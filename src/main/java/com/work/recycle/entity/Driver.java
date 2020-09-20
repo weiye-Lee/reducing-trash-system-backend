@@ -28,14 +28,14 @@ public class Driver {
     @OneToMany(mappedBy = "driver")
     private List<DTOrder> dtOrders;
 
-     @Column(columnDefinition = "timestamp default current_timestamp",
-             insertable = false,
-             updatable = false)
-     private LocalDateTime insertTime;
+    @Column(columnDefinition = "timestamp default current_timestamp",
+            insertable = false,
+            updatable = false)
+    private LocalDateTime insertTime;
 
-     @Column(columnDefinition = "timestamp default current_timestamp " +
-             "on update current_timestamp",
-             insertable = false,
-             updatable = false)
-     private LocalDateTime updateTime;
+    @Column(columnDefinition = "timestamp default current_timestamp " +
+            "on update current_timestamp",
+            insertable = false,
+            updatable = false)
+    private LocalDateTime updateTime;
 }
