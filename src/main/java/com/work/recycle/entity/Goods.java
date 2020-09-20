@@ -20,7 +20,7 @@ import java.util.List;
 public class Goods {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer goodsId;
+    private Integer id;
 
     @Min(1)
     private Integer integral = 99999; // 积分
