@@ -12,7 +12,7 @@ public class GoodsExchange {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer goodsExchangeId;
+    private Integer id;
 
     @Column(columnDefinition = "timestamp default current_timestamp")
     private LocalDateTime exchangeTime;
