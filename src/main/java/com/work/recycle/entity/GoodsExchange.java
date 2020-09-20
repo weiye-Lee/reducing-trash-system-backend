@@ -12,10 +12,10 @@ public class GoodsExchange {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer GoodsExchange_id;
+    private Integer goodsExchangeId;
 
     @Column(columnDefinition = "timestamp default current_timestamp")
-    private LocalDateTime exchange_time;
+    private LocalDateTime exchangeTime;
 
     @ManyToOne
     private Goods goods;
@@ -23,4 +23,14 @@ public class GoodsExchange {
     @ManyToOne
     private User user;
 
+    @Column(columnDefinition = "timestamp default current_timestamp",
+            insertable = false,
+            updatable = false)
+    private LocalDateTime insertTime;
+
+    @Column(columnDefinition = "timestamp default current_timestamp " +
+            "on update current_timestamp",
+            insertable = false,
+            updatable = false)
+    private LocalDateTime updateTime;
 }

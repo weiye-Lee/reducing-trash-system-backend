@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -23,10 +24,10 @@ public class Cleaner {
     private String serviceArea;
 
     @OneToMany(mappedBy = "cleaner")
-    private List<FCOrder> fcOrders;
+    private List<Farmer> farmers;
 
     @OneToMany(mappedBy = "cleaner")
-    private List<Farmer> farmers;
+    private List<FCOrder> fcOrders;
 
     @OneToMany(mappedBy = "cleaner")
     private List<CDOrder> cdOrders;
@@ -34,4 +35,14 @@ public class Cleaner {
     @OneToMany(mappedBy = "cleaner")
     private List<CROrder> crOrders;
 
+    @Column(columnDefinition = "timestamp default current_timestamp",
+            insertable = false,
+            updatable = false)
+    private LocalDateTime insertTime;
+
+    @Column(columnDefinition = "timestamp default current_timestamp " +
+            "on update current_timestamp",
+            insertable = false,
+            updatable = false)
+    private LocalDateTime updateTime;
 }

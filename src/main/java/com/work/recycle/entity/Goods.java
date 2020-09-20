@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -19,7 +20,7 @@ import java.util.List;
 public class Goods {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer goodsid;
+    private Integer goodsId;
 
     @Min(1)
     private Integer integral = 99999; // 积分
@@ -44,4 +45,15 @@ public class Goods {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<GoodsExchange> goodsExchanges;
 
+
+    @Column(columnDefinition = "timestamp default current_timestamp",
+            insertable = false,
+            updatable = false)
+    private LocalDateTime insertTime;
+
+    @Column(columnDefinition = "timestamp default current_timestamp " +
+            "on update current_timestamp",
+            insertable = false,
+            updatable = false)
+    private LocalDateTime updateTime;
 }

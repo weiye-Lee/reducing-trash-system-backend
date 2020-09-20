@@ -14,6 +14,9 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class User {
+    public enum Sex {
+        MALE, FEMALE
+    }
     @Id
     // 自增，可以通过uuid对其进行处理
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +24,7 @@ public class User {
 
     @Column(nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    //只能反序列化为java，不能序列化为json。也就是json返回不到前端
     @OneToMany(mappedBy = "user")
     private List<UserRole> roleList;
 
@@ -28,7 +32,7 @@ public class User {
     @Size(min = 2,max = 6,message = "用户名长度超出限制")
     private String name;
 
-    @Column(length = 20,nullable = false)
+    @Column(length = 11,nullable = false)
     private String phoneNumber;
 
     @Column(length = 20)
@@ -36,14 +40,19 @@ public class User {
 
     @Min(0)
     private Integer score = 0;
-    @Column(length = 10)
-    private String sex;
+    private Sex sex;
+
+    @OneToMany(mappedBy = "user")
+    private List<GoodsExchange> goodsExchanges;
 
     @Column(columnDefinition = "timestamp default current_timestamp",
             insertable = false,
             updatable = false)
     private LocalDateTime insertTime;
 
-    @OneToMany(mappedBy = "user")
-    private List<GoodsExchange> goodsExchanges;
+    @Column(columnDefinition = "timestamp default current_timestamp " +
+            "on update current_timestamp",
+            insertable = false,
+            updatable = false)
+    private LocalDateTime updateTime;
 }
