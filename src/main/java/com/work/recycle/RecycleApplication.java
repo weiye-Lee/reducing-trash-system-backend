@@ -1,6 +1,6 @@
 package com.work.recycle;
 
-import com.work.recycle.repository.impl.BaseRespostoryImpl;
+import com.work.recycle.repository.impl.BaseRepositoryImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -10,7 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 @SpringBootApplication
-@EnableJpaRepositories(repositoryBaseClass = BaseRespostoryImpl.class)
+@EnableJpaRepositories(repositoryBaseClass = BaseRepositoryImpl.class)
 public class RecycleApplication {
 
     public static void main(String[] args) {
