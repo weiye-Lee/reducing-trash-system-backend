@@ -2,6 +2,7 @@ package com.work.recycle.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import java.time.LocalDateTime;
 
 @Entity
 public class Garbage {
@@ -23,7 +24,7 @@ public class Garbage {
     @Min(0)
     private Integer amount = 0; // 数量
 
-    private String priture;
+    private int picture;
 
     @ManyToOne
     private FCOrder fcOrder;
@@ -33,4 +34,15 @@ public class Garbage {
 
     @ManyToOne
     private CROrder crOrder;
+
+    @Column(columnDefinition = "timestamp default current_timestamp",
+            insertable = false,
+            updatable = false)
+    private LocalDateTime insertTime;
+
+    @Column(columnDefinition = "timestamp default current_timestamp " +
+            "on update current_timestamp",
+            insertable = false,
+            updatable = false)
+    private LocalDateTime updateTime;
 }
