@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -24,6 +25,9 @@ public class Farmer {
     private String address;
 
     private Integer familySize = 1;
+
+    @Min(0)
+    private Integer score = 0;
 
     @OneToMany(mappedBy = "farmer")
     private List<FarmerFamily> families;
