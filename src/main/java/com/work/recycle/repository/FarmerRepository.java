@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FarmerRepository extends BaseRepository<Farmer,Integer> {
 
-    @Query("select f.id from Farmer f where f.id = :id")
-    int getScoreById(@Param("id") int id);
+    @Query("select f.score from Farmer f where f.id = :id")
+    int getScoreById(@Param("id") Integer id);
+
 }
