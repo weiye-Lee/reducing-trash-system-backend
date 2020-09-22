@@ -30,6 +30,7 @@ public class UserService {
         return userRepository.getUserByPhoneNumber(phoneNumber);
     }
 
-
-
+    public Garbage getGarbageById(int id) {
+        return garbageRepository.getGarbageById(id);
+    }
 }

@@ -36,16 +36,8 @@ public class FCOrder {
     @ManyToOne
     private Cleaner cleaner;
 
-    @OneToMany(mappedBy = "fcOrder")
+    @OneToMany(mappedBy = "fcOrder",cascade = CascadeType.PERSIST)
     private List<Garbage> garbageList;
-
-    // farmer 发布订单时间
-    @Column(columnDefinition = "timestamp default current_timestamp", insertable = false,updatable = false)
-    private LocalDateTime farmerTime;
-
-    // cleaner 完成订单时间
-    @Column(columnDefinition = "timestamp default current_timestamp", insertable = false)
-    private LocalDateTime cleanerTime;
 
     @Column(columnDefinition = "timestamp default current_timestamp",
             insertable = false,

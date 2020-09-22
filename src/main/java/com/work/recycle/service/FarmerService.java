@@ -24,10 +24,11 @@ public class FarmerService {
         return fcOrderRepository.getFarmerFCOrderTimesById(id);
     }
 
-    public FCOrder addFCOrder(List<Garbage> garbage) {
-
-        return null;
+    public FCOrder addFCOrder(FCOrder fcOrder) {
+       fcOrderRepository.save(fcOrder);
+       return null;
     }
+
 
     public List<FCOrder> getOrders(int id) {
         return fcOrderRepository.getFarmerFCOrdersById(id);

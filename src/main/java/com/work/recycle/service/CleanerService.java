@@ -1,5 +1,6 @@
 package com.work.recycle.service;
 
+import com.work.recycle.entity.Cleaner;
 import com.work.recycle.entity.FCOrder;
 import com.work.recycle.repository.CleanerRepository;
 import com.work.recycle.repository.FCOrderRepository;
@@ -21,5 +22,9 @@ public class CleanerService {
 
     public List<FCOrder> getFCOrdersById(int id) {
         return null;
+    }
+
+    public void addCleaner(Cleaner cleaner) {
+        cleanerRepository.save(cleaner);
     }
 }
