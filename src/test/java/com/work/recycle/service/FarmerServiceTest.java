@@ -24,6 +24,7 @@ class FarmerServiceTest {
     private UserService userService;
     @Autowired
     private ObjectMapper mapper;
+    /*
     @Test
     void testAddFCOrder() throws JsonProcessingException {
         // Garbage g1  = userService.getGarbageById(1);
@@ -50,5 +51,21 @@ class FarmerServiceTest {
         fcOrder.setGarbageList(garbageList);
         farmerService.addFCOrder(fcOrder);
         log.warn("撒花");
+    }
+
+     */
+
+    @Test
+    public void test_mapper() throws JsonProcessingException {
+        Garbage garbage = new Garbage();
+        garbage.setName("tom");
+        garbage.setAmount(10);
+        log.warn("{}",garbage);
+        String str = mapper.writeValueAsString(garbage);
+
+        log.warn(str);
+        Object garbage1 = mapper.readValue(str,Object.class);
+        log.warn("{}",garbage1);
+
     }
 }

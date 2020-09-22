@@ -15,27 +15,16 @@ public class CROrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @MapsId
+    private Order order;
+
     @ManyToOne
     private Cleaner cleaner;
 
     @ManyToOne
     private RecycleFirm recycleFirm;
 
-    private Integer score;
 
-    @OneToMany(mappedBy = "crOrder")
-    private List<Garbage> garbageList;
-
-    private Boolean status;
-    @Column(columnDefinition = "timestamp default current_timestamp",
-            insertable = false,
-            updatable = false)
-    private LocalDateTime insertTime;
-
-    @Column(columnDefinition = "timestamp default current_timestamp " +
-            "on update current_timestamp",
-            insertable = false,
-            updatable = false)
-    private LocalDateTime updateTime;
 
 }

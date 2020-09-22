@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -31,22 +32,13 @@ public class Garbage {
     @Column(length = 10)
     private String unit; // 计量单位
 
+    @OneToMany(mappedBy = "garbage")
+    private List<GarbageChoose> garbageChooseList;
+
     @Min(0)
     private Integer amount = 0; // 数量
 
     private String picture; // 垃圾的图片
-
-    @ManyToOne
-    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private FCOrder fcOrder;
-
-    @ManyToOne
-    @JsonIgnore
-    private CDOrder cdOrder;
-
-    @ManyToOne
-    @JsonIgnore
-    private CROrder crOrder;
 
     @Column(columnDefinition = "timestamp default current_timestamp",
             insertable = false,
