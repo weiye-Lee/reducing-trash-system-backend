@@ -38,8 +38,6 @@ public class User {
     @Column(length = 20)
     private String IDNumber;
 
-    @Min(0)
-    private Integer score = 0;
     private Sex sex;
 
     @OneToMany(mappedBy = "user")

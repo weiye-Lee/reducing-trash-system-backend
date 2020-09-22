@@ -1,29 +1,25 @@
 package com.work.recycle.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Data
 @NoArgsConstructor
-public class DTOrder {
+@AllArgsConstructor
+public class GarbageChoose {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @MapsId
+    @ManyToOne
     private Order order;
 
     @ManyToOne
-    private Driver driver;
-
-    @ManyToOne
-    private TransferStation transferStation;
+    private Garbage garbage;
 
 
 }

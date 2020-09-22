@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -20,6 +21,9 @@ public class Cleaner {
     @OneToOne(cascade = {CascadeType.REMOVE,CascadeType.PERSIST})
     @MapsId
     private User user;
+
+    @Min(0)
+    private Integer score = 0;
 
     private String serviceArea;
 

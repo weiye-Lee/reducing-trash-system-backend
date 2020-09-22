@@ -1,10 +1,21 @@
 package com.work.recycle.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+
 public class Garbage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,19 +32,13 @@ public class Garbage {
     @Column(length = 10)
     private String unit; // 计量单位
 
+    @OneToMany(mappedBy = "garbage")
+    private List<GarbageChoose> garbageChooseList;
+
     @Min(0)
     private Integer amount = 0; // 数量
 
-    private int picture;
-
-    @ManyToOne
-    private FCOrder fcOrder;
-
-    @ManyToOne
-    private CDOrder cdOrder;
-
-    @ManyToOne
-    private CROrder crOrder;
+    private String picture; // 垃圾的图片
 
     @Column(columnDefinition = "timestamp default current_timestamp",
             insertable = false,
