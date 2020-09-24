@@ -25,6 +25,9 @@ public class CleanerService {
     }
 
     public void addCleaner(Cleaner cleaner) {
+
         cleanerRepository.save(cleaner);
     }
+
+
 }

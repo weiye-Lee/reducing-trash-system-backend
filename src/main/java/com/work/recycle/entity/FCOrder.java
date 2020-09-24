@@ -19,7 +19,7 @@ public class FCOrder {
 
     @OneToOne(cascade = CascadeType.PERSIST)
     @MapsId
-    private Order order;
+    private BaseOrder baseOrder;
 
     @ManyToOne
     private Farmer farmer;

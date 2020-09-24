@@ -1,10 +1,12 @@
 package com.work.recycle.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 
 @Entity
 @Data
@@ -15,11 +17,14 @@ public class GarbageChoose {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @JsonIgnore
     @ManyToOne
-    private Order order;
+    private BaseOrder baseOrder;
 
     @ManyToOne
     private Garbage garbage;
 
+    @Min(0)
+    private Integer amount = 0; // 数量
 
 }

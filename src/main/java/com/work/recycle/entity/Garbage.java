@@ -33,10 +33,8 @@ public class Garbage {
     private String unit; // 计量单位
 
     @OneToMany(mappedBy = "garbage")
+    @JsonIgnore
     private List<GarbageChoose> garbageChooseList;
-
-    @Min(0)
-    private Integer amount = 0; // 数量
 
     private String picture; // 垃圾的图片
 

@@ -1,5 +1,6 @@
 package com.work.recycle.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,9 +31,11 @@ public class Farmer {
     private Integer score = 0;
 
     @OneToMany(mappedBy = "farmer")
+    @JsonIgnore
     private List<FarmerFamily> families;
 
     @OneToMany(mappedBy = "farmer")
+    @JsonIgnore
     private List<FCOrder> fcOrders;
 
     @ManyToOne

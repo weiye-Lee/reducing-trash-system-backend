@@ -17,7 +17,7 @@ public class DTOrder {
 
     @OneToOne(cascade = CascadeType.PERSIST)
     @MapsId
-    private Order order;
+    private BaseOrder baseOrder;
 
     @ManyToOne
     private Driver driver;

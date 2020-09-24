@@ -2,18 +2,21 @@ package com.work.recycle.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.work.recycle.entity.FCOrder;
+import com.work.recycle.entity.BaseOrder;
 import com.work.recycle.entity.Garbage;
-import com.work.recycle.repository.GarbageRepository;
+import com.work.recycle.entity.GarbageChoose;
+import com.work.recycle.repository.BaseOrderRepository;
+import com.work.recycle.repository.GarbageChooseRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Slf4j
 class FarmerServiceTest {
@@ -24,6 +27,10 @@ class FarmerServiceTest {
     private UserService userService;
     @Autowired
     private ObjectMapper mapper;
+    @Autowired
+    private GarbageChooseRepository chooseRepository;
+    @Autowired
+    private BaseOrderRepository orderRepository;
     /*
     @Test
     void testAddFCOrder() throws JsonProcessingException {
@@ -59,13 +66,47 @@ class FarmerServiceTest {
     public void test_mapper() throws JsonProcessingException {
         Garbage garbage = new Garbage();
         garbage.setName("tom");
-        garbage.setAmount(10);
         log.warn("{}",garbage);
         String str = mapper.writeValueAsString(garbage);
 
         log.warn(str);
         Object garbage1 = mapper.readValue(str,Object.class);
         log.warn("{}",garbage1);
+
+    }
+
+    @Test
+    void addFCOrder() throws JsonProcessingException {
+        BaseOrder order = new BaseOrder();
+        order.setRemark("nothing to say");
+        order.setAddress("火星");
+        Garbage g = new Garbage();
+        Garbage g2 = new Garbage();
+        g.setId(1);
+        g2.setId(2);
+
+        GarbageChoose garbageChoose = new GarbageChoose();
+        garbageChoose.setGarbage(g);
+        GarbageChoose garbageChoose1 = new GarbageChoose();
+        garbageChoose1.setGarbage(g2);
+        List<GarbageChoose> list = new ArrayList<>();
+        list.add(garbageChoose);
+        list.add(garbageChoose1);
+
+        farmerService.addFCOrder(order,list);
+
+
+    }
+    @Test
+    void fuck_code() throws JsonProcessingException {
+        Optional<GarbageChoose> garbageChoose = chooseRepository.findById(1);
+        GarbageChoose g = garbageChoose.get();
+        log.warn("{}",mapper.writeValueAsString(g));
+        BaseOrder baseOrder = orderRepository.getBaseOrderById(1);
+        log.warn("{}",mapper.writeValueAsString(baseOrder));
+        g.setBaseOrder(baseOrder);
+        chooseRepository.save(g);
+        log.warn("fuck the code");
 
     }
 }

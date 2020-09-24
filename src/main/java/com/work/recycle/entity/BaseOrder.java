@@ -1,5 +1,6 @@
 package com.work.recycle.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,14 +11,14 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
-public class Order {
+public class BaseOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     private Integer score = 0;
 
-    private Boolean status;
+    private Boolean status = false;
 
     @Column(length = 40)
     private String address;
@@ -25,7 +26,8 @@ public class Order {
     @Column(length = 40)
     private String remark;
 
-    @OneToMany(mappedBy = "order")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "baseOrder")
     private List<GarbageChoose> garbageChooses;
 
     @Column(columnDefinition = "timestamp default current_timestamp",
@@ -33,7 +35,8 @@ public class Order {
             updatable = false)
     private LocalDateTime insertTime;
 
-    @Column(columnDefinition = "timestamp default current_timestamp",
+    @Column(columnDefinition = "timestamp default current_timestamp " +
+            "on update current_timestamp",
             insertable = false,
             updatable = false)
     private LocalDateTime updateTime;
