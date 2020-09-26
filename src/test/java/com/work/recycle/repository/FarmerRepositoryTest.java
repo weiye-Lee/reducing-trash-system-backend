@@ -24,9 +24,18 @@ class FarmerRepositoryTest {
         User u1 = new User();
         u1.setName("tom");
         u1.setPhoneNumber("13050496540");
+        u1.setId(1);
         f1.setUser(u1);
         farmerRepository.save(f1);
 
+
+    }
+
+    @Test
+    void test_Farmer() {
+        Farmer farmer = new Farmer();
+        farmer.setId(66);
+        farmerRepository.save(farmer);
 
     }
 

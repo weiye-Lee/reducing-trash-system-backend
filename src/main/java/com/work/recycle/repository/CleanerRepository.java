@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CleanerRepository extends BaseRepository<Cleaner,Integer>{
 
-
+    @Query("select c from Cleaner c where id = :id")
+    Cleaner getCleanerById(@Param("id") int id);
 }

@@ -1,0 +1,12 @@
+POST http://localhost:8080/api/user/sentAudhCode?phone=111
+Content-Type: application/json
+
+{}
+
+###
+POST http://localhost:8080/api/user/sentAudhCode?phone=111
+Content-Type: application/json
+
+{}
+
+###

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.engine.internal.Cascade;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -21,7 +22,7 @@ public class GarbageChoose {
     @ManyToOne
     private BaseOrder baseOrder;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Garbage garbage;
 
     @Min(0)

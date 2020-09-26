@@ -27,7 +27,7 @@ public class BaseOrder {
     private String remark;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "baseOrder")
+    @OneToMany(mappedBy = "baseOrder",cascade = CascadeType.PERSIST)
     private List<GarbageChoose> garbageChooses;
 
     @Column(columnDefinition = "timestamp default current_timestamp",

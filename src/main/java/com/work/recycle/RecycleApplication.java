@@ -1,5 +1,7 @@
 package com.work.recycle;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.work.recycle.repository.impl.BaseRepositoryImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,6 +21,8 @@ public class RecycleApplication {
     // 自动将方法注入到容器当中
     @Bean
     public PasswordEncoder getPasswordEncoder() {
+
         return new BCryptPasswordEncoder();
     }
+
 }

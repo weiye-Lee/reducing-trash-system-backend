@@ -24,4 +24,13 @@ class UserRepositoryTest {
         log.warn("{}",mapper.writeValueAsString(user));
     }
 
+    @Test
+    void test_addUser() {
+        User user = new User();
+        user.setName("dog");
+        user.setId(66);
+        user.setPhoneNumber("110");
+        userRepository.save(user);
+    }
+
 }
