@@ -111,7 +111,6 @@ class FarmerServiceTest {
         g.setBaseOrder(baseOrder);
         chooseRepository.save(g);
         log.warn("fuck the code");
-
     }
 
     @Test

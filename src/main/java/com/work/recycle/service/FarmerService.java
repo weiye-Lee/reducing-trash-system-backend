@@ -73,7 +73,9 @@ public class FarmerService {
        garbageChooses.forEach(each -> {
            int garbageId = each.getGarbage().getId();
            Optional<Garbage> garbage = garbageRepository.findById(garbageId);
-           garbage.ifPresent(each::setGarbage);
+           garbage.ifPresentOrElse(each::setGarbage
+                   , () -> Asserts.fail("数据集错误"));
+           each.setBaseOrder(order);
            chooseRepository.save(each);
        });
 
