@@ -1,7 +1,84 @@
-POST http://localhost:8080/api/user/sentAudhCode?phone=111
+POST http://localhost:8080/api/cleaner/check/order
+Content-Type: application/json
+
+{
+  "baseOrder": {
+    "id": 22,
+    "garbageChooses": [
+      {
+        "id": 32,
+        "garbage": {
+          "id": 1
+        },
+        "amount": 6
+      },
+      {
+        "id": 33,
+        "garbage": {
+          "id": 2
+        },
+        "amount": 6
+      }
+    ]
+  }
+}
+
+###
+POST http://localhost:8080/api/cleaner/receive/order/22
 Content-Type: application/json
 
 {}
+
+###
+GET http://localhost:8080/api/cleaner/getFCOrders
+Accept: application/json
+
+###
+GET http://localhost:8080/api/farmer/getBaseOrder?id=21
+Accept: application/json
+
+###
+GET http://localhost:8080/api/farmer/getFCOrders
+Accept: application/json
+
+###
+POST http://localhost:8080/api/farmer/addFCOrder
+Content-Type: application/json
+
+{
+  "remark": "今天晚上敲代码",
+  "garbageChooses": [
+    {
+      "garbage": {
+        "id": 1,
+        "name": "水瓶子",
+        "score": 0,
+        "insertTime": "2020-09-23T22:25:51",
+        "updateTime": "2020-09-23T22:25:51"
+      },
+      "amount": 0
+    },
+    {
+      "garbage": {
+        "id": 2,
+        "name": "二手飞机",
+        "score": 0,
+        "insertTime": "2020-09-23T22:25:51",
+        "updateTime": "2020-09-23T22:25:51"
+      },
+      "amount": 0
+    }
+  ]
+}
+
+###
+
+GET http://localhost:8080/api/farmer/getScore
+Accept: application/json
+
+###
+GET http://localhost:8080/api/user/getGarbage
+Accept: application/json
 
 ###
 POST http://localhost:8080/api/user/sentAudhCode?phone=111

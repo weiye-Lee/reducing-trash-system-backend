@@ -1,10 +1,8 @@
 package com.work.recycle.service;
 
 import com.work.recycle.entity.*;
-import com.work.recycle.repository.CROrderRepository;
-import com.work.recycle.repository.GarbageChooseRepository;
-import com.work.recycle.repository.GarbageRepository;
-import com.work.recycle.repository.RecycleFirmRepository;
+import com.work.recycle.exception.Asserts;
+import com.work.recycle.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,17 +19,23 @@ public class RecycleFirmService {
     private CROrderRepository crOrderRepository;
     @Autowired
     private RecycleFirmRepository firmRepository;
+    @Autowired
+    private CleanerRepository cleanerRepository;
 
-    public void addCROrder(BaseOrder order, List<GarbageChoose> garbageChooses, Cleaner cleaner) {
+    public void addCROrder(BaseOrder order, List<GarbageChoose> garbageChooses, Integer cleanerId) {
         CROrder crOrder = new CROrder();
         int uid = 1;
         RecycleFirm firm = firmRepository.getRecycleFirmById(uid);
+        Cleaner cleaner = cleanerRepository.getCleanerById(cleanerId);
         crOrder.setBaseOrder(order);
         crOrder.setRecycleFirm(firm);
+        crOrder.setCleaner(cleaner);
 
         garbageChooses.forEach(each -> {
             int garbageId = each.getGarbage().getId();
-            Garbage garbage = garbageRepository.findById(garbageId).get();
+            garbageRepository.findById(garbageId)
+                    .ifPresentOrElse(each::setGarbage
+                            ,()-> Asserts.fail("数据集错误"));
             chooseRepository.save(each);
         });
         crOrderRepository.save(crOrder);

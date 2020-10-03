@@ -2,9 +2,11 @@ package com.work.recycle.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.work.recycle.common.ResultCode;
 import com.work.recycle.component.RequestComponent;
 import com.work.recycle.entity.*;
 import com.work.recycle.repository.*;
+import com.work.recycle.utils.CalculateScore;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,12 +39,15 @@ public class FarmerService {
     private GarbageChooseRepository chooseRepository;
     @Autowired
     private ObjectMapper mapper;
-    public int getScore(int id) {
-        return farmerRepository.getScoreById(id);
+
+    private int uid = 1;
+
+    public int getScore() {
+        return farmerRepository.getScoreById(uid);
     }
 
-    public int getOrderTimes(int id) {
-        return fcOrderRepository.getFarmerFCOrderTimesById(id);
+    public int getOrderTimes() {
+        return fcOrderRepository.getFarmerFCOrderTimesById(uid);
     }
 
 
@@ -54,16 +59,16 @@ public class FarmerService {
      * @return the fc order
      */
 
-    public FCOrder addFCOrder(BaseOrder order, List<GarbageChoose> garbageChooses) throws JsonProcessingException {
+    public void addFCOrder(BaseOrder order, List<GarbageChoose> garbageChooses) throws JsonProcessingException {
        FCOrder fcOrder = new FCOrder();
-       // 通过uid将提交这条记录的用户获取出来，并插入到FCOrder中
 
        // int uid = requestComponent.getUid();
        int uid = 1;
        Farmer farmer = farmerRepository.getFarmerById(uid);
+       order.setScore(CalculateScore.getScore(garbageChooses));
        fcOrder.setBaseOrder(order);
        fcOrder.setFarmer(farmer);
-
+       fcOrderRepository.save(fcOrder);
        // 遍历垃圾选择集合，作用是将垃圾 和垃圾选择建立联系
        garbageChooses.forEach(each -> {
            int garbageId = each.getGarbage().getId();
@@ -71,20 +76,15 @@ public class FarmerService {
            garbage.ifPresent(each::setGarbage);
            chooseRepository.save(each);
        });
-       fcOrderRepository.save(fcOrder);
-       log.warn("{}",mapper.writeValueAsString(order));
-
-       // 让每条垃圾选择记录和订单记录建立关联
-       order.setGarbageChooses(garbageChooses);
-       garbageChooses.forEach(each -> {
-           each.setBaseOrder(order);
-           chooseRepository.save(each);
-       });
-       return fcOrder;
 
     }
 
-    public List<FCOrder> getOrders(int id) {
-        return fcOrderRepository.getFarmerFCOrdersById(id);
+    public List<FCOrder> getOrders() {
+
+        return fcOrderRepository.getFarmerFCOrdersById(uid);
+    }
+
+    public BaseOrder getOrderInfo(int id) {
+        return baseOrderRepository.getBaseOrderById(id);
     }
 }

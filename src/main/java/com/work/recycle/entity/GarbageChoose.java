@@ -22,7 +22,7 @@ public class GarbageChoose {
     @ManyToOne
     private BaseOrder baseOrder;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     private Garbage garbage;
 
     @Min(0)

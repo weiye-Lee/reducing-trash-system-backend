@@ -18,7 +18,9 @@ public class BaseOrder {
 
     private Integer score = 0;
 
-    private Boolean status = false;
+    private Boolean receiveStatus = false;
+
+    private Boolean checkStatus = false;
 
     @Column(length = 40)
     private String address;
@@ -26,7 +28,7 @@ public class BaseOrder {
     @Column(length = 40)
     private String remark;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    // @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "baseOrder",cascade = CascadeType.PERSIST)
     private List<GarbageChoose> garbageChooses;
 
@@ -40,4 +42,5 @@ public class BaseOrder {
             insertable = false,
             updatable = false)
     private LocalDateTime updateTime;
+
 }

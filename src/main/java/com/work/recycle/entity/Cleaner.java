@@ -1,5 +1,6 @@
 package com.work.recycle.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,7 @@ public class Cleaner {
     private String serviceArea;
 
     @OneToMany(mappedBy = "cleaner")
+    @JsonIgnore
     private List<Farmer> farmers;
 
     @OneToMany(mappedBy = "cleaner")
@@ -49,4 +51,6 @@ public class Cleaner {
             insertable = false,
             updatable = false)
     private LocalDateTime updateTime;
+
+
 }

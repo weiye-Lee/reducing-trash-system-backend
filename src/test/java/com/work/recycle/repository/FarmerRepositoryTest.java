@@ -2,13 +2,15 @@ package com.work.recycle.repository;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.work.recycle.entity.Farmer;
-import com.work.recycle.entity.User;
+import com.work.recycle.entity.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.core.AutoConfigureCache;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
@@ -18,6 +20,11 @@ class FarmerRepositoryTest {
     private FarmerRepository farmerRepository;
     @Autowired
     private ObjectMapper mapper;
+    @Autowired
+    private GarbageRepository garbageRepository;
+    @Autowired
+    private GarbageChooseRepository chooseRepository;
+
     @Test
     void test_addFarmer() {
         Farmer f1 = new Farmer();
@@ -44,4 +51,5 @@ class FarmerRepositoryTest {
         Farmer farmer = farmerRepository.getFarmerById(1);
         log.warn("{}",mapper.writeValueAsString(farmer));
     }
+
 }
