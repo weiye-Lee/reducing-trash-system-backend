@@ -1,14 +1,14 @@
 package com.work.recycle.service;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
 import com.work.recycle.entity.*;
 import com.work.recycle.exception.Asserts;
 import com.work.recycle.repository.*;
-import com.work.recycle.utils.CalculateScore;
+import com.work.recycle.component.CalculateScore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The type Cleaner service.
@@ -29,6 +29,10 @@ public class CleanerService {
     private CROrderRepository crOrderRepository;
     @Autowired
     private BaseOrderRepository baseOrderRepository;
+    @Autowired
+    private CalculateScore calculateScore;
+    @Autowired
+    private DriverRepository driverRepository;
 
     private int uid = 5;
 
@@ -41,8 +45,9 @@ public class CleanerService {
         FCOrder fcOrder = fcOrderRepository.getFCOrderById(order.getId());
         Cleaner cleaner = cleanerRepository.getCleanerById(uid);
         fcOrder.setCleaner(cleaner);
-        int score = CalculateScore.getScore(garbageChooses);
+        int score = calculateScore.getScore(garbageChooses);
         order.setScore(score);
+        baseOrderRepository.save(order);
         garbageChooses.forEach(each -> {
             int garbageId = each.getGarbage().getId();
             garbageRepository.findById(garbageId)
@@ -68,24 +73,25 @@ public class CleanerService {
 
     }
 
-    public void addCDOrder(BaseOrder order,List<GarbageChoose> garbageChooses){
+    public int addCDOrder(BaseOrder order,List<GarbageChoose> garbageChooses){
         CDOrder cdOrder = new CDOrder();
         Cleaner cleaner = cleanerRepository.getCleanerById(uid);
+        order.setScore(calculateScore.getScore(garbageChooses));
         cdOrder.setBaseOrder(order);
         cdOrder.setCleaner(cleaner);
 
+        cdOrderRepository.save(cdOrder);
+
         garbageChooses.forEach(each -> {
             int garbageId = each.getGarbage().getId();
-            garbageRepository.findById(garbageId)
-                    .ifPresentOrElse(each::setGarbage
-                            ,()-> Asserts.fail("数据集错误"));
-            chooseRepository.save(each);
-        });
-        cdOrderRepository.save(cdOrder);
-        garbageChooses.forEach(each -> {
+            Optional<Garbage> garbage = garbageRepository.findById(garbageId);
+            garbage.ifPresentOrElse(each::setGarbage
+                    , () -> Asserts.fail("数据集错误"));
             each.setBaseOrder(order);
             chooseRepository.save(each);
         });
+
+        return uid;
 
     }
 

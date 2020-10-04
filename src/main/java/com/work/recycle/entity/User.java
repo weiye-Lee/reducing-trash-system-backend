@@ -27,6 +27,7 @@ public class User {
     @Column(nullable = false)
     @JsonIgnore
     @OneToMany(mappedBy = "user")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private List<UserRole> roleList;
 
     @Column(length = 10)

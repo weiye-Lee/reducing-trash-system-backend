@@ -60,4 +60,28 @@ class CleanerServiceTest {
     void test_saveAll() {
 
     }
+
+    @Test
+    void addCDOrder() throws JsonProcessingException {
+        BaseOrder baseOrder = new BaseOrder();
+        baseOrder.setId(22);
+        Garbage garbage = new Garbage();
+        Garbage garbage1 = new Garbage();
+        garbage.setId(1);
+        garbage1.setId(2);
+
+        GarbageChoose garbageChoose = new GarbageChoose();
+        GarbageChoose garbageChoose1 = new GarbageChoose();
+        garbageChoose.setGarbage(garbage);
+        garbageChoose.setAmount(100);
+
+        garbageChoose1.setGarbage(garbage1);
+        garbageChoose1.setAmount(500);
+        List<GarbageChoose> list = new ArrayList<>();
+        list.add(garbageChoose);
+        list.add(garbageChoose1);
+
+        log.warn(mapper.writeValueAsString(baseOrder));
+        cleanerService.addCDOrder(baseOrder,list);
+    }
 }

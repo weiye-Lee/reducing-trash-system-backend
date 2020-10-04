@@ -2,14 +2,12 @@ package com.work.recycle.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.work.recycle.common.ResultCode;
 import com.work.recycle.component.RequestComponent;
 import com.work.recycle.entity.*;
 import com.work.recycle.repository.*;
-import com.work.recycle.utils.CalculateScore;
+import com.work.recycle.component.CalculateScore;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.server.ResponseStatusException;
@@ -39,6 +37,8 @@ public class FarmerService {
     private GarbageChooseRepository chooseRepository;
     @Autowired
     private ObjectMapper mapper;
+    @Autowired
+    private CalculateScore calculateScore;
 
     private int uid = 1;
 
@@ -65,7 +65,7 @@ public class FarmerService {
        // int uid = requestComponent.getUid();
        int uid = 1;
        Farmer farmer = farmerRepository.getFarmerById(uid);
-       order.setScore(CalculateScore.getScore(garbageChooses));
+       order.setScore(calculateScore.getScore(garbageChooses));
        fcOrder.setBaseOrder(order);
        fcOrder.setFarmer(farmer);
        fcOrderRepository.save(fcOrder);

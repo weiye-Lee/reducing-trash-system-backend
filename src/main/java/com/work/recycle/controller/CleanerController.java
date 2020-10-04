@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.work.recycle.common.CommonResult;
 import com.work.recycle.entity.BaseOrder;
+import com.work.recycle.entity.CDOrder;
 import com.work.recycle.entity.FCOrder;
 import com.work.recycle.entity.GarbageChoose;
 import com.work.recycle.repository.CleanerRepository;
@@ -45,6 +46,19 @@ public class CleanerController {
         List<GarbageChoose> garbageChooseList = baseOrder.getGarbageChooses();
         baseOrder.setGarbageChooses(null);
         return CommonResult.success(cleanerService.checkFCOrder(baseOrder,garbageChooseList));
+    }
+
+    @PostMapping("addCDOrder")
+    public CommonResult addCDOrder(@RequestBody BaseOrder baseOrder) {
+        try {
+            log.warn(mapper.writeValueAsString(baseOrder));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        List<GarbageChoose> garbageChooses = baseOrder.getGarbageChooses();
+        baseOrder.setGarbageChooses(null);
+        return CommonResult.success(cleanerService.addCDOrder(baseOrder,garbageChooses));
     }
 
     @GetMapping("getScore")

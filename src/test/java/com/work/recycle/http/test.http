@@ -1,3 +1,53 @@
+POST http://localhost:8080/api/driver/checkCDOrder
+Content-Type: application/json
+
+{
+  "id": 26,
+  "garbageChooses": [
+    {
+      "id": 58,
+      "garbage": {
+        "id": 1
+      },
+      "amount": 10
+    },
+    {
+      "id": 59,
+      "garbage": {
+        "id": 2
+      },
+      "amount": 10
+    }
+  ]
+}
+
+###
+GET http://localhost:8080/api/driver/receive/CDOrder/23
+Accept: application/json
+
+###
+POST http://localhost:8080/api/cleaner/addCDOrder
+Content-Type: application/json
+
+{
+  "remark": "再最后生成一条cd订单",
+  "garbageChooses": [
+    {
+      "garbage": {
+        "id": 1
+      },
+      "amount": 5
+    },
+    {
+      "garbage": {
+        "id": 2
+      },
+      "amount": 6
+    }
+  ]
+}
+
+###
 POST http://localhost:8080/api/cleaner/check/order
 Content-Type: application/json
 
