@@ -37,7 +37,7 @@ public class FarmerService {
     public int getOrderTimes() {
         return fcOrderRepository.getFarmerFCOrderTimesById(uid);
     }
-    
+
     public void addFCOrder(BaseOrder order, List<GarbageChoose> garbageChooses) {
 
         ordersComponent.addOrder(order,garbageChooses, SwitchUtil.FCORDER);
