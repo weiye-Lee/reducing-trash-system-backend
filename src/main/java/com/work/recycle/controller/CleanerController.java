@@ -45,7 +45,8 @@ public class CleanerController {
         BaseOrder baseOrder = fcOrder.getBaseOrder();
         List<GarbageChoose> garbageChooseList = baseOrder.getGarbageChooses();
         baseOrder.setGarbageChooses(null);
-        return CommonResult.success(cleanerService.checkFCOrder(baseOrder,garbageChooseList));
+        cleanerService.checkFCOrder(baseOrder,garbageChooseList);
+        return CommonResult.success(null);
     }
 
     @PostMapping("addCDOrder")
@@ -58,7 +59,8 @@ public class CleanerController {
 
         List<GarbageChoose> garbageChooses = baseOrder.getGarbageChooses();
         baseOrder.setGarbageChooses(null);
-        return CommonResult.success(cleanerService.addCDOrder(baseOrder,garbageChooses));
+        cleanerService.addCDOrder(baseOrder,garbageChooses);
+        return CommonResult.success(null);
     }
 
     @GetMapping("getScore")

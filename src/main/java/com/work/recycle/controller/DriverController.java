@@ -28,7 +28,8 @@ public class DriverController {
     public CommonResult checkCDOrder(@RequestBody BaseOrder baseOrder) {
         List<GarbageChoose> garbageChooses = baseOrder.getGarbageChooses();
         baseOrder.setGarbageChooses(null);
-        return CommonResult.success(driverService.checkCDOrder(baseOrder,garbageChooses));
+        driverService.checkCDOrder(baseOrder,garbageChooses);
+        return CommonResult.success(null);
 
     }
 

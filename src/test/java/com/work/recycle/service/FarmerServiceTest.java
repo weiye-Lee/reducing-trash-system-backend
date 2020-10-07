@@ -70,12 +70,12 @@ class FarmerServiceTest {
     public void test_mapper() throws JsonProcessingException {
         Garbage garbage = new Garbage();
         garbage.setName("tom");
-        log.warn("{}",garbage);
+        log.warn("{}", garbage);
         String str = mapper.writeValueAsString(garbage);
 
         log.warn(str);
-        Object garbage1 = mapper.readValue(str,Object.class);
-        log.warn("{}",garbage1);
+        Object garbage1 = mapper.readValue(str, Object.class);
+        log.warn("{}", garbage1);
 
     }
 
@@ -97,17 +97,18 @@ class FarmerServiceTest {
         list.add(garbageChoose);
         list.add(garbageChoose1);
 
-        farmerService.addFCOrder(order,list);
+        farmerService.addFCOrder(order, list);
 
 
     }
+
     @Test
     void fuck_code() throws JsonProcessingException {
         Optional<GarbageChoose> garbageChoose = chooseRepository.findById(1);
         GarbageChoose g = garbageChoose.get();
-        log.warn("{}",mapper.writeValueAsString(g));
+        log.warn("{}", mapper.writeValueAsString(g));
         BaseOrder baseOrder = orderRepository.getBaseOrderById(1);
-        log.warn("{}",mapper.writeValueAsString(baseOrder));
+        log.warn("{}", mapper.writeValueAsString(baseOrder));
         g.setBaseOrder(baseOrder);
         chooseRepository.save(g);
         log.warn("fuck the code");
@@ -123,12 +124,12 @@ class FarmerServiceTest {
         garbageChoose.setGarbage(garbage);
         garbageChoose1.setGarbage(garbage1);
 
-        log.warn("{}",mapper.writeValueAsString(garbageChoose));
+        log.warn("{}", mapper.writeValueAsString(garbageChoose));
         List<GarbageChoose> list = new ArrayList<>();
         list.add(garbageChoose);
         list.add(garbageChoose1);
 
-        log.warn("{}",mapper.writeValueAsString(list));
+        log.warn("{}", mapper.writeValueAsString(list));
 
         // 构造baseOrder
         BaseOrder baseOrder = new BaseOrder();

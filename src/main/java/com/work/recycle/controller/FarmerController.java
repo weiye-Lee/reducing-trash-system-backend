@@ -25,15 +25,8 @@ public class FarmerController {
     public CommonResult addFCOrder(@RequestBody BaseOrder baseOrder) {
         List<GarbageChoose> garbageChooses = baseOrder.getGarbageChooses();
         baseOrder.setGarbageChooses(null);
-        try {
-            farmerService.addFCOrder(baseOrder,garbageChooses);
-            log.warn(baseOrder.getRemark());
-            return CommonResult.success(null);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return CommonResult.failed();
-
+        farmerService.addFCOrder(baseOrder,garbageChooses);
+        return CommonResult.success(null);
     }
 
     @GetMapping("getScore")
