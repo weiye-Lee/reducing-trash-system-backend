@@ -37,16 +37,7 @@ public class FarmerService {
     public int getOrderTimes() {
         return fcOrderRepository.getFarmerFCOrderTimesById(uid);
     }
-
-
-    /**
-     * 添加一条农户预约记录
-     *
-     * @param order          基础订单信息
-     * @param garbageChooses 对应每条每条订单记录的
-     * @return the fc order
-     */
-
+    
     public void addFCOrder(BaseOrder order, List<GarbageChoose> garbageChooses) {
 
         ordersComponent.addOrder(order,garbageChooses, SwitchUtil.FCORDER);
