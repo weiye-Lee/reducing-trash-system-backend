@@ -43,6 +43,7 @@ public class FarmerService {
         ordersComponent.addOrder(order,garbageChooses, SwitchUtil.FCORDER);
     }
 
+
     public List<FCOrder> getOrders() {
 
         return fcOrderRepository.getFarmerFCOrdersById(uid);

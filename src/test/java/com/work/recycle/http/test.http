@@ -147,6 +147,7 @@ Accept: application/json
 ###
 GET http://localhost:8080/api/user/getGarbage
 Accept: application/json
+Authorization: 6358ed60c3f72d93f0594fe7f5b2474aa17067c0e5927c6138cd5554e0f90fbcf8c8212b8eec2d0bd4718ec95ec6cba0240ded7e377229a7f3c8ccd4ae7b993
 
 ###
 POST http://localhost:8080/api/user/sentAudhCode?phone=111
