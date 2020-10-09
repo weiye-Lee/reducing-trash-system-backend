@@ -27,12 +27,12 @@ class GarbageChooseRepositoryTest {
         // 测试级联操作choose保存garbage
 
         Garbage g = new Garbage();
-        Garbage g1 = new Garbage();
-        g.setName("");
+        // Garbage g1 = new Garbage();
+        g.setName("粉笔盒");
         GarbageChoose garbageChoose = new GarbageChoose();
-        GarbageChoose garbageChoose1 = new GarbageChoose();
+        // GarbageChoose garbageChoose1 = new GarbageChoose();
         garbageChoose.setGarbage(g);
-        garbageChoose1.setGarbage(g1);
+        // garbageChoose1.setGarbage(g1);
         garbageChoose.setAmount(666);
         chooseRepository.save(garbageChoose);
     }
