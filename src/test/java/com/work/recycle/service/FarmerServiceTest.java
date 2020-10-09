@@ -99,7 +99,6 @@ class FarmerServiceTest {
 
         farmerService.addFCOrder(order, list);
 
-
     }
 
     @Test
