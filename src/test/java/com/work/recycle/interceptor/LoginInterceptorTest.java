@@ -16,7 +16,7 @@ class LoginInterceptorTest {
     @Test
     void test_encrypt() {
         throw new HttpServerErrorException(
-                HttpStatus.ACCEPTED
+                HttpStatus.ACCEPTED,"不准"
         );
     }
 }
