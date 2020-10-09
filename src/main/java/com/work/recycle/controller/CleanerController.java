@@ -72,4 +72,9 @@ public class CleanerController {
     public CommonResult getOrderTimes() {
         return null;
     }
+
+    @GetMapping("getCleanerRank")
+    public CommonResult getCleanerRank() {
+        return null;
+    }
 }

@@ -30,7 +30,6 @@ public class DriverController {
         baseOrder.setGarbageChooses(null);
         driverService.checkCDOrder(baseOrder,garbageChooses);
         return CommonResult.success(null);
-
     }
 
 }

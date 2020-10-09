@@ -50,6 +50,11 @@ class FarmerRepositoryTest {
     void getFarmerById() throws JsonProcessingException {
         Farmer farmer = farmerRepository.getFarmerById(1);
         log.warn("{}",mapper.writeValueAsString(farmer));
+        Cleaner cleaner = farmer.getCleaner();
+        log.warn(cleaner.getUser().getName());
     }
 
+    @Test
+    void testGetFarmerById() {
+    }
 }

@@ -22,6 +22,7 @@ public class TransferStationController {
     @Autowired
     private TransferStationService transferStationService;
 
+
     @PostMapping("addDTOrder")
     public CommonResult addDTOrder(BaseOrder baseOrder) {
         List<GarbageChoose> garbageChooses = baseOrder.getGarbageChooses();

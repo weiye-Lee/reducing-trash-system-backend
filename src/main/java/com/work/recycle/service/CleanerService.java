@@ -1,10 +1,12 @@
 package com.work.recycle.service;
 
 import com.work.recycle.component.OrdersComponent;
+import com.work.recycle.component.RequestComponent;
 import com.work.recycle.entity.*;
 import com.work.recycle.exception.Asserts;
 import com.work.recycle.repository.*;
 import com.work.recycle.utils.SwitchUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,7 @@ import java.util.List;
  * The type Cleaner service.
  */
 @Service
+@Slf4j
 public class CleanerService {
     @Autowired
     private FCOrderRepository fcOrderRepository;
@@ -21,8 +24,8 @@ public class CleanerService {
     private BaseOrderRepository baseOrderRepository;
     @Autowired
     private OrdersComponent ordersComponent;
-
-    private int uid = 5;
+    @Autowired
+    private RequestComponent requestComponent;
 
     public int getFCOrderTime(int id) {
         return fcOrderRepository.getCleanerFCOrderTimesById(id);
@@ -57,6 +60,8 @@ public class CleanerService {
     }
 
     public List<FCOrder> getFCOrders() {
+        int uid = requestComponent.getUid();
+        log.warn("{}",uid);
         return fcOrderRepository.getCleanerFCOrdersById(uid);
     }
 

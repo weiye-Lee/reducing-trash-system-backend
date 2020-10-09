@@ -43,6 +43,8 @@ public class OrdersComponent {
     private BaseOrderRepository baseOrderRepository;
     @Autowired
     private DriverRepository driverRepository;
+    @Autowired
+    private RequestComponent requestComponent;
 
     // ----------- 仅用于生产环境下 ------------
     private static final int FARMERUID = 1;
@@ -97,58 +99,81 @@ public class OrdersComponent {
     }
 
     private void checkFCOrder(BaseOrder baseOrder,List<GarbageChoose> garbageChooses) {
+        int uid = requestComponent.getUid();
         FCOrder fcOrder = fcOrderRepository.getFCOrderById(baseOrder.getId());
-        Cleaner cleaner = cleanerRepository.getCleanerById(CLEANERUID);
+        Cleaner cleaner = cleanerRepository.getCleanerById(uid);
+
+        // 增加农户积分
+        Farmer farmer = fcOrder.getFarmer();
+        farmer.addScore(getScore(garbageChooses));
+        farmerRepository.save(farmer);
+
         fcOrder.setCleaner(cleaner);
         baseOrder.setScore(getScore(garbageChooses));
         baseOrderRepository.save(baseOrder);
     }
 
     private void checkCDOrder(BaseOrder baseOrder,List<GarbageChoose> garbageChooses) {
+        int uid = requestComponent.getUid();
         CDOrder cdOrder = cdOrderRepository.getCDOrderById(baseOrder.getId());
-        Driver driver = driverRepository.getDriverById(DRIVERUID);
+        Driver driver = driverRepository.getDriverById(uid);
+
+        // 增加保洁员积分
+        Cleaner cleaner = cdOrder.getCleaner();
+        cleaner.addScore(getScore(garbageChooses));
+        cleanerRepository.save(cleaner);
+
         cdOrder.setDriver(driver);
         baseOrder.setScore(getScore(garbageChooses));
         baseOrderRepository.save(baseOrder);
     }
 
     private void checkCROrder(BaseOrder baseOrder,List<GarbageChoose> garbageChooses) {
+        int uid = requestComponent.getUid();
         CROrder crOrder = crOrderRepository.getCROrderById(baseOrder.getId());
-        RecycleFirm recycleFirm = recycleFirmRepository.getRecycleFirmById(RECYCLEFIRMUID);
+        RecycleFirm recycleFirm = recycleFirmRepository.getRecycleFirmById(uid);
+
+
+        Cleaner cleaner = crOrder.getCleaner();
+        cleaner.addScore(getScore(garbageChooses));
+        cleanerRepository.save(cleaner);
+
         crOrder.setRecycleFirm(recycleFirm);
         baseOrder.setScore(getScore(garbageChooses));
         baseOrderRepository.save(baseOrder);
     }
 
     private void addFCOrder(BaseOrder baseOrder,List<GarbageChoose> garbageChooses) {
+        int uid = requestComponent.getUid();
         FCOrder fcOrder = new FCOrder();
-
-        // int uid = requestComponent.getUid();
-        Farmer farmer = farmerRepository.getFarmerById(FARMERUID);
+        Farmer farmer = farmerRepository.getFarmerById(uid);
+        Cleaner cleaner = farmer.getCleaner();
         baseOrder.setScore(getScore(garbageChooses));
         fcOrder.setBaseOrder(baseOrder);
         fcOrder.setFarmer(farmer);
-
+        fcOrder.setCleaner(cleaner);
         fcOrderRepository.save(fcOrder);
     }
 
 
     private void addCDOrder(BaseOrder baseOrder,List<GarbageChoose> garbageChooses) {
+        int uid = requestComponent.getUid();
         CDOrder cdOrder = new CDOrder();
-
-        // int CLEANERUID = requestComponent.getUid();
-        Cleaner cleaner = cleanerRepository.getCleanerById(CLEANERUID);
+        Cleaner cleaner = cleanerRepository.getCleanerById(uid);
+        Driver driver = cleaner.getDriver();
         baseOrder.setScore(getScore(garbageChooses));
         cdOrder.setBaseOrder(baseOrder);
         cdOrder.setCleaner(cleaner);
+        cdOrder.setDriver(driver);
 
         cdOrderRepository.save(cdOrder);
     }
 
     private void addDTOrder(BaseOrder baseOrder,List<GarbageChoose> garbageChooses) {
+        int uid = requestComponent.getUid();
         DTOrder dtOrder = new DTOrder();
 
-        TransferStation transferStation = transferStationRepository.getTransferStationById(TRANSFERSTATIONUID);
+        TransferStation transferStation = transferStationRepository.getTransferStationById(uid);
         baseOrder.setScore(getScore(garbageChooses));
         dtOrder.setBaseOrder(baseOrder);
         dtOrder.setTransferStation(transferStation);
@@ -157,9 +182,10 @@ public class OrdersComponent {
     }
 
     private void addCROrder(BaseOrder baseOrder,List<GarbageChoose> garbageChooses) {
+        int uid = requestComponent.getUid();
         CROrder crOrder = new CROrder();
 
-        RecycleFirm recycleFirm = recycleFirmRepository.getRecycleFirmById(RECYCLEFIRMUID);
+        RecycleFirm recycleFirm = recycleFirmRepository.getRecycleFirmById(uid);
         baseOrder.setScore(getScore(garbageChooses));
         crOrder.setBaseOrder(baseOrder);
         crOrder.setRecycleFirm(recycleFirm);
