@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 @Controller
-public class LoginInterceptor implements HandlerInterceptor {
+public class    LoginInterceptor implements HandlerInterceptor {
 
     @Autowired
     private EncryptComponent encrypt;
