@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 /**
  *使用heysky sms api提交一条文字短信的例子
  */
+// TODO 2020/10/12 : 在导入api-demo 包时候，tomcat依赖会发生冲突
 @Slf4j
 @Component
 public class AuthCodeComponent {

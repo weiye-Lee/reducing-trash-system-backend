@@ -16,7 +16,8 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequestMapping("api/farmer/")
-public class FarmerController {
+public class
+FarmerController {
     @Autowired
     private FarmerService farmerService;
 
@@ -39,9 +40,21 @@ public class FarmerController {
         return CommonResult.success(farmerService.getOrders());
     }
 
-    @GetMapping("getBaseOrder")
-    public CommonResult getBaseOrder(@Param("id") int id) {
-        return CommonResult.success(farmerService.getOrderInfo(id));
+
+    @GetMapping("getOrderTimes")
+    public CommonResult getOrderTimes() {
+        return CommonResult.success(farmerService.getOrderTimes());
+    }
+
+    @GetMapping("getBaseOrderById")
+    public CommonResult getBaseOrderById(@Param("id") int id) {
+        return CommonResult.success(farmerService.getBaseOrderById(id));
+    }
+
+    // TODO 2020/10/13 : 农户积分？提交次数？排行榜
+    @GetMapping("getRankList")
+    public CommonResult getRankList() {
+        return null;
     }
 
 }

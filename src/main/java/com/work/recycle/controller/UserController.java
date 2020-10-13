@@ -9,6 +9,7 @@ import com.work.recycle.component.RequestComponent;
 import com.work.recycle.entity.Garbage;
 import com.work.recycle.entity.User;
 import com.work.recycle.entity.UserRole;
+import com.work.recycle.exception.Asserts;
 import com.work.recycle.repository.UserRepository;
 import com.work.recycle.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +38,7 @@ public class UserController {
     @PostMapping("sentAuthCode")
     public Map sentAuthCode(@Param("phone") String phone, HttpServletResponse response) throws JsonProcessingException {
         String authcode = String.format("%06d", new Random().nextInt(1000000));
-        authCodeComponent.sentTextMsg(phone,authcode);
+        // authCodeComponent.sentTextMsg(phone,authcode);
         log.warn(authcode);
         // 创建包含验证码token
         MyToken token = new MyToken(authcode);

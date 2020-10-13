@@ -1,3 +1,29 @@
+GET http://localhost:8080/api/farmer/getOrderTimes
+Accept: application/json
+Authorization: 96a45160cb1db954294ecc22baba66cc8c2e1bac3023c735ae00877c5b3de0855ca53402b3284a1690309f8c369f1c5e596165042e390f0964ddb2cb3435fb21
+
+###
+GET http://localhost:8080/api/farmer/getScore
+Accept: application/json
+Authorization: 96a45160cb1db954294ecc22baba66cc8c2e1bac3023c735ae00877c5b3de0855ca53402b3284a1690309f8c369f1c5e596165042e390f0964ddb2cb3435fb21
+###
+POST http://localhost:8080/api/user/updateUserInfo
+Content-Type: application/json
+Authorization: 685636ef397549a3e086bdf314365d3f50d14531709a3e92cef67fbf0f80be69b5cff53db01a309b5481d436642a8f2c
+
+{
+  "id": 1,
+  "name": "weiye",
+  "sex": "MALE"
+}
+
+###
+GET http://localhost:8080/api/user/test
+Accept: application/json
+Authorization: 5636ef397549a3e086bdf314365d3f50d14531709a3e92cef67fbf0f80be69b5cff53db01a309b5481d436642a8f2c
+
+
+###
 GET http://localhost:8080/api/user/getGarbage
 Accept: application/json
 Authorization: 685636ef397549a3e086bdf314365d3f50d14531709a3e92cef67fbf0f80be69b5cff53db01a309b5481d436642a8f2c
@@ -152,8 +178,6 @@ Accept: application/json
 ###
 GET http://localhost:8080/api/user/getGarbage
 Accept: application/json
-Authorization: 6358ed60c3f72d93f0594fe7f5b2474aa17067c0e5927c6138cd5554e0f90fbcf8c8212b8eec2d0bd4718ec95ec6cba0240ded7e377229a7f3c8ccd4ae7b993
-
 ###
 POST http://localhost:8080/api/user/sentAudhCode?phone=111
 Content-Type: application/json
