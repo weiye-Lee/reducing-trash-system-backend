@@ -1,5 +1,6 @@
 package com.work.recycle.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,18 +15,19 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class User {
+
     public enum Sex {
         MALE, FEMALE
     }
+
     @Id
-    // 自增，可以通过uuid对其进行处理
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    //只能反序列化为java，不能序列化为json。也就是json返回不到前端
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private List<UserRole> roleList;
 
     @Column(length = 10)
@@ -40,6 +42,7 @@ public class User {
 
     private Sex sex;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<GoodsExchange> goodsExchanges;
 

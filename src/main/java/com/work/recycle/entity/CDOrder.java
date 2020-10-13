@@ -1,5 +1,6 @@
 package com.work.recycle.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,8 +17,9 @@ public class CDOrder {
     private Integer id;
 
     @OneToOne(cascade = CascadeType.PERSIST)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @MapsId
-    private Order order;
+    private BaseOrder baseOrder;
 
     @ManyToOne
     private Cleaner cleaner;

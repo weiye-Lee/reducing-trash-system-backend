@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface GarbageRepository extends BaseRepository<Garbage,Integer>{
 
-    @Query("select g.category,g.name,g.picture,g.score,g.unit from Garbage g where 1 = 1")
+    @Query("select g from Garbage g where 1 = 1")
     List<Garbage> getGarbage();
 
     @Query("select g from Garbage g where g.id = :id")

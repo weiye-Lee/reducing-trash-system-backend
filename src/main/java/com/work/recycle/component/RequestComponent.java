@@ -22,9 +22,9 @@ public class RequestComponent {
                 .getAttribute(MyToken.ROLE, RequestAttributes.SCOPE_REQUEST);
     }
 
-    public String getAutoCode() {
+    public String getAuthCode() {
         return (String)RequestContextHolder.currentRequestAttributes()
-                .getAttribute(MyToken.AUTHORIZATION,RequestAttributes.SCOPE_REQUEST);
+                .getAttribute(MyToken.AUTHCODE,RequestAttributes.SCOPE_REQUEST);
     }
 
 }

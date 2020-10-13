@@ -1,13 +1,11 @@
 package com.work.recycle.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -32,11 +30,9 @@ public class Garbage {
     @Column(length = 10)
     private String unit; // 计量单位
 
-    @OneToMany(mappedBy = "garbage")
+    @OneToMany(mappedBy = "garbage",cascade = CascadeType.PERSIST)
+    @JsonIgnore
     private List<GarbageChoose> garbageChooseList;
-
-    @Min(0)
-    private Integer amount = 0; // 数量
 
     private String picture; // 垃圾的图片
 

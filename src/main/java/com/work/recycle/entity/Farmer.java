@@ -1,5 +1,7 @@
 package com.work.recycle.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,12 +32,15 @@ public class Farmer {
     private Integer score = 0;
 
     @OneToMany(mappedBy = "farmer")
+    @JsonIgnore
     private List<FarmerFamily> families;
 
     @OneToMany(mappedBy = "farmer")
+    @JsonIgnore
     private List<FCOrder> fcOrders;
 
     @ManyToOne
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Cleaner cleaner;
 
     @Column(columnDefinition = "timestamp default current_timestamp",
@@ -48,5 +53,15 @@ public class Farmer {
             insertable = false,
             updatable = false)
     private LocalDateTime updateTime;
+
+    public void addScore(int score) {
+        this.score += score;
+    }
+
+    public void reduceScore(int score) {
+        if ((this.score -= score) >= 0) {
+            this.score -= score;
+        }
+    }
 
 }

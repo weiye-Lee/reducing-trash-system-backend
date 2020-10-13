@@ -19,6 +19,9 @@ public class Driver {
     @MapsId
     private User user;
 
+    @OneToMany(mappedBy = "driver")
+    private List<Cleaner> cleaners;
+
     @Column(length = 40)
     private String serviceArea;
 

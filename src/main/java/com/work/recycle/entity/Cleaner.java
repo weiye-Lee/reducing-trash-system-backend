@@ -1,8 +1,11 @@
 package com.work.recycle.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -13,6 +16,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Slf4j
 public class Cleaner {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +32,12 @@ public class Cleaner {
     private String serviceArea;
 
     @OneToMany(mappedBy = "cleaner")
+    @JsonIgnore
     private List<Farmer> farmers;
+
+    @ManyToOne
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Driver driver;
 
     @OneToMany(mappedBy = "cleaner")
     private List<FCOrder> fcOrders;
@@ -49,4 +58,16 @@ public class Cleaner {
             insertable = false,
             updatable = false)
     private LocalDateTime updateTime;
+
+    public void addScore(int score) {
+        log.warn(this.score.toString());
+        this.score += score;
+    }
+
+    public void reduceScore(int score) {
+        if ((this.score -= score) >= 0) {
+            this.score -= score;
+        }
+    }
+
 }

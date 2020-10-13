@@ -21,4 +21,7 @@ public interface FCOrderRepository extends BaseRepository<FCOrder,Integer> {
 
     @Query("select fc from FCOrder fc where fc.cleaner.id = :id")
     List<FCOrder> getCleanerFCOrdersById(@Param("id") int id);
+
+    @Query("select fc from FCOrder fc where fc.id = :id")
+    FCOrder getFCOrderById(@Param("id") int id);
 }
