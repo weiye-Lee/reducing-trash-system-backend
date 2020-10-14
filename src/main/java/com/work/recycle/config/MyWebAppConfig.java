@@ -3,6 +3,7 @@ package com.work.recycle.config;
 import com.work.recycle.interceptor.LoginInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -16,7 +17,7 @@ public class MyWebAppConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
 
         registry.addInterceptor(loginInterceptor)
-                .addPathPatterns("/api/*")
+                .addPathPatterns("/api/**")
                 .excludePathPatterns("/api/user/sentAuthCode");
     }
 }

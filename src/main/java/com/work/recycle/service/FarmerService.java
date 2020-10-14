@@ -1,6 +1,7 @@
 package com.work.recycle.service;
 
 import com.work.recycle.component.OrdersComponent;
+import com.work.recycle.component.RequestComponent;
 import com.work.recycle.entity.*;
 import com.work.recycle.repository.*;
 import com.work.recycle.utils.SwitchUtil;
@@ -24,30 +25,32 @@ public class FarmerService {
     private BaseOrderRepository baseOrderRepository;
     @Autowired
     private OrdersComponent ordersComponent;
+    @Autowired
+    private RequestComponent requestComponent;
 
-
-    private int uid = 1;
 
     public int getScore() {
+        int uid = requestComponent.getUid();
         return farmerRepository.getScoreById(uid);
     }
 
     public int getOrderTimes() {
+        int uid = requestComponent.getUid();
         return fcOrderRepository.getFarmerFCOrderTimesById(uid);
     }
 
-    public void addFCOrder(BaseOrder order, List<GarbageChoose> garbageChooses) {
+        public void addFCOrder(BaseOrder order, List<GarbageChoose> garbageChooses) {
 
-        ordersComponent.addOrder(order,garbageChooses, SwitchUtil.FCORDER);
+        ordersComponent.addOrder(order,garbageChooses,SwitchUtil.FCORDER);
     }
 
 
     public List<FCOrder> getOrders() {
-
+        int uid = requestComponent.getUid();
         return fcOrderRepository.getFarmerFCOrdersById(uid);
     }
 
-    public BaseOrder getOrderInfo(int id) {
+    public BaseOrder getBaseOrderById(int id) {
         return baseOrderRepository.getBaseOrderById(id);
     }
 }

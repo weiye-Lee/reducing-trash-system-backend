@@ -25,16 +25,28 @@ public class CleanerController {
     @Autowired
     private ObjectMapper mapper;
 
-    @GetMapping("getFCOrders")
-    public CommonResult getFCOrders() {
+    /**
+     * 获得农户提交待审核订单
+     *
+     * @return the fc orders checking
+     */
+    @GetMapping("getFCOrders/checking")
+    public CommonResult getFCOrdersChecking() {
         return CommonResult.success(cleanerService.getFCOrders());
+    }
+
+
+    // TODO 2020/10/14 :  获取审核完成订单
+
+    @GetMapping("getFCOrders/checked")
+    public CommonResult getFCOrdersChecker() {
+        return CommonResult.success(null);
     }
 
     @PostMapping("receive/order/{id}")
     public CommonResult receiveFCOrder(@PathVariable("id") int id) {
         return CommonResult.success(cleanerService.receiveFCOrder(id));
     }
-
     @PostMapping("check/order")
     public CommonResult checkFCOrder(@RequestBody FCOrder fcOrder) {
         try {
@@ -65,16 +77,18 @@ public class CleanerController {
 
     @GetMapping("getScore")
     public CommonResult getScore() {
-        return null;
+        return CommonResult.success(cleanerService.getScore());
     }
 
     @GetMapping("getOrderTimes")
     public CommonResult getOrderTimes() {
-        return null;
+        return CommonResult.success(cleanerService.getFCOrderTimes());
     }
 
-    @GetMapping("getCleanerRank")
-    public CommonResult getCleanerRank() {
+
+    // TODO 2020/10/14 : 获取保洁员排排行
+    @GetMapping("getRankList")
+    public CommonResult getRankList() {
         return null;
     }
 }
