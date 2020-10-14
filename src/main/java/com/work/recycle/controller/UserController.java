@@ -49,6 +49,7 @@ public class UserController {
         //     return CommonResult.failed(ResultCode.FORBIDDEN);
         // }
         String authcode = String.format("%06d", new Random().nextInt(1000000));
+        // 是否使用向手机发送验证码的接口~~~
         // authCodeComponent.sentTextMsg(phone,authcode);
         log.warn(authcode);
         String auth = encrypt.encryptToken(new MyToken(authcode));
