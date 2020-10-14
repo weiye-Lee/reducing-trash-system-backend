@@ -24,7 +24,7 @@ class EncryptComponentTest {
 
     @Test
     void decryptToken() throws JsonProcessingException {
-        String token = "a1d0dd5621f964b0308b6f29cea0e29e17cc621cbd3c93c0cdc7a9be9184bce69f4cc5f3b424edaca06930c88b5a315732b919860d869f568137e605c50bc80f";
+        String token = "a7b45ad346bd01b1ad9798751f3ac59ff5256936e24d8d6fb42c78b8f9ad08a51f8aa76d62977d71bd3cb520800c7e700e9020e2878342c20c5e6139c6b89af7";
         MyToken myToken = encryptComponent.decryptToken(token);
 
         log.warn(mapper.writeValueAsString(myToken));

@@ -15,7 +15,7 @@ public class RequestComponent {
     public int getUid(){
         return (int)RequestContextHolder.currentRequestAttributes()
                 .getAttribute(MyToken.UID, RequestAttributes.SCOPE_REQUEST );
-        //在请求范围内获取MyToken.UID
+//        在请求范围内获取MyToken.UID
     }
     public List<UserRole.Role> getRole(){
         return (List<UserRole.Role>) RequestContextHolder.currentRequestAttributes()

@@ -56,6 +56,7 @@ public class UserController {
             String auth = encrypt.encryptToken(token);
             response.setHeader(MyToken.AUTHORIZATION,auth);
             return Map.of("code",List.of(UserRole.Role.CLEANER,UserRole.Role.FARMER));
+
         }
 
         else return Map.of("code","wrong");
@@ -77,4 +78,20 @@ public class UserController {
         return CommonResult.success(userService.getFCOrders());
     }
 
+    /**
+     * 根据token中id获取用户基本信息
+     * @return user
+     */
+    @GetMapping("index")
+    public Map getUser(){
+        log.debug("{}", requestComponent.getUid());
+        User user = userService.getUserById(requestComponent.getUid());
+        if(user!=null){
+            return Map.of("user",user);
+        }
+        else{
+            return Map.of("{}",null);
+        }
+
+    }
 }

@@ -16,7 +16,7 @@ public class MyWebAppConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
 
         registry.addInterceptor(loginInterceptor)
-                .addPathPatterns("/api/*")
+                .addPathPatterns("/api/**")
                 .excludePathPatterns("/api/user/sentAuthCode");
     }
 }

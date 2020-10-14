@@ -25,9 +25,9 @@ public class UserService {
     @Autowired
     private RequestComponent requestComponent;
 
-    // public User getUserById(int id) {
-    //     return userRepository.getUserById(id);
-    // }
+     public User getUserById(int id) {
+         return userRepository.getUserById(id);
+     }
 
     public List<Garbage> getGarbage() {
         return garbageRepository.getGarbage();
