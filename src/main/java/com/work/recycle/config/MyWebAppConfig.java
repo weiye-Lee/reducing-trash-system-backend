@@ -20,9 +20,4 @@ public class MyWebAppConfig implements WebMvcConfigurer {
                 .addPathPatterns("/api/**")
                 .excludePathPatterns("/api/user/sentAuthCode");
     }
-
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**").allowedOrigins("*").allowedMethods("GET","POST","PUT","OPTIONS","DELETE","PATCH").allowCredentials(true).maxAge(3600);
-    }
 }

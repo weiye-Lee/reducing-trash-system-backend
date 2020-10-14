@@ -2,6 +2,8 @@ package com.work.recycle.component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.work.recycle.common.ResultCode;
+import com.work.recycle.exception.ApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -42,7 +44,7 @@ public class EncryptComponent {
             return encryptor.encrypt(json);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "服务器端错误");
+            throw new ApiException(ResultCode.FAILED);
         }
     }
 
@@ -56,7 +58,7 @@ public class EncryptComponent {
             String json = encryptor.decrypt(auth);
             return objectMapper.readValue(json,MyToken.class);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "无权限吧");
+            throw new ApiException(ResultCode.FORBIDDEN);
         }
     }
 

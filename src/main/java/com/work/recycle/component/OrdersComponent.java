@@ -1,9 +1,12 @@
 package com.work.recycle.component;
 
+import com.work.recycle.common.ResultCode;
 import com.work.recycle.entity.*;
+import com.work.recycle.exception.ApiException;
 import com.work.recycle.exception.Asserts;
 import com.work.recycle.repository.*;
 import com.work.recycle.utils.SwitchUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +20,7 @@ import java.util.Optional;
  * 接下来可以用泛型去简化代码
  */
 @Component
+@Slf4j
 public class OrdersComponent {
     @Autowired
     private FarmerRepository farmerRepository;
@@ -29,7 +33,7 @@ public class OrdersComponent {
     @Autowired
     private CleanerRepository cleanerRepository;
     @Autowired
-    private CDOrderRepository  cdOrderRepository;
+    private CDOrderRepository cdOrderRepository;
     @Autowired
     private TransferStationRepository transferStationRepository;
     @Autowired
@@ -60,36 +64,19 @@ public class OrdersComponent {
      * @param garbageChooses the garbage chooses
      * @param opt            switch 的条件
      */
-    public void addOrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses,String opt) {
+    public void addOrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses, String opt) {
         switch (opt) {
-            case SwitchUtil.CDORDER :
-                addCDOrder(baseOrder,garbageChooses);
-                break;
-            case SwitchUtil.FCORDER :
-                addFCOrder(baseOrder,garbageChooses);
-                break;
-            case SwitchUtil.CRORDER :
-                addCROrder(baseOrder,garbageChooses);
-                break;
-            case SwitchUtil.DTORDER :
-                addDTOrder(baseOrder,garbageChooses);
-                break;
-        }
-
-        addBaseOrderGarbageList(baseOrder,garbageChooses);
-
-    }
-
-    public void checkOrder(BaseOrder baseOrder,List<GarbageChoose> garbageChooses,String opt) {
-        switch (opt) {
-            case SwitchUtil.FCORDER:
-                checkFCOrder(baseOrder,garbageChooses);
-                break;
             case SwitchUtil.CDORDER:
-                checkCDOrder(baseOrder,garbageChooses);
+                addCDOrder(baseOrder, garbageChooses);
+                break;
+            case SwitchUtil.FCORDER:
+                addFCOrder(baseOrder, garbageChooses);
                 break;
             case SwitchUtil.CRORDER:
-                checkCROrder(baseOrder,garbageChooses);
+                addCROrder(baseOrder, garbageChooses);
+                break;
+            case SwitchUtil.DTORDER:
+                addDTOrder(baseOrder, garbageChooses);
                 break;
         }
 
@@ -97,7 +84,24 @@ public class OrdersComponent {
 
     }
 
-    private void checkFCOrder(BaseOrder baseOrder,List<GarbageChoose> garbageChooses) {
+    public void checkOrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses, String opt) {
+        switch (opt) {
+            case SwitchUtil.FCORDER:
+                checkFCOrder(baseOrder, garbageChooses);
+                break;
+            case SwitchUtil.CDORDER:
+                checkCDOrder(baseOrder, garbageChooses);
+                break;
+            case SwitchUtil.CRORDER:
+                checkCROrder(baseOrder, garbageChooses);
+                break;
+        }
+
+        addBaseOrderGarbageList(baseOrder, garbageChooses);
+
+    }
+
+    private void checkFCOrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
         int uid = requestComponent.getUid();
         FCOrder fcOrder = fcOrderRepository.getFCOrderById(baseOrder.getId());
         Cleaner cleaner = cleanerRepository.getCleanerById(uid);
@@ -112,7 +116,7 @@ public class OrdersComponent {
         baseOrderRepository.save(baseOrder);
     }
 
-    private void checkCDOrder(BaseOrder baseOrder,List<GarbageChoose> garbageChooses) {
+    private void checkCDOrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
         int uid = requestComponent.getUid();
         CDOrder cdOrder = cdOrderRepository.getCDOrderById(baseOrder.getId());
         Driver driver = driverRepository.getDriverById(uid);
@@ -127,7 +131,7 @@ public class OrdersComponent {
         baseOrderRepository.save(baseOrder);
     }
 
-    private void checkCROrder(BaseOrder baseOrder,List<GarbageChoose> garbageChooses) {
+    private void checkCROrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
         int uid = requestComponent.getUid();
         CROrder crOrder = crOrderRepository.getCROrderById(baseOrder.getId());
         RecycleFirm recycleFirm = recycleFirmRepository.getRecycleFirmById(uid);
@@ -142,8 +146,9 @@ public class OrdersComponent {
         baseOrderRepository.save(baseOrder);
     }
 
-    private void addFCOrder(BaseOrder baseOrder,List<GarbageChoose> garbageChooses) {
+    private void addFCOrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
         int uid = requestComponent.getUid();
+        log.warn("{}", uid);
         FCOrder fcOrder = new FCOrder();
         Farmer farmer = farmerRepository.getFarmerById(uid);
         Cleaner cleaner = farmer.getCleaner();
@@ -155,7 +160,7 @@ public class OrdersComponent {
     }
 
 
-    private void addCDOrder(BaseOrder baseOrder,List<GarbageChoose> garbageChooses) {
+    private void addCDOrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
         int uid = requestComponent.getUid();
         CDOrder cdOrder = new CDOrder();
         Cleaner cleaner = cleanerRepository.getCleanerById(uid);
@@ -168,7 +173,7 @@ public class OrdersComponent {
         cdOrderRepository.save(cdOrder);
     }
 
-    private void addDTOrder(BaseOrder baseOrder,List<GarbageChoose> garbageChooses) {
+    private void addDTOrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
         int uid = requestComponent.getUid();
         DTOrder dtOrder = new DTOrder();
 
@@ -180,7 +185,7 @@ public class OrdersComponent {
         dtOrderRepository.save(dtOrder);
     }
 
-    private void addCROrder(BaseOrder baseOrder,List<GarbageChoose> garbageChooses) {
+    private void addCROrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
         int uid = requestComponent.getUid();
         CROrder crOrder = new CROrder();
 
@@ -194,31 +199,61 @@ public class OrdersComponent {
 
     }
 
-    // 最后写到这里，将getscore方法剥离出来，但是想到会不会影响到check和receive方法
     private int getScore(List<GarbageChoose> garbageChooses) {
-        Iterator<GarbageChoose> iterator = garbageChooses.iterator();
-        int score = 0;
-        while (iterator.hasNext()) {
-            GarbageChoose choose = iterator.next();
-            int id = choose.getGarbage().getId();
-            Garbage garbage = garbageRepository.getGarbageById(id);
-            score += choose.getAmount() * garbage.getScore();
+        try {
+            Iterator<GarbageChoose> iterator = garbageChooses.iterator();
+            int score = 0;
+            while (iterator.hasNext()) {
+                GarbageChoose choose = iterator.next();
+                int id = choose.getGarbage().getId();
+                Garbage garbage = garbageRepository.getGarbageById(id);
+                score += choose.getAmount() * garbage.getScore();
 
+            }
+            return score;
         }
-        return score;
+        catch (NullPointerException e) {
+            throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
+        }
+
     }
 
 
-    private void addBaseOrderGarbageList(BaseOrder baseOrder,List<GarbageChoose> garbageChooses) {
+    /*
+    private void addBaseOrderGarbageList(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
         garbageChooses.forEach(each -> {
             int garbageId = each.getGarbage().getId();
             Optional<Garbage> garbage = garbageRepository.findById(garbageId);
             garbage.ifPresentOrElse(each::setGarbage
-                    , () -> Asserts.fail("数据集错误"));
+                    , () -> {
+                        throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
+                    });
             each.setBaseOrder(baseOrder);
             chooseRepository.save(each);
         });
     }
 
+     */
+
+    // TODO : 2020/10/13 : 重构插入基础垃圾集合方法
+    private void addBaseOrderGarbageList(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
+        Optional.ofNullable(garbageChooses)
+                .ifPresent(item -> item.forEach(each -> garbageRepository.findById(
+                        Optional.ofNullable(each)
+                                .map(GarbageChoose::getGarbage)
+                                .map(Garbage::getId)
+                                .orElseGet(() -> {
+                                    throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
+                                })
+                        ).ifPresentOrElse(garbage -> {
+                            each.setGarbage(garbage);
+                            each.setBaseOrder(baseOrder);
+                            chooseRepository.save(each);
+                        }
+                        , () -> {
+                            throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
+                        }))
+                );
+    }
 
 }

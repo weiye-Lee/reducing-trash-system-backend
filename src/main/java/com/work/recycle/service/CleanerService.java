@@ -26,9 +26,12 @@ public class CleanerService {
     private OrdersComponent ordersComponent;
     @Autowired
     private RequestComponent requestComponent;
+    @Autowired
+    private CleanerRepository cleanerRepository;
 
-    public int getFCOrderTime(int id) {
-        return fcOrderRepository.getCleanerFCOrderTimesById(id);
+    public int getFCOrderTimes() {
+        int uid = requestComponent.getUid();
+        return fcOrderRepository.getCleanerFCOrderTimesById(uid);
     }
 
     // 审核农户订单
@@ -63,6 +66,11 @@ public class CleanerService {
         int uid = requestComponent.getUid();
         log.warn("{}",uid);
         return fcOrderRepository.getCleanerFCOrdersById(uid);
+    }
+
+    public int getScore() {
+        int uid = requestComponent.getUid();
+        return cleanerRepository.getScoreById(uid);
     }
 
 }

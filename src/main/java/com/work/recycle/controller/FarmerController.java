@@ -2,6 +2,7 @@ package com.work.recycle.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.work.recycle.common.CommonResult;
+import com.work.recycle.component.RequestComponent;
 import com.work.recycle.entity.BaseOrder;
 import com.work.recycle.entity.FCOrder;
 import com.work.recycle.entity.GarbageChoose;
@@ -20,6 +21,8 @@ public class
 FarmerController {
     @Autowired
     private FarmerService farmerService;
+    @Autowired
+    private RequestComponent requestComponent;
 
 
     @PostMapping("addFCOrder")
@@ -56,5 +59,4 @@ FarmerController {
     public CommonResult getRankList() {
         return null;
     }
-
 }
