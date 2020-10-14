@@ -8,6 +8,7 @@ import javax.persistence.*;
 @Entity
 @Data
 @NoArgsConstructor
+// TODO 2020/10/14 : 修改用户实体，将角色属性加入到用户表中
 public class UserRole {
     @Id
     // 自增，可以通过uuid对其进行处理

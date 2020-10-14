@@ -46,13 +46,27 @@ class EncryptComponentTest {
 
 
             cleaner
-            d6358ed60c3f72d93f0594fe7f5b2474aa17067c0e5927c6138cd5554e0f90fbcf8c8212b8eec2d0bd4718ec95ec6cba0240ded7e377229a7f3c8ccd4ae7b993
-
+            6cc9b3328629c0569d43ea63b0800c3bb11ad1bea6357dd9f9fa2b2faed48dac6777e55db29d97b542838358fff6c16124b0c5be0a686f41b9cba1dad5fa3e8b
 
             driver
             54f92eec9d35f7c1c82957373ef7d3928f5c0dec1b2ffba46a9c5067282890781413c09263428887eaadfdf215fb0a884ed56ff4ebeece73b0349ea4c1341f2f
 
 
          */
+    }
+
+    @Test
+    void test_encrypt() {
+        String auth = "96a45160cb1db954294ecc22baba66cc8c2e1bac3023c735ae00877c5b3de0855ca53402b3284a1690309f8c369f1c5e596165042e390f0964ddb2cb3435fb21";
+        MyToken myToken = encryptComponent.decryptToken(auth);
+        log.warn("{}",myToken.getUid());
+
+    }
+
+    @Test
+    void mkr_cleanerToken() {
+        MyToken myToken = new MyToken("0",UserRole.Role.CLEANER,2);
+        String auth = encryptComponent.encryptToken(myToken);
+        log.warn(auth);
     }
 }

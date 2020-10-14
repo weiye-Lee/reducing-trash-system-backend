@@ -2,6 +2,7 @@ package com.work.recycle.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.work.recycle.common.CommonResult;
+import com.work.recycle.common.ResultCode;
 import com.work.recycle.component.AuthCodeComponent;
 import com.work.recycle.component.EncryptComponent;
 import com.work.recycle.component.MyToken;
@@ -9,8 +10,10 @@ import com.work.recycle.component.RequestComponent;
 import com.work.recycle.entity.Garbage;
 import com.work.recycle.entity.User;
 import com.work.recycle.entity.UserRole;
+import com.work.recycle.exception.Asserts;
 import com.work.recycle.repository.UserRepository;
 import com.work.recycle.service.UserService;
+import com.work.recycle.utils.PhoneUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -35,19 +38,25 @@ public class UserController {
     @Autowired
     private RequestComponent requestComponent;
     @PostMapping("sentAuthCode")
-    public Map sentAuthCode(@Param("phone") String phone, HttpServletResponse response) throws JsonProcessingException {
+    public CommonResult sentAuthCode(@Param("phone") String phone, HttpServletResponse response) throws JsonProcessingException {
+
+        // TODO 2020/10/14 : 手机号验证合法性
+        // 手机号不合法
+        // if (!PhoneUtil.isMobileNO(phone)) {
+        //     return CommonResult.failed(ResultCode.FAILED);
+        // }
+        // if (userService.getUserByPhone(phone) == null) {
+        //     return CommonResult.failed(ResultCode.FORBIDDEN);
+        // }
         String authcode = String.format("%06d", new Random().nextInt(1000000));
-        authCodeComponent.sentTextMsg(phone,authcode);
+        // authCodeComponent.sentTextMsg(phone,authcode);
         log.warn(authcode);
-        // 创建包含验证码token
-        MyToken token = new MyToken(authcode);
-        log.warn(token.toString());
-        String auth = encrypt.encryptToken(token);
-        response.setHeader(MyToken.AUTHORIZATION, auth);//以键值对形式放入头中
-        return Map.of("code","返回角色集合列表");
+        String auth = encrypt.encryptToken(new MyToken(authcode));
+        response.setHeader(MyToken.AUTHORIZATION, auth);
+        return CommonResult.success(Map.of("code",phone));
     }
     @PostMapping("checkAuthCode")
-    public Map checkAuthCode(@Param("code") String code,HttpServletResponse response) {
+    public CommonResult checkAuthCode(@Param("code") String code,HttpServletResponse response) {
         log.warn(code);
         log.warn(requestComponent.getAuthCode());
         if (code.equals(requestComponent.getAuthCode())) {
@@ -55,11 +64,10 @@ public class UserController {
             MyToken token = new MyToken(uid);
             String auth = encrypt.encryptToken(token);
             response.setHeader(MyToken.AUTHORIZATION,auth);
-            return Map.of("code",List.of(UserRole.Role.CLEANER,UserRole.Role.FARMER));
-
+            return CommonResult.success(Map.of("code",List.of(UserRole.Role.CLEANER,UserRole.Role.FARMER)));
         }
 
-        else return Map.of("code","wrong");
+        else return CommonResult.failed(ResultCode.FORBIDDEN);
     }
 
     @GetMapping("getGarbage")
