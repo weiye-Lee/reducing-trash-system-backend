@@ -24,11 +24,11 @@ public class Garbage {
 
     @Column(length = 40)
     private String category; // 种类（可回收垃圾）
-    
+
     @Column(length = 40)
     private String type; // 种类 （不可回收垃圾）
 
-    private Integer score = 0; // 积分
+    private double score = 0; // 积分
 
     @Column(length = 10)
     private String unit; // 计量单位

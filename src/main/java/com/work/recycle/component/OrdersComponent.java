@@ -113,6 +113,9 @@ public class OrdersComponent {
         farmerRepository.save(farmer);
 
         fcOrder.setCleaner(cleaner);
+
+        // TODO 2020/10/15 ：修复bug
+
         baseOrder.setScore(getScore(garbageChooses));
         baseOrderRepository.save(baseOrder);
     }
