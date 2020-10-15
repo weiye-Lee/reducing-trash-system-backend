@@ -25,7 +25,6 @@ public class InitComponent implements InitializingBean {
     private UserService userService;
     @Override
     public void afterPropertiesSet() throws Exception {
-        // TODO 2020/10/15 : 项目初始化
 
         User u = userService.getUserByPhone("13050496540");
         if (u == null) {

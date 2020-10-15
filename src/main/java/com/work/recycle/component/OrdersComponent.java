@@ -235,7 +235,6 @@ public class OrdersComponent {
 
      */
 
-    // TODO : 2020/10/13 : 重构插入基础垃圾集合方法
     private void addBaseOrderGarbageList(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
         Optional.ofNullable(garbageChooses)
                 .ifPresent(item -> item.forEach(each -> garbageRepository.findById(

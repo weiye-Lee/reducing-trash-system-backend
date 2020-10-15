@@ -1,6 +1,7 @@
 package com.work.recycle.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.sun.xml.bind.v2.TODO;
 import com.work.recycle.common.CommonResult;
 import com.work.recycle.common.ResultCode;
 import com.work.recycle.component.AuthCodeComponent;
@@ -9,6 +10,7 @@ import com.work.recycle.component.MyToken;
 import com.work.recycle.component.RequestComponent;
 import com.work.recycle.entity.User;
 import com.work.recycle.service.UserService;
+import com.work.recycle.utils.PhoneUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -31,38 +33,42 @@ public class UserController {
     private AuthCodeComponent authCodeComponent;
     @Autowired
     private RequestComponent requestComponent;
-    @PostMapping("sentAuthCode")
-    public CommonResult sentAuthCode(@Param("phone") String phone, HttpServletResponse response) throws JsonProcessingException {
 
-        // TODO 2020/10/14 : 手机号验证合法性
-        // 手机号不合法
-        // if (!PhoneUtil.isMobileNO(phone)) {
-        //     return CommonResult.failed(ResultCode.FAILED);
-        // }
-        // if (userService.getUserByPhone(phone) == null) {
-        //     return CommonResult.failed(ResultCode.FORBIDDEN);
-        // }
+    /**
+     * 验证码发送接口
+     *
+     * @param phone    用户手机号
+     * @param response token ：验证码 uid （不包含uid是判断为完成登录和登录完成的标准）
+     * @return the common result
+     */
+    @PostMapping("sentAuthCode")
+    public CommonResult sentAuthCode(@Param("phone") String phone, HttpServletResponse response) {
+
+        if (!PhoneUtil.isMobileNO(phone)) {
+            return CommonResult.failed(ResultCode.VALIDATE_FAILED);
+        }
+        User user = userService.getUserByPhone(phone);
+        if (user == null) {
+            return CommonResult.failed(ResultCode.FORBIDDEN);
+        }
         String authcode = String.format("%06d", new Random().nextInt(1000000));
         // 是否使用向手机发送验证码的接口~~~
         // authCodeComponent.sentTextMsg(phone,authcode);
         log.warn(authcode);
-        String auth = encrypt.encryptToken(new MyToken(authcode));
+        String auth = encrypt.encryptToken(new MyToken(authcode, user.getId()));
         response.setHeader(MyToken.AUTHORIZATION, auth);
-        return CommonResult.success(Map.of("code",phone));
+        return CommonResult.success(Map.of("phone", phone));
     }
     @PostMapping("checkAuthCode")
-    public CommonResult checkAuthCode(@Param("code") String code,HttpServletResponse response) {
+    public CommonResult checkAuthCode(@Param("code") String code, HttpServletResponse response) {
         log.warn(code);
         log.warn(requestComponent.getAuthCode());
         if (code.equals(requestComponent.getAuthCode())) {
-            int uid = 1; // 通过手机号查询用户表获得uid
-            MyToken token = new MyToken(uid);
-            String auth = encrypt.encryptToken(token);
-            response.setHeader(MyToken.AUTHORIZATION,auth);
-            return CommonResult.success(Map.of("code",List.of(User.Role.CLEANER,User.Role.FARMER)));
-        }
-
-        else return CommonResult.failed(ResultCode.FORBIDDEN);
+            User user = userService.getUserById(requestComponent.getUid());
+            String auth = encrypt.encryptToken(new MyToken(user.getRole(),user.getId()));
+            response.setHeader(MyToken.AUTHORIZATION, auth);
+            return CommonResult.success(Map.of("user", user));
+        } else return CommonResult.failed(ResultCode.FORBIDDEN);
     }
 
     @GetMapping("getGarbage")
@@ -83,17 +89,17 @@ public class UserController {
 
     /**
      * 根据token中id获取用户基本信息
+     *
      * @return user
      */
     @GetMapping("index")
-    public Map getUser(){
+    public Map getUser() {
         log.debug("{}", requestComponent.getUid());
         User user = userService.getUserById(requestComponent.getUid());
-        if(user!=null){
-            return Map.of("user",user);
-        }
-        else{
-            return Map.of("{}",null);
+        if (user != null) {
+            return Map.of("user", user);
+        } else {
+            return Map.of("{}", null);
         }
 
     }

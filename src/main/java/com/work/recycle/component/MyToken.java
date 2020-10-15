@@ -24,7 +24,17 @@ public class MyToken implements Serializable {
         this.authcode = authcode;
     }
 
+    public MyToken(String authcode,Integer uid) {
+        this.authcode = authcode;
+        this.uid = uid;
+    }
+
     public MyToken(Integer uid) {
+        this.uid = uid;
+    }
+
+    public MyToken(User.Role role,Integer uid) {
+        this.role = role;
         this.uid = uid;
     }
 }
