@@ -33,4 +33,9 @@ class UserRepositoryTest {
         userRepository.save(user);
     }
 
+    @Test
+    void getUserByPhoneNumber() throws JsonProcessingException {
+        User user = userRepository.getUserByPhoneNumber("13050496540");
+        log.warn(mapper.writeValueAsString(user));
+    }
 }

@@ -15,4 +15,7 @@ public interface CleanerRepository extends BaseRepository<Cleaner,Integer>{
     @Query("select c.score from Cleaner c where c.id = :id")
     int getScoreById(@Param("id") int id);
 
+    @Query("select c from Cleaner c where c.user.phoneNumber = :phoneNumber")
+    Cleaner getCleanerByPhoneNumber(@Param("phoneNumber") String phoneNumber);
+
 }

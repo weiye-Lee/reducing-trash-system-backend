@@ -10,4 +10,7 @@ public interface DriverRepository extends BaseRepository<Driver,Integer> {
 
     @Query("select d from Driver d where d.id = :id")
     Driver getDriverById(@Param("id") int id);
+
+    @Query("select d from Driver d where d.user.phoneNumber = :phoneNumber")
+    Driver getDriverByPhoneNumber(@Param("phoneNumber") String phoneNumber);
 }

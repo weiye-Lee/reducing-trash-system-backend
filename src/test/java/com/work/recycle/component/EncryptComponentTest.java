@@ -2,13 +2,12 @@ package com.work.recycle.component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.work.recycle.entity.UserRole;
+import com.work.recycle.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Slf4j
@@ -33,9 +32,10 @@ class EncryptComponentTest {
     // 生成几个用户token
     @Test
     void testEncrypt() {
-        MyToken myToken = new MyToken("0", UserRole.Role.FARMER, 1);
-        MyToken myToken1 = new MyToken("0", UserRole.Role.CLEANER, 5);
-        MyToken myToken2 = new MyToken("0", UserRole.Role.DREIVER, 7);
+
+        MyToken myToken = new MyToken("0", User.Role.CLEANER,1);
+        MyToken myToken1 = new MyToken("0", User.Role.CLEANER, 5);
+        MyToken myToken2 = new MyToken("0", User.Role.DRIVER, 7);
         log.warn(encryptComponent.encryptToken(myToken));
         log.warn(encryptComponent.encryptToken(myToken1));
         log.warn(encryptComponent.encryptToken(myToken2));
@@ -65,8 +65,5 @@ class EncryptComponentTest {
 
     @Test
     void mkr_cleanerToken() {
-        MyToken myToken = new MyToken("0",UserRole.Role.CLEANER,2);
-        String auth = encryptComponent.encryptToken(myToken);
-        log.warn(auth);
     }
 }

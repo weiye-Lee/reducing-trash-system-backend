@@ -7,20 +7,14 @@ import com.work.recycle.component.AuthCodeComponent;
 import com.work.recycle.component.EncryptComponent;
 import com.work.recycle.component.MyToken;
 import com.work.recycle.component.RequestComponent;
-import com.work.recycle.entity.Garbage;
 import com.work.recycle.entity.User;
-import com.work.recycle.entity.UserRole;
-import com.work.recycle.exception.Asserts;
-import com.work.recycle.repository.UserRepository;
 import com.work.recycle.service.UserService;
-import com.work.recycle.utils.PhoneUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -65,7 +59,7 @@ public class UserController {
             MyToken token = new MyToken(uid);
             String auth = encrypt.encryptToken(token);
             response.setHeader(MyToken.AUTHORIZATION,auth);
-            return CommonResult.success(Map.of("code",List.of(UserRole.Role.CLEANER,UserRole.Role.FARMER)));
+            return CommonResult.success(Map.of("code",List.of(User.Role.CLEANER,User.Role.FARMER)));
         }
 
         else return CommonResult.failed(ResultCode.FORBIDDEN);

@@ -20,15 +20,13 @@ public class User {
         MALE, FEMALE
     }
 
+    public enum Role{
+        FARMER,CLEANER,DRIVER,RECYCLEFIRM,ADMIN,LENADER
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @Column(nullable = false)
-    @JsonIgnore
-    @OneToMany(mappedBy = "user")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private List<UserRole> roleList;
 
     @Column(length = 10)
     @Size(min = 2,max = 6,message = "用户名长度超出限制")
@@ -41,6 +39,8 @@ public class User {
     private String IDNumber;
 
     private Sex sex;
+
+    private Role role;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user")

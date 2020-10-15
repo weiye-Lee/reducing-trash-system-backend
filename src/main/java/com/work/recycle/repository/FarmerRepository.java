@@ -14,4 +14,7 @@ public interface FarmerRepository extends BaseRepository<Farmer,Integer> {
     @Query("select f from Farmer f where f.id = :id")
     Farmer getFarmerById(@Param("id") int id);
 
+    @Query("select f from Farmer f where f.user.phoneNumber = :phoneNumber")
+    Farmer getFarmerByPhoneNumber(@Param("phoneNumber") String PhoneNumber);
+
 }

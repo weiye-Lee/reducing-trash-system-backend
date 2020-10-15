@@ -1,12 +1,11 @@
 package com.work.recycle.component;
 
-import com.work.recycle.entity.UserRole;
+import com.work.recycle.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,7 +17,7 @@ public class MyToken implements Serializable {
     public static final String AUTHCODE = "authcode";
 
     private String authcode;
-    private UserRole.Role role;
+    private User.Role role;
     private Integer uid;
 
     public MyToken(String authcode) {

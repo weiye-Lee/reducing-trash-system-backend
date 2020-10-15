@@ -1,7 +1,7 @@
 package com.work.recycle.component;
 
 
-import com.work.recycle.entity.UserRole;
+import com.work.recycle.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
@@ -17,8 +17,8 @@ public class RequestComponent {
                 .getAttribute(MyToken.UID, RequestAttributes.SCOPE_REQUEST );
 //        在请求范围内获取MyToken.UID
     }
-    public List<UserRole.Role> getRole(){
-        return (List<UserRole.Role>) RequestContextHolder.currentRequestAttributes()
+    public User.Role getRole(){
+        return (User.Role) RequestContextHolder.currentRequestAttributes()
                 .getAttribute(MyToken.ROLE, RequestAttributes.SCOPE_REQUEST);
     }
 

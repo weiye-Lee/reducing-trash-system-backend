@@ -31,20 +31,7 @@ class AdminTest {
 
     @Test
     void addDriver() throws JsonProcessingException {
-        Driver driver = new Driver();
-        User user = new User();
-        UserRole userRole = new UserRole();
-        userRole.setRole(UserRole.Role.DREIVER);
-        userRole.setRoleName("司机");
-        List<UserRole> list = new ArrayList<UserRole>();
-        list.add(userRole);
-        user.setRoleList(list);
 
-        user.setPhoneNumber("13050462540");
-        user.setName("司机");
-        driver.setUser(user);
-        log.warn(mapper.writeValueAsString(driver));
-        driverRepository.save(driver);
     }
 
     @Test

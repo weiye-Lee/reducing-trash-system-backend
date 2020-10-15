@@ -14,7 +14,7 @@ public interface UserRepository extends BaseRepository<User,Integer>  {
     @Query("select u from User u where u.id = :id")
     User getUserById(@Param("id") int id);
 
-    @Query("select u.phoneNumber from User u where u.phoneNumber = :phoneNumber")
+    @Query("select u from User u where u.phoneNumber = :phoneNumber")
     User getUserByPhoneNumber(@Param("phoneNumber") String phoneNumber);
 
 }

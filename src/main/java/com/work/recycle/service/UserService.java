@@ -25,16 +25,18 @@ public class UserService {
     @Autowired
     private RequestComponent requestComponent;
 
-     public User getUserById(int id) {
-         return userRepository.getUserById(id);
-     }
+    public User getUserById(int id) {
+        return userRepository.getUserById(id);
+    }
+
+    public User getUserByPhone(String phone) {
+        return userRepository.getUserByPhoneNumber(phone);
+    }
+
+
 
     public List<Garbage> getGarbage() {
         return garbageRepository.getGarbage();
-    }
-
-    public User getUserByPhone(String phoneNumber) {
-        return userRepository.getUserByPhoneNumber(phoneNumber);
     }
 
     public Garbage getGarbageById(int id) {
@@ -56,5 +58,9 @@ public class UserService {
         int uid = requestComponent.getUid();
         return fcOrderRepository.getFarmerFCOrdersById(uid);
 
+    }
+
+    public Garbage getGarbage(String name) {
+        return garbageRepository.getGarbageByName(name);
     }
 }
