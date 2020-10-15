@@ -23,7 +23,10 @@ public class Garbage {
     private String name;
 
     @Column(length = 40)
-    private String category; // 种类
+    private String category; // 种类（可回收垃圾）
+    
+    @Column(length = 40)
+    private String type; // 种类 （不可回收垃圾）
 
     private Integer score = 0; // 积分
 

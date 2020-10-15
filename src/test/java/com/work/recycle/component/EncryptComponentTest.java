@@ -33,24 +33,21 @@ class EncryptComponentTest {
     @Test
     void testEncrypt() {
 
-        MyToken myToken = new MyToken("0", User.Role.CLEANER,1);
-        MyToken myToken1 = new MyToken("0", User.Role.CLEANER, 5);
-        MyToken myToken2 = new MyToken("0", User.Role.DRIVER, 7);
+        MyToken myToken = new MyToken(User.Role.FARMER,3);
+        MyToken myToken1 = new MyToken(User.Role.CLEANER, 2);
+        MyToken myToken2 = new MyToken(User.Role.DRIVER, 1);
         log.warn(encryptComponent.encryptToken(myToken));
         log.warn(encryptComponent.encryptToken(myToken1));
         log.warn(encryptComponent.encryptToken(myToken2));
 
         /*
             farmer
-            96a45160cb1db954294ecc22baba66cc8c2e1bac3023c735ae00877c5b3de0855ca53402b3284a1690309f8c369f1c5e596165042e390f0964ddb2cb3435fb21
-
+            139c2fbebadbd5a7d23baa1933854de84a3516e2c3b6cd8923ae7d40d1da3208807c992e36c3c75f447151d4270b7612
 
             cleaner
-            6cc9b3328629c0569d43ea63b0800c3bb11ad1bea6357dd9f9fa2b2faed48dac6777e55db29d97b542838358fff6c16124b0c5be0a686f41b9cba1dad5fa3e8b
-
+            c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e3d69a5f46c7f3b2bef6219155aa7d57
             driver
-            54f92eec9d35f7c1c82957373ef7d3928f5c0dec1b2ffba46a9c5067282890781413c09263428887eaadfdf215fb0a884ed56ff4ebeece73b0349ea4c1341f2f
-
+            7ebb247b73fb86cf1a8228091ea0fab4334e6ee2795c2a3a5d5fe85c73fd226ddc4e5dbd7b29078d22a32e5852df26de
 
          */
     }

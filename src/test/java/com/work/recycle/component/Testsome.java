@@ -1,5 +1,6 @@
 package com.work.recycle.component;
 
+import ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy;
 import com.work.recycle.entity.User;
 import com.work.recycle.repository.BaseRepository;
 import com.work.recycle.repository.UserRepository;
@@ -28,6 +29,13 @@ public class Testsome {
     @Test
     void testSome() {
       log.warn(User.class.toString());
+    }
+
+    @Test
+    void test_format() {
+        String d = "1.22";
+        double ans = Double.parseDouble(d);
+        log.warn("{}",ans);
     }
 
 }

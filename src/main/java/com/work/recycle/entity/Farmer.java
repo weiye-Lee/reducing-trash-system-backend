@@ -29,7 +29,7 @@ public class Farmer {
     private Integer familySize = 1;
 
     @Min(0)
-    private Integer score = 0;
+    private double score = 0;
 
     @OneToMany(mappedBy = "farmer")
     @JsonIgnore
@@ -54,11 +54,11 @@ public class Farmer {
             updatable = false)
     private LocalDateTime updateTime;
 
-    public void addScore(int score) {
+    public void addScore(double score) {
         this.score += score;
     }
 
-    public void reduceScore(int score) {
+    public void reduceScore(double score) {
         if ((this.score -= score) >= 0) {
             this.score -= score;
         }

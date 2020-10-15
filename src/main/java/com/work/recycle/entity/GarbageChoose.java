@@ -26,6 +26,6 @@ public class GarbageChoose {
     private Garbage garbage;
 
     @Min(0)
-    private Integer amount = 0; // 数量
+    private double amount = 0; // 数量
 
 }

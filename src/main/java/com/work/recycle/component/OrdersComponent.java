@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.text.DecimalFormat;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -199,20 +200,22 @@ public class OrdersComponent {
 
     }
 
-    private int getScore(List<GarbageChoose> garbageChooses) {
+    private double getScore(List<GarbageChoose> garbageChooses) {
+        DecimalFormat df = new DecimalFormat("0.0");
         try {
             Iterator<GarbageChoose> iterator = garbageChooses.iterator();
-            int score = 0;
+            double score = 0.0;
             while (iterator.hasNext()) {
                 GarbageChoose choose = iterator.next();
                 int id = choose.getGarbage().getId();
                 Garbage garbage = garbageRepository.getGarbageById(id);
-                score += choose.getAmount() * garbage.getScore();
-
+                score += Double.parseDouble(
+                        df.format(choose.getAmount() * garbage.getScore())
+                );
             }
+            log.warn("score:{}",score);
             return score;
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
         }
 

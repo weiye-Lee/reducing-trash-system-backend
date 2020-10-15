@@ -16,7 +16,7 @@ public class BaseOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private Integer score = 0;
+    private double score = 0;
 
     private Boolean receiveStatus = false;
 

@@ -27,7 +27,7 @@ public class Cleaner {
     private User user;
 
     @Min(0)
-    private Integer score = 0;
+    private double score = 0;
 
     private String serviceArea;
 
@@ -59,12 +59,11 @@ public class Cleaner {
             updatable = false)
     private LocalDateTime updateTime;
 
-    public void addScore(int score) {
-        log.warn(this.score.toString());
+    public void addScore(double score) {
         this.score += score;
     }
 
-    public void reduceScore(int score) {
+    public void reduceScore(double score) {
         if ((this.score -= score) >= 0) {
             this.score -= score;
         }
