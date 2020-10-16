@@ -38,14 +38,4 @@ class UserServiceTest {
         User u = userService.getUserByPhone("13050496540");
         log.warn(mapper.writeValueAsString(u));
     }
-
-    @Test
-    void constructMap() {
-        Map<String, List<Garbage>> map = userService.constructMap(GarbageVo.UNRECYCLE_CATEGORY,GarbageVo.UnRecycleTypeName);
-        try {
-            log.warn(mapper.writeValueAsString(map));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-    }
 }
