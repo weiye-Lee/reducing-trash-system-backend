@@ -105,29 +105,33 @@ public class UserService {
     }
 
     // TODO 2020/10/16 : 构造返回值
-    public List<Map<String, Map<String, List<Garbage>>>> getGarbage() {
+    public Map<String, Map<String, List<Garbage>>> getRecycleGarbage() {
         Map<String, Map<String, List<Garbage>>> recycleMap = new HashMap<>();
-        Map<String, Map<String, List<Garbage>>> unRecycleMap = new HashMap<>();
-        Map<String, Map<String, List<Garbage>>> soilMap = new HashMap<>();
 
         recycleMap.put(
                 GarbageVo.RECYCLE_CATEGORY,
                 constructMap(GarbageVo.RECYCLE_CATEGORY, GarbageVo.recycleTypeName)
         );
+        return recycleMap;
+    }
+
+    public Map<String, Map<String, List<Garbage>>> getUnRecycleGarbage() {
+        Map<String, Map<String, List<Garbage>>> unRecycleMap = new HashMap<>();
+
         unRecycleMap.put(
                 GarbageVo.UNRECYCLE_CATEGORY,
                 constructMap(GarbageVo.UNRECYCLE_CATEGORY,GarbageVo.UnRecycleTypeName)
         );
+        return unRecycleMap;
+    }
 
+    public Map<String, Map<String, List<Garbage>>> getSoilGarbage() {
+        Map<String, Map<String, List<Garbage>>> soilMap = new HashMap<>();
         soilMap.put(
                 GarbageVo.SOIL_CATEGORY,
                 constructMap(GarbageVo.SOIL_CATEGORY)
         );
-        List<Map<String, Map<String, List<Garbage>>>> list = new ArrayList<>();
-        list.add(recycleMap);
-        list.add(unRecycleMap);
-        list.add(soilMap);
-        return list;
+        return soilMap;
     }
 
     public Garbage getGarbageById(int id) {

@@ -23,14 +23,6 @@ class UserServiceTest {
     private ObjectMapper mapper;
     @Test
     void getGarbage() {
-        userService.getGarbage()
-                .forEach(a -> {
-                    try {
-                        log.warn("{}",mapper.writeValueAsString(a));
-                    } catch (JsonProcessingException e) {
-                        e.printStackTrace();
-                    }
-                });
     }
 
     @Test

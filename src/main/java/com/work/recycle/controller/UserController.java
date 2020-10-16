@@ -89,9 +89,19 @@ public class UserController {
      *
      * @return 成功 则返回垃圾集合
      */
-    @GetMapping("getGarbage")
-    public CommonResult getGarbage() {
-        return CommonResult.success(userService.getGarbage());
+    @GetMapping("getRecycleGarbage")
+    public CommonResult getRecycleGarbage() {
+        return CommonResult.success(userService.getRecycleGarbage());
+    }
+
+    @GetMapping("getUnRecycleGarbage")
+    public CommonResult getUnRecycleGarbage() {
+        return CommonResult.success(userService.getUnRecycleGarbage());
+    }
+
+    @GetMapping("getSoilGarbage")
+    public CommonResult getSoilGarbage() {
+        return CommonResult.success(userService.getSoilGarbage());
     }
 
 

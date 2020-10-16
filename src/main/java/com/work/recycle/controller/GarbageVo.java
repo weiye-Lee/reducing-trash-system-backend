@@ -21,8 +21,8 @@ public class GarbageVo {
     private static final String type6 = "农药包装";
 
 
-    public static final String RECYCLE_CATEGORY = "recycle";
-    public static final String UNRECYCLE_CATEGORY = "unRecycle";
+    public static final String RECYCLE_CATEGORY = "recycleGarbage";
+    public static final String UNRECYCLE_CATEGORY = "unRecycleGarbage";
     public static final String SOIL_CATEGORY = "soil";
 
     public static final Map<String,String> typeCHName = createTypeCHName();
