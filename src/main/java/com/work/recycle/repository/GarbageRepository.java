@@ -19,4 +19,12 @@ public interface GarbageRepository extends BaseRepository<Garbage,Integer>{
     @Query("select g from Garbage g where g.name = :name")
     Garbage getGarbageByName(@Param("name") String name);
 
+    @Query("select g from Garbage g where g.type = :type and g.category = :category")
+    List<Garbage> getGarbageByType(@Param("type") String type,@Param("category") String category);
+
+    @Query("select g from Garbage g where g.category = :category")
+    List<Garbage> getGarbageByType(@Param("category") String category);
+
+
+
 }

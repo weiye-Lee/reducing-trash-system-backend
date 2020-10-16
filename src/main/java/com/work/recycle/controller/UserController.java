@@ -83,6 +83,7 @@ public class UserController {
         } else return CommonResult.failed(ResultCode.FORBIDDEN);
     }
 
+    // TODO 2020/10/16 : 重构代码，返回经过封装好的garbage集合 涉及一些问题没想通---
     /**
      * 获得垃圾列表
      *

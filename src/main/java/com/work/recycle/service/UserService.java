@@ -1,6 +1,7 @@
 package com.work.recycle.service;
 
 import com.work.recycle.component.RequestComponent;
+import com.work.recycle.controller.GarbageVo;
 import com.work.recycle.entity.FCOrder;
 import com.work.recycle.entity.Garbage;
 import com.work.recycle.entity.Goods;
@@ -11,7 +12,11 @@ import com.work.recycle.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.management.GarbageCollectorMXBean;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -34,9 +39,50 @@ public class UserService {
     }
 
 
+    public Map<String, List<Garbage>> constructMap(String categoryName, String[] typeName) {
+        Map<String, List<Garbage>> map = new HashMap<>();
+        for (String type : typeName) {
+            String typeCHName = GarbageVo.typeCHName.get(type);
+            String categoryCHName = GarbageVo.categoryCHName.get(categoryName);
+            List<Garbage> garbageList = garbageRepository.getGarbageByType(typeCHName, categoryCHName);
+            map.put(type, garbageList);
+        }
+        return map;
 
-    public List<Garbage> getGarbage() {
-        return garbageRepository.getGarbage();
+    }
+
+    private Map<String, List<Garbage>> constructMap(String categoryName) {
+        Map<String, List<Garbage>> map = new HashMap<>();
+        String categoryCHName = GarbageVo.categoryCHName.get(categoryName);
+        List<Garbage> garbageList = garbageRepository.getGarbageByType(categoryCHName);
+        map.put(categoryName, garbageList);
+        return map;
+    }
+
+    // TODO 2020/10/16 : 构造返回值
+    public List<Map<String, Map<String, List<Garbage>>>> getGarbage() {
+        Map<String, Map<String, List<Garbage>>> recycleMap = new HashMap<>();
+        Map<String, Map<String, List<Garbage>>> unRecycleMap = new HashMap<>();
+        Map<String, Map<String, List<Garbage>>> soilMap = new HashMap<>();
+
+        recycleMap.put(
+                GarbageVo.RECYCLE_CATEGORY,
+                constructMap(GarbageVo.RECYCLE_CATEGORY, GarbageVo.recycleTypeName)
+        );
+        unRecycleMap.put(
+                GarbageVo.UNRECYCLE_CATEGORY,
+                constructMap(GarbageVo.UNRECYCLE_CATEGORY,GarbageVo.UnRecycleTypeName)
+        );
+
+        soilMap.put(
+                GarbageVo.SOIL_CATEGORY,
+                constructMap(GarbageVo.SOIL_CATEGORY)
+        );
+        List<Map<String, Map<String, List<Garbage>>>> list = new ArrayList<>();
+        list.add(recycleMap);
+        list.add(unRecycleMap);
+        list.add(soilMap);
+        return list;
     }
 
     public Garbage getGarbageById(int id) {

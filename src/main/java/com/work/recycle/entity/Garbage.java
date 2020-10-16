@@ -39,11 +39,13 @@ public class Garbage {
 
     private String picture; // 垃圾的图片
 
+    @JsonIgnore
     @Column(columnDefinition = "timestamp default current_timestamp",
             insertable = false,
             updatable = false)
     private LocalDateTime insertTime;
 
+    @JsonIgnore
     @Column(columnDefinition = "timestamp default current_timestamp " +
             "on update current_timestamp",
             insertable = false,

@@ -165,5 +165,19 @@ public class InitComponent implements InitializingBean {
             }
         }
 
+        if (userService.getGarbage("煤渣、灰土") == null ) {
+            String category = "煤渣、灰土";
+            String type = "煤渣、灰土";
+            String unit = "斤";
+            double score = 0.1;
+            Garbage garbage = new Garbage();
+            garbage.setCategory(category);
+            garbage.setType(type);
+            garbage.setUnit(unit);
+            garbage.setName(type);
+            garbage.setScore(score);
+            garbageRepository.save(garbage);
+        }
+
     }
 }
