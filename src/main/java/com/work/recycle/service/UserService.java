@@ -39,7 +39,32 @@ public class UserService {
     }
 
 
-    public Map<String, List<Garbage>> constructMap(String categoryName, String[] typeName) {
+    /**
+     * 构造垃圾返回列表的键值对
+     * @param categoryName ：GarbageVo.categoryName 垃圾大类（e.g. 可回收垃圾，不可回收垃圾...）
+     * @param typeName : GarbageVo.typeName 垃圾类别（e.g. 可回收垃圾中纸张类、玻璃类）
+     * @return Map < 垃圾类别, List< 对应垃圾类别的 垃圾 > >
+     *     // e.g
+     *     "metal": [
+     *           {
+     *             "id": 12,
+     *             "name": "废电池",
+     *             "category": "不可回收垃圾",
+     *             "type": "金属类",
+     *             "score": 1.0,
+     *             "unit": "节"
+     *           },
+     *           {
+     *             "id": 13,
+     *             "name": "废灯管 ",
+     *             "category": "不可回收垃圾",
+     *             "type": "金属类",
+     *             "score": 1.0,
+     *             "unit": "个"
+     *           }
+     *         ]
+     */
+    private Map<String, List<Garbage>> constructMap(String categoryName, String[] typeName) {
         Map<String, List<Garbage>> map = new HashMap<>();
         for (String type : typeName) {
             String typeCHName = GarbageVo.typeCHName.get(type);
@@ -51,6 +76,26 @@ public class UserService {
 
     }
 
+    /**
+     * 根据垃圾大类进行查询获取 ，由于某些垃圾只有大类，没有类别（type）（e.g 煤渣）
+     * @param categoryName GarbageVo.categoryName 垃圾种类(e.g 煤渣、废土)
+     * @return Map < 垃圾类别, List< 对应垃圾类别的 垃圾 > >
+     *     // e.g
+     *     {
+     *       "soil": {
+     *         "soil": [
+     *           {
+     *             "id": 17,
+     *             "name": "煤渣、灰土",
+     *             "category": "煤渣、灰土",
+     *             "type": "煤渣、灰土",
+     *             "score": 0.1,
+     *             "unit": "斤"
+     *           }
+     *         ]
+     *       }
+     *     }
+     */
     private Map<String, List<Garbage>> constructMap(String categoryName) {
         Map<String, List<Garbage>> map = new HashMap<>();
         String categoryCHName = GarbageVo.categoryCHName.get(categoryName);
