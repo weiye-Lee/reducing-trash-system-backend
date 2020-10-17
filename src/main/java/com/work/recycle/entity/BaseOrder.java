@@ -28,6 +28,12 @@ public class BaseOrder {
     @Column(length = 40)
     private String remark;
 
+    @Column(length = 10)
+    private String name;
+
+    @Column(length = 12)
+    private String phoneNumber;
+
     // @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "baseOrder",cascade = CascadeType.PERSIST)
     private List<GarbageChoose> garbageChooses;
