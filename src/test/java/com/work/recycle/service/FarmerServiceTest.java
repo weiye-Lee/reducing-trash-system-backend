@@ -2,10 +2,9 @@ package com.work.recycle.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.work.recycle.entity.BaseOrder;
-import com.work.recycle.entity.Garbage;
-import com.work.recycle.entity.GarbageChoose;
+import com.work.recycle.entity.*;
 import com.work.recycle.repository.BaseOrderRepository;
+import com.work.recycle.repository.FarmerRepository;
 import com.work.recycle.repository.GarbageChooseRepository;
 import com.work.recycle.repository.GarbageRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +33,8 @@ class FarmerServiceTest {
     private BaseOrderRepository orderRepository;
     @Autowired
     private GarbageRepository garbageRepository;
+    @Autowired
+    private FarmerRepository farmerRepository;
 
     /*
     @Test
@@ -141,5 +142,28 @@ class FarmerServiceTest {
         // farmerService.addFCOrder(baseOrder,list);
 
 
+    }
+
+    @Test
+    void getRankList() {
+        List<Farmer> farmers = farmerService.getRankList();
+        farmers.forEach(a -> {
+            log.warn(a.getUser().getName());
+        });
+    }
+
+    @Test
+    void test_addFarmer() {
+        for (int i = 0; i < 10; i++) {
+            String name = "农户姓名" + i;
+            String phoneNum = "1305049653" + i;
+            User user = new User();
+            user.setName(name);
+            user.setPhoneNumber(phoneNum);
+            Farmer farmer = new Farmer();
+            farmer.setUser(user);
+            farmer.setScore(i);
+            farmerRepository.save(farmer);
+        }
     }
 }

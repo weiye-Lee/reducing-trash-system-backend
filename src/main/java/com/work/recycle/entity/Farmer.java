@@ -43,21 +43,31 @@ public class Farmer {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Cleaner cleaner;
 
+    @JsonIgnore
     @Column(columnDefinition = "timestamp default current_timestamp",
             insertable = false,
             updatable = false)
     private LocalDateTime insertTime;
 
+    @JsonIgnore
     @Column(columnDefinition = "timestamp default current_timestamp " +
             "on update current_timestamp",
             insertable = false,
             updatable = false)
     private LocalDateTime updateTime;
 
+    /**
+     * 农户订单完成增加积分
+     * @param score 要增加的积分数
+     */
     public void addScore(double score) {
         this.score += score;
     }
 
+    /**
+     * 农户进行商品交换时扣除积分
+     * @param score 要扣除的积分
+     */
     public void reduceScore(double score) {
         if ((this.score -= score) >= 0) {
             this.score -= score;

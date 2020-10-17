@@ -23,8 +23,6 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        log.debug("{}", "hello!");
-        log.debug("{}", request.getHeader(MyToken.AUTHORIZATION));
         Optional.ofNullable(request.getHeader(MyToken.AUTHORIZATION))
                 .map(auth->encrypt.decryptToken(auth))
                 .ifPresentOrElse(token -> {

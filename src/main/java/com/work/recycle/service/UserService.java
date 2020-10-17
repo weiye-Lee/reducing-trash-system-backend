@@ -1,10 +1,9 @@
 package com.work.recycle.service;
 
 import com.work.recycle.component.RequestComponent;
-import com.work.recycle.controller.GarbageVo;
+import com.work.recycle.controller.vo.GarbageVo;
 import com.work.recycle.entity.FCOrder;
 import com.work.recycle.entity.Garbage;
-import com.work.recycle.entity.Goods;
 import com.work.recycle.entity.User;
 import com.work.recycle.repository.FCOrderRepository;
 import com.work.recycle.repository.GarbageRepository;
@@ -12,8 +11,6 @@ import com.work.recycle.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.management.GarbageCollectorMXBean;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -104,7 +101,6 @@ public class UserService {
         return map;
     }
 
-    // TODO 2020/10/16 : 构造返回值
     public Map<String, Map<String, List<Garbage>>> getRecycleGarbage() {
         Map<String, Map<String, List<Garbage>>> recycleMap = new HashMap<>();
 

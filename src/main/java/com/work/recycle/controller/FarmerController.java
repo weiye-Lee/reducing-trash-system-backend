@@ -1,10 +1,13 @@
 package com.work.recycle.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.work.recycle.common.CommonResult;
 import com.work.recycle.component.RequestComponent;
+import com.work.recycle.controller.vo.RankListVo;
 import com.work.recycle.entity.BaseOrder;
 import com.work.recycle.entity.FCOrder;
+import com.work.recycle.entity.Farmer;
 import com.work.recycle.entity.GarbageChoose;
 import com.work.recycle.service.FarmerService;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -23,6 +27,8 @@ FarmerController {
     private FarmerService farmerService;
     @Autowired
     private RequestComponent requestComponent;
+    @Autowired
+    private ObjectMapper mapper;
 
 
     /**
@@ -64,6 +70,7 @@ FarmerController {
         return CommonResult.success(farmerService.getScore());
     }
 
+    // TODO 2020/10/17 : 构造返回值，前端展示内容
     /**
      * 获取订单列表
      * @return
@@ -136,14 +143,15 @@ FarmerController {
         return CommonResult.success(farmerService.getBaseOrderById(id));
     }
 
-    // TODO 2020/10/13 : 农户积分？提交次数？排行榜
-
     /**
-     * 获取用户排行榜列表
+     * 获取积分前十名的用户
      * @return 返回农户排行榜集合
      */
     @GetMapping("getRankList")
     public CommonResult getRankList() {
-        return null;
+        List<Farmer> farmers = farmerService.getRankList();
+        List<RankListVo> rankListVos = new ArrayList<>();
+        farmers.forEach(each -> rankListVos.add(new RankListVo(each.getUser().getName(),each.getScore(), each.getId())));
+        return CommonResult.success(rankListVos);
     }
 }

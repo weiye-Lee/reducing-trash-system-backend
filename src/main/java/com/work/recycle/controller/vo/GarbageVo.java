@@ -1,4 +1,4 @@
-package com.work.recycle.controller;
+package com.work.recycle.controller.vo;
 
 import java.util.HashMap;
 import java.util.Map;

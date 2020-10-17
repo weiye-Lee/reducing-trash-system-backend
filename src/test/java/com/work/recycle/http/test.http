@@ -1,3 +1,8 @@
+GET http://localhost:8080/api/farmer/getRankList
+Accept: application/json
+Authorization: 6cc9b3328629c0569d43ea63b0800c3bb11ad1bea6357dd9f9fa2b2faed48dac6777e55db29d97b542838358fff6c16124b0c5be0a686f41b9cba1dad5fa3e8b
+
+###
 GET http://localhost:8080/api/user/getSoilGarbage
 Accept: application/json
 Authorization: 6cc9b3328629c0569d43ea63b0800c3bb11ad1bea6357dd9f9fa2b2faed48dac6777e55db29d97b542838358fff6c16124b0c5be0a686f41b9cba1dad5fa3e8b

@@ -2,7 +2,7 @@ package com.work.recycle.repository;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.work.recycle.controller.GarbageVo;
+import com.work.recycle.controller.vo.GarbageVo;
 import com.work.recycle.entity.Garbage;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -11,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Slf4j
 

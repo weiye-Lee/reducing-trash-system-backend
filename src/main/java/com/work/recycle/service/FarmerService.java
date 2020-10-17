@@ -53,4 +53,8 @@ public class FarmerService {
     public BaseOrder getBaseOrderById(int id) {
         return baseOrderRepository.getBaseOrderById(id);
     }
+
+    public List<Farmer> getRankList() {
+        return farmerRepository.findTop10ByOrderByScoreDesc();
+    }
 }
