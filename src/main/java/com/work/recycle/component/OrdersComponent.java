@@ -103,51 +103,40 @@ public class OrdersComponent {
     }
 
     private void checkFCOrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
-        int uid = requestComponent.getUid();
+        double score = getScore(garbageChooses);
+
         FCOrder fcOrder = fcOrderRepository.getFCOrderById(baseOrder.getId());
-        Cleaner cleaner = cleanerRepository.getCleanerById(uid);
+        BaseOrder trulyBaseOrder = baseOrderRepository.getBaseOrderById(baseOrder.getId());
+        addBaseOrderGarbageList(baseOrder,garbageChooses);
+        trulyBaseOrder.setCheckStatus(true);
+        trulyBaseOrder.setScore(score);
 
-        // 增加农户积分
-        Farmer farmer = fcOrder.getFarmer();
-        farmer.addScore(getScore(garbageChooses));
-        farmerRepository.save(farmer);
-
-        fcOrder.setCleaner(cleaner);
-
-        // TODO 2020/10/15 ：修复bug
-
-        baseOrder.setScore(getScore(garbageChooses));
-        baseOrderRepository.save(baseOrder);
+        fcOrder.getFarmer().setScore(score);
+        fcOrder.setBaseOrder(trulyBaseOrder);
+        fcOrderRepository.save(fcOrder);
     }
 
     private void checkCDOrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
-        int uid = requestComponent.getUid();
+        double score = getScore(garbageChooses);
+
         CDOrder cdOrder = cdOrderRepository.getCDOrderById(baseOrder.getId());
-        Driver driver = driverRepository.getDriverById(uid);
+        BaseOrder trulyBaseOrder = baseOrderRepository.getBaseOrderById(baseOrder.getId());
+        addBaseOrderGarbageList(baseOrder,garbageChooses);
+        trulyBaseOrder.setCheckStatus(true);
+        trulyBaseOrder.setScore(score);
 
-        // 增加保洁员积分
-        Cleaner cleaner = cdOrder.getCleaner();
-        cleaner.addScore(getScore(garbageChooses));
-        cleanerRepository.save(cleaner);
-
-        cdOrder.setDriver(driver);
-        baseOrder.setScore(getScore(garbageChooses));
-        baseOrderRepository.save(baseOrder);
+        cdOrder.getCleaner().setScore(score);
+        cdOrder.setBaseOrder(trulyBaseOrder);
+        cdOrderRepository.save(cdOrder);
     }
 
+    /**
+     * 功能暂时不需要
+     * @param baseOrder the baseOrder
+     * @param garbageChooses the garbageChoose list
+     */
     private void checkCROrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
-        int uid = requestComponent.getUid();
-        CROrder crOrder = crOrderRepository.getCROrderById(baseOrder.getId());
-        RecycleFirm recycleFirm = recycleFirmRepository.getRecycleFirmById(uid);
 
-
-        Cleaner cleaner = crOrder.getCleaner();
-        cleaner.addScore(getScore(garbageChooses));
-        cleanerRepository.save(cleaner);
-
-        crOrder.setRecycleFirm(recycleFirm);
-        baseOrder.setScore(getScore(garbageChooses));
-        baseOrderRepository.save(baseOrder);
     }
 
     private void addFCOrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {

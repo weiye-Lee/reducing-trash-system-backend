@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface BaseOrderRepository extends BaseRepository<BaseOrder,Integer> {
     @Query("select o from BaseOrder o where o.id = :id")
     BaseOrder getBaseOrderById(@Param("id") int id);
+
 }

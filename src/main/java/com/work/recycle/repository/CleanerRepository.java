@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface CleanerRepository extends BaseRepository<Cleaner,Integer>{
 
@@ -18,4 +20,5 @@ public interface CleanerRepository extends BaseRepository<Cleaner,Integer>{
     @Query("select c from Cleaner c where c.user.phoneNumber = :phoneNumber")
     Cleaner getCleanerByPhoneNumber(@Param("phoneNumber") String phoneNumber);
 
+    List<Cleaner> findTop10ByOrderByScoreDesc();
 }

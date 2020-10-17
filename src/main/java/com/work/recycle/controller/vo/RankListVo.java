@@ -1,8 +1,12 @@
 package com.work.recycle.controller.vo;
 
+import com.work.recycle.entity.GarbageChoose;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Iterator;
+import java.util.List;
 
 @Data
 @AllArgsConstructor

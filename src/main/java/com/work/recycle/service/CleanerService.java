@@ -73,4 +73,8 @@ public class CleanerService {
         return cleanerRepository.getScoreById(uid);
     }
 
+    public List<Cleaner> getRankList() {
+        return cleanerRepository.findTop10ByOrderByScoreDesc();
+    }
+
 }

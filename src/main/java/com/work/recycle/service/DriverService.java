@@ -1,6 +1,7 @@
 package com.work.recycle.service;
 
 import com.work.recycle.component.OrdersComponent;
+import com.work.recycle.component.RequestComponent;
 import com.work.recycle.entity.*;
 import com.work.recycle.repository.*;
 import com.work.recycle.utils.SwitchUtil;
@@ -23,8 +24,9 @@ public class DriverService {
     private CDOrderRepository cdOrderRepository;
     @Autowired
     private OrdersComponent ordersComponent;
+    @Autowired
+    private RequestComponent requestComponent;
 
-    private int uid = 6;
 
     public void checkCDOrder(BaseOrder order, List<GarbageChoose> garbageChooses) {
         ordersComponent.checkOrder(order,garbageChooses, SwitchUtil.CDORDER);
@@ -32,6 +34,7 @@ public class DriverService {
 
     // 司机接收 保洁员的订单,即改变基础订单的状态值
     public int receiveCDOrder(int id) {
+        int uid = requestComponent.getUid();
         BaseOrder baseOrder = baseOrderRepository.getBaseOrderById(id);
         CDOrder cdOrder = cdOrderRepository.getCDOrderById(id);
         Driver driver = driverRepository.getDriverById(uid);

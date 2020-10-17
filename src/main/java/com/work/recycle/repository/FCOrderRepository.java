@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface FCOrderRepository extends BaseRepository<FCOrder,Integer> {
+public interface FCOrderRepository extends BaseRepository<FCOrder, Integer> {
 
     @Query("select count(fc) from FCOrder fc where fc.farmer.id = :id")
     int getFarmerFCOrderTimesById(@Param("id") int id);
@@ -18,6 +18,9 @@ public interface FCOrderRepository extends BaseRepository<FCOrder,Integer> {
 
     @Query("select fc from FCOrder fc where fc.farmer.id = :id")
     List<FCOrder> getFarmerFCOrdersById(@Param("id") int id);
+
+    @Query("select fc from FCOrder fc where fc.farmer.id = :id and fc.baseOrder.checkStatus = :checkStatus")
+    List<FCOrder> getFarmerFCOrdersById(@Param("id") int id, @Param("checkStatus") Boolean checkStatus);
 
     @Query("select fc from FCOrder fc where fc.cleaner.id = :id")
     List<FCOrder> getCleanerFCOrdersById(@Param("id") int id);

@@ -25,10 +25,13 @@ public class GarbageVo {
     public static final String UNRECYCLE_CATEGORY = "unRecycleGarbage";
     public static final String SOIL_CATEGORY = "soil";
 
+    // 垃圾类别中英文转换map
     public static final Map<String,String> typeCHName = createTypeCHName();
 
+    // 垃圾大类中英文转换map
     public static final Map<String,String> categoryCHName = createCategoryCHName();
 
+    // 创建垃圾类别中英文map
     private static Map<String,String> createTypeCHName() {
         Map<String,String> map = new HashMap<>();
         map.put(PAPER,type);
@@ -40,6 +43,7 @@ public class GarbageVo {
         return map;
     }
 
+    // 创建垃圾大类中英文名map （e.g Map<"unRecycleGarbage","不可回收垃圾">)
     private static Map<String,String> createCategoryCHName() {
         Map<String,String> map = new HashMap<>();
         map.put(RECYCLE_CATEGORY,"可回收垃圾");
@@ -48,8 +52,10 @@ public class GarbageVo {
         return map;
     }
 
+    // 可回收垃圾类别数组
     public static String[] recycleTypeName = {PAPER,PLASTIC,GLASS,METAL,WEAVE};
 
+    // 不可回收垃圾类别数组
     public static String[] UnRecycleTypeName = {METAL,PESTICIDE};
 
 

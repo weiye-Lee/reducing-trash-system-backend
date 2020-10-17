@@ -1,0 +1,45 @@
+package com.work.recycle.utils;
+
+import com.work.recycle.controller.vo.IndexOrderVo;
+import com.work.recycle.entity.BaseOrder;
+import com.work.recycle.entity.GarbageChoose;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+public class VoUtil {
+
+    /**
+     * 根据给定的垃圾选择集合，构造msg，用来为前端订单列表显示 构造数据
+     * @param garbageChooses the garbageChoose list
+     * @return (String) 长度不超过13的字符串
+     */
+    private static String getMsg(List<GarbageChoose> garbageChooses) {
+        Iterator<GarbageChoose> iterator = garbageChooses.iterator();
+        StringBuilder msg = new StringBuilder();
+        while (iterator.hasNext()) {
+            GarbageChoose garbageChoose = iterator.next();
+            msg.append(garbageChoose.getGarbage().getName()).append("*").append(garbageChoose.getAmount());
+            if (msg.length() > 10) {
+                break;
+            }
+            msg.append(",");
+        }
+
+        if (msg.length() > 10) {
+            msg.delete(10,msg.length());
+        }
+        msg.append("...");
+        return msg.toString();
+    }
+
+    public static IndexOrderVo constructIndexOrder(BaseOrder baseOrder) {
+            IndexOrderVo indexOrderVo = new IndexOrderVo();
+            indexOrderVo.setAddress(baseOrder.getAddress());
+            indexOrderVo.setId(baseOrder.getId());
+            indexOrderVo.setMsg(getMsg(baseOrder.getGarbageChooses()));
+            indexOrderVo.setDate(baseOrder.getInsertTime());
+            return indexOrderVo;
+    }
+}

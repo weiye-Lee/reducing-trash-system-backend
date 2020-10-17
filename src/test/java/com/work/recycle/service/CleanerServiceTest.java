@@ -84,4 +84,8 @@ class CleanerServiceTest {
         log.warn(mapper.writeValueAsString(baseOrder));
         cleanerService.addCDOrder(baseOrder,list);
     }
+
+    @Test
+    void testCheckFCOrder() {
+    }
 }

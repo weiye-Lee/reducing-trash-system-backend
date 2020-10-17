@@ -70,14 +70,23 @@ FarmerController {
         return CommonResult.success(farmerService.getScore());
     }
 
-    // TODO 2020/10/17 : 构造返回值，前端展示内容
+
     /**
-     * 获取订单列表
-     * @return
+     * 获取审核完成订单
+     * @return the IndexOrderVo list
      */
-    @GetMapping("getFCOrders")
-    public CommonResult getFCOrders() {
-        return CommonResult.success(farmerService.getOrders());
+    @GetMapping("getFCOrder/checked")
+    public CommonResult getFCOrderChecker() {
+        return CommonResult.success(farmerService.getFCOrderChecked());
+    }
+
+    /**
+     * 获取审核未完成订单
+     * @return the IndexOrderVo list
+     */
+    @GetMapping("getFCOrder/checking")
+    public CommonResult getFCOrderChecking() {
+        return CommonResult.success(farmerService.getFCOrderChecking());
     }
 
 

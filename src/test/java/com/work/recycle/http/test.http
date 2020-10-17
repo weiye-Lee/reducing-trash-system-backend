@@ -1,3 +1,38 @@
+GET http://localhost:8080/api/farmer/getFCOrder/checking
+Accept: application/json
+Authorization: 139c2fbebadbd5a7d23baa1933854de84a3516e2c3b6cd8923ae7d40d1da3208807c992e36c3c75f447151d4270b7612
+
+###
+GET http://localhost:8080/api/farmer/getFCOrder/checked
+Accept: application/json
+Authorization: 139c2fbebadbd5a7d23baa1933854de84a3516e2c3b6cd8923ae7d40d1da3208807c992e36c3c75f447151d4270b7612
+
+###
+POST http://localhost:8080/api/cleaner/checkFCorder
+Content-Type: application/json
+Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e3d69a5f46c7f3b2bef6219155aa7d57
+
+{
+  "id": 17,
+  "garbageChooses": [
+    {
+      "id": 34,
+      "garbage": {
+        "id": 1
+      },
+      "amount": 10.3
+    },
+    {
+      "id": 35,
+      "garbage": {
+        "id": 2
+      },
+      "amount": 1.2
+    }
+  ]
+}
+
+###
 GET http://localhost:8080/api/farmer/getRankList
 Accept: application/json
 Authorization: 6cc9b3328629c0569d43ea63b0800c3bb11ad1bea6357dd9f9fa2b2faed48dac6777e55db29d97b542838358fff6c16124b0c5be0a686f41b9cba1dad5fa3e8b
@@ -128,51 +163,13 @@ Authorization: d6358ed60c3f72d93f0594fe7f5b2474aa17067c0e5927c6138cd5554e0f90fbc
 }
 
 ###
-POST http://localhost:8080/api/cleaner/check/order
-Content-Type: application/json
-Authorization: d6358ed60c3f72d93f0594fe7f5b2474aa17067c0e5927c6138cd5554e0f90fbcf8c8212b8eec2d0bd4718ec95ec6cba0240ded7e377229a7f3c8ccd4ae7b993
-
-{
-  "baseOrder": {
-    "id": 4,
-    "garbageChooses": [
-      {
-        "id": 7,
-        "garbage": {
-          "id": 1
-        },
-        "amount": 6.6
-      },
-      {
-        "id": 8,
-        "garbage": {
-          "id": 2
-        },
-        "amount": 6
-      }
-    ]
-  }
-}
-
-###
 POST http://localhost:8080/api/cleaner/receive/order/22
 Content-Type: application/json
 
 {}
 
 ###
-GET http://localhost:8080/api/cleaner/getFCOrders
-Accept: application/json
-Authorization: d6358ed60c3f72d93f0594fe7f5b2474aa17067c0e5927c6138cd5554e0f90fbcf8c8212b8eec2d0bd4718ec95ec6cba0240ded7e377229a7f3c8ccd4ae7b993
-
-###
 GET http://localhost:8080/api/farmer/getBaseOrder?id=1
-Accept: application/json
-Authorization: d6358ed60c3f72d93f0594fe7f5b2474aa17067c0e5927c6138cd5554e0f90fbcf8c8212b8eec2d0bd4718ec95ec6cba0240ded7e377229a7f3c8ccd4ae7b993
-
-
-###
-GET http://localhost:8080/api/farmer/getFCOrders
 Accept: application/json
 Authorization: d6358ed60c3f72d93f0594fe7f5b2474aa17067c0e5927c6138cd5554e0f90fbcf8c8212b8eec2d0bd4718ec95ec6cba0240ded7e377229a7f3c8ccd4ae7b993
 
