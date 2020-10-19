@@ -6,6 +6,7 @@ import com.work.recycle.exception.ApiException;
 import com.work.recycle.exception.Asserts;
 import com.work.recycle.repository.*;
 import com.work.recycle.utils.SwitchUtil;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,6 +15,8 @@ import java.text.DecimalFormat;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+
+import static java.util.Optional.ofNullable;
 
 
 /**
@@ -102,71 +105,83 @@ public class OrdersComponent {
 
     }
 
-    // TODO 2002/10/19 : 修复bug
     private void checkFCOrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
-        double score = getScore(garbageChooses);
 
         FCOrder fcOrder = fcOrderRepository.getFCOrderById(baseOrder.getId());
-        BaseOrder trulyBaseOrder = baseOrderRepository.getBaseOrderById(baseOrder.getId());
-        addBaseOrderGarbageList(baseOrder,garbageChooses);
-        trulyBaseOrder.setCheckStatus(true);
-        trulyBaseOrder.setScore(score);
+        if (fcOrder == null || fcOrder.getBaseOrder() == null || fcOrder.getFarmer() == null)
+            throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
+        double score = getScore(garbageChooses);
+        addBaseOrderGarbageList(baseOrder, garbageChooses);
 
         fcOrder.getFarmer().setScore(score);
-        fcOrder.setBaseOrder(trulyBaseOrder);
+        fcOrder.getBaseOrder().setScore(score);
+        fcOrder.getBaseOrder().setCheckStatus(true);
         fcOrderRepository.save(fcOrder);
+
     }
 
     private void checkCDOrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
-        double score = getScore(garbageChooses);
 
         CDOrder cdOrder = cdOrderRepository.getCDOrderById(baseOrder.getId());
-        BaseOrder trulyBaseOrder = baseOrderRepository.getBaseOrderById(baseOrder.getId());
-        addBaseOrderGarbageList(baseOrder,garbageChooses);
-        trulyBaseOrder.setCheckStatus(true);
-        trulyBaseOrder.setScore(score);
+        if (cdOrder == null || cdOrder.getBaseOrder() == null || cdOrder.getCleaner() == null)
+            throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
+        double score = getScore(garbageChooses);
+
+        addBaseOrderGarbageList(baseOrder, garbageChooses);
 
         cdOrder.getCleaner().setScore(score);
-        cdOrder.setBaseOrder(trulyBaseOrder);
+        cdOrder.getBaseOrder().setCheckStatus(true);
+        cdOrder.getBaseOrder().setScore(score);
         cdOrderRepository.save(cdOrder);
     }
 
     /**
      * 功能暂时不需要
-     * @param baseOrder the baseOrder
+     *
+     * @param baseOrder      the baseOrder
      * @param garbageChooses the garbageChoose list
      */
     private void checkCROrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
-        
+
     }
 
     private void addFCOrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
         int uid = requestComponent.getUid();
         log.warn("{}", uid);
-        FCOrder fcOrder = new FCOrder();
         Farmer farmer = farmerRepository.getFarmerById(uid);
-        Cleaner cleaner = farmer.getCleaner();
-        baseOrder.setScore(getScore(garbageChooses));
-        fcOrder.setBaseOrder(baseOrder);
-        fcOrder.setFarmer(farmer);
-        fcOrder.setCleaner(cleaner);
-        fcOrderRepository.save(fcOrder);
+        ofNullable(farmer)
+                .map(Farmer::getCleaner)
+                .ifPresentOrElse(cleaner -> {
+                    FCOrder fcOrder = new FCOrder();
+                    fcOrder.setCleaner(cleaner);
+                    fcOrder.setFarmer(farmer);
+                    baseOrder.setScore(getScore(garbageChooses));
+                    fcOrder.setBaseOrder(baseOrder);
+                    fcOrderRepository.save(fcOrder);
+                }, () -> {
+                    throw new ApiException(ResultCode.FAILED);
+                });
     }
 
 
     private void addCDOrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
         int uid = requestComponent.getUid();
-        CDOrder cdOrder = new CDOrder();
         Cleaner cleaner = cleanerRepository.getCleanerById(uid);
-        Driver driver = cleaner.getDriver();
-        baseOrder.setScore(getScore(garbageChooses));
-        cdOrder.setBaseOrder(baseOrder);
-        cdOrder.setCleaner(cleaner);
-        cdOrder.setDriver(driver);
-
-        cdOrderRepository.save(cdOrder);
+        ofNullable(cleaner)
+                .map(Cleaner::getDriver)
+                .ifPresentOrElse(driver -> {
+                    CDOrder cdOrder = new CDOrder();
+                    cdOrder.setCleaner(cleaner);
+                    cdOrder.setDriver(driver);
+                    baseOrder.setScore(getScore(garbageChooses));
+                    cdOrder.setBaseOrder(baseOrder);
+                    cdOrderRepository.save(cdOrder);
+                }, () -> {
+                    throw new ApiException(ResultCode.FAILED);
+                });
     }
 
+    // TODO 2020/10/19 ：重构代码，增加一条id属性
     private void addDTOrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
         int uid = requestComponent.getUid();
         DTOrder dtOrder = new DTOrder();
@@ -206,7 +221,7 @@ public class OrdersComponent {
                         df.format(choose.getAmount() * garbage.getScore())
                 );
             }
-            log.warn("score:{}",score);
+            log.warn("score:{}", score);
             return score;
         } catch (NullPointerException e) {
             throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
@@ -232,9 +247,9 @@ public class OrdersComponent {
      */
 
     private void addBaseOrderGarbageList(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
-        Optional.ofNullable(garbageChooses)
+        ofNullable(garbageChooses)
                 .ifPresent(item -> item.forEach(each -> garbageRepository.findById(
-                        Optional.ofNullable(each)
+                        ofNullable(each)
                                 .map(GarbageChoose::getGarbage)
                                 .map(Garbage::getId)
                                 .orElseGet(() -> {
