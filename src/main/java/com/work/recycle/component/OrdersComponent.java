@@ -183,15 +183,7 @@ public class OrdersComponent {
 
     // TODO 2020/10/19 ：重构代码，增加一条id属性
     private void addDTOrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
-        int uid = requestComponent.getUid();
-        DTOrder dtOrder = new DTOrder();
 
-        TransferStation transferStation = transferStationRepository.getTransferStationById(uid);
-        baseOrder.setScore(getScore(garbageChooses));
-        dtOrder.setBaseOrder(baseOrder);
-        dtOrder.setTransferStation(transferStation);
-
-        dtOrderRepository.save(dtOrder);
     }
 
     private void addCROrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
@@ -208,7 +200,7 @@ public class OrdersComponent {
 
     }
 
-    private double getScore(List<GarbageChoose> garbageChooses) {
+    public double getScore(List<GarbageChoose> garbageChooses) {
         DecimalFormat df = new DecimalFormat("0.0");
         try {
             Iterator<GarbageChoose> iterator = garbageChooses.iterator();
@@ -246,7 +238,7 @@ public class OrdersComponent {
 
      */
 
-    private void addBaseOrderGarbageList(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
+    public void addBaseOrderGarbageList(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
         ofNullable(garbageChooses)
                 .ifPresent(item -> item.forEach(each -> garbageRepository.findById(
                         ofNullable(each)

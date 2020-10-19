@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class InitComponent implements InitializingBean {
     @Autowired
+    private TransferStationRepository transferStationRepository;
+    @Autowired
     private FarmerRepository farmerRepository;
     @Autowired
     private CleanerRepository cleanerRepository;
@@ -26,6 +28,8 @@ public class InitComponent implements InitializingBean {
     private UserService userService;
     @Autowired
     private PasswordEncoder encoder;
+    @Autowired
+    private RecycleFirmRepository recycleFirmRepository;
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -42,6 +46,7 @@ public class InitComponent implements InitializingBean {
             driver.setUser(user3);
             driverRepository.save(driver);
         }
+
 
 
         u = userService.getUserByPhone("13050496541");
@@ -71,8 +76,30 @@ public class InitComponent implements InitializingBean {
             farmer.setCleaner(cleanerRepository.getCleanerByPhoneNumber("13050496541"));
             farmerRepository.save(farmer);
         }
-        
-        
+
+        u = userService.getUserByPhone("13050496543");
+        if (u == null) {
+            User user = new User();
+            user.setName("中转站姓名");
+            user.setRole(User.Role.TRANSFERSTATION);
+            user.setPhoneNumber("13050496543");
+            user.setPassword(encoder.encode("123456"));
+            TransferStation transferStation = new TransferStation();
+            transferStation.setUser(user);
+            transferStationRepository.save(transferStation);
+        }
+
+        u = userService.getUserByPhone("13050496544");
+        if (u == null) {
+            User user = new User();
+            user.setName("回收企业姓名");
+            user.setRole(User.Role.RECYCLEFIRM);
+            user.setPhoneNumber("13050496544");
+            user.setPassword(encoder.encode("123456"));
+            RecycleFirm recycleFirm = new RecycleFirm();
+            recycleFirm.setUser(user);
+            recycleFirmRepository.save(recycleFirm);
+        }
         if (garbageRepository.getGarbageById(1) == null) {
             String RecycleCategory = "可回收垃圾";
             String UnRecycleCategory = "不可回收垃圾";

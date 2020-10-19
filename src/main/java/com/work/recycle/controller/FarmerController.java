@@ -55,6 +55,11 @@ FarmerController {
      */
     @PostMapping("addFCOrder")
     public CommonResult addFCOrder(@RequestBody BaseOrder baseOrder) {
+        try {
+            log.warn(mapper.writeValueAsString(baseOrder));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
         List<GarbageChoose> garbageChooses = baseOrder.getGarbageChooses();
         baseOrder.setGarbageChooses(null);
         farmerService.addFCOrder(baseOrder,garbageChooses);

@@ -36,9 +36,13 @@ class EncryptComponentTest {
         MyToken myToken = new MyToken(User.Role.FARMER,3);
         MyToken myToken1 = new MyToken(User.Role.CLEANER, 2);
         MyToken myToken2 = new MyToken(User.Role.DRIVER, 1);
+        MyToken myToken3 = new MyToken(User.Role.TRANSFERSTATION,4);
+        MyToken myToken4 = new MyToken(User.Role.RECYCLEFIRM,5);
         log.warn(encryptComponent.encryptToken(myToken));
         log.warn(encryptComponent.encryptToken(myToken1));
         log.warn(encryptComponent.encryptToken(myToken2));
+        log.warn(encryptComponent.encryptToken(myToken3));
+        log.warn(encryptComponent.encryptToken(myToken4));
 
         /*
             farmer
@@ -50,6 +54,8 @@ class EncryptComponentTest {
             driver
             7ebb247b73fb86cf1a8228091ea0fab4334e6ee2795c2a3a5d5fe85c73fd226ddc4e5dbd7b29078d22a32e5852df26de
 
+            recycleFirm
+            621ecd13f84b1bfee8fc7dcd2ce2c538068f9b9272039187efd6946302775132f8a88001ab8912cc7123e4e07d9a9bec
          */
     }
 

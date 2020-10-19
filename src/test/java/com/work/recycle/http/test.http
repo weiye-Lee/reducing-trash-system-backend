@@ -1,3 +1,61 @@
+POST http://localhost:8080/api/recycleFirm/addCROrder?id=2
+Content-Type: application/json
+Authorization: 621ecd13f84b1bfee8fc7dcd2ce2c538068f9b9272039187efd6946302775132f8a88001ab8912cc7123e4e07d9a9bec
+
+{
+  "address": "黑龙江省大庆市",
+  "remark": "提交一条保洁员-回收企业订单",
+  "name": "回收企业",
+  "phoneNumber": "13050496544",
+  "garbageChooses": [
+    {
+      "garbage": {
+        "id": 1
+      },
+      "amount": 100.1
+    },
+    {
+      "garbage": {
+        "id": 2
+      },
+      "amount": 2.3
+    }
+  ]
+}
+###
+POST http://localhost:8080/api/transferStation/addDTOrder?id=1
+Content-Type: application/json
+Authorization: e2cf25451c687a1c48b0e6a74bd8303af273e18f8b60dbbddf610ff715ba0362ce36cee522e3adf17fe2dde1c927b2763eb6f633dcf42fbc44eb20cf2c4a8e05
+
+{
+  "address": "黑龙江省大庆市",
+  "remark": "农户zai插入提交一条记录",
+  "name": "李伟业",
+  "phone": "13050496540",
+  "garbageChooses": [
+    {
+      "garbage": {
+        "id": 1
+      },
+      "amount": 5.5
+    },
+    {
+      "garbage": {
+        "id": 2
+      },
+      "amount": 1.2
+    }
+  ]
+}
+
+###
+POST http://localhost:8080/api/transferStation/addDTOrder?id=1
+Content-Type: application/json
+Authorization: e2cf25451c687a1c48b0e6a74bd8303af273e18f8b60dbbddf610ff715ba0362ce36cee522e3adf17fe2dde1c927b2763eb6f633dcf42fbc44eb20cf2c4a8e05
+
+{}
+
+###
 POST http://localhost:8080/api/user/login
 Content-Type: application/json
 
@@ -94,9 +152,9 @@ Accept: application/json
 Authorization: 6cc9b3328629c0569d43ea63b0800c3bb11ad1bea6357dd9f9fa2b2faed48dac6777e55db29d97b542838358fff6c16124b0c5be0a686f41b9cba1dad5fa3e8b
 
 ###
-GET http://localhost:8080/api/farmer/getBaseOrderById?id=22
+GET http://localhost:8080/api/farmer/getBaseOrderById?id=
 Accept: application/json
-Authorization: 6cc9b3328629c0569d43ea63b0800c3bb11ad1bea6357dd9f9fa2b2faed48dac6777e55db29d97b542838358fff6c16124b0c5be0a686f41b9cba1dad5fa3e8b
+Authorization: 139c2fbebadbd5a7d23baa1933854de84a3516e2c3b6cd8923ae7d40d1da3208807c992e36c3c75f447151d4270b7612
 
 ###
 GET http://localhost:8080/api/cleaner/getScore

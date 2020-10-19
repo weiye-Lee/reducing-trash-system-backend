@@ -33,8 +33,6 @@ public class UserController {
     @Autowired
     private EncryptComponent encrypt;
     @Autowired
-    private AuthCodeComponent authCodeComponent;
-    @Autowired
     private RequestComponent requestComponent;
     @Autowired
     private PasswordEncoder encoder;
@@ -50,48 +48,45 @@ public class UserController {
      *                 }
      * @return 返回手机号
      */
-    @Deprecated
-    @PostMapping("sentAuthCode")
-    public CommonResult sentAuthCode(@Param("phone") String phone, HttpServletResponse response) {
-
-        if (!PhoneUtil.isMobileNO(phone)) {
-            return CommonResult.failed(ResultCode.VALIDATE_FAILED);
-        }
-        User user = userService.getUserByPhone(phone);
-        if (user == null) {
-            return CommonResult.failed(ResultCode.FORBIDDEN);
-        }
-        String authcode = String.format("%06d", new Random().nextInt(1000000));
-        // 是否使用向手机发送验证码的接口~~~
-        // authCodeComponent.sentTextMsg(phone,authcode);
-        log.warn(authcode);
-        String auth = encrypt.encryptToken(new MyToken(authcode, user.getId()));
-        response.setHeader(MyToken.AUTHORIZATION, auth);
-        return CommonResult.success(Map.of("phone", phone));
-    }
+    // @PostMapping("sentAuthCode")
+    // public CommonResult sentAuthCode(@Param("phone") String phone, HttpServletResponse response) {
+    //     if (!PhoneUtil.isMobileNO(phone)) {
+    //         return CommonResult.failed(ResultCode.VALIDATE_FAILED);
+    //     }
+    //     User user = userService.getUserByPhone(phone);
+    //     if (user == null) {
+    //         return CommonResult.failed(ResultCode.FORBIDDEN);
+    //     }
+    //     String authcode = String.format("%06d", new Random().nextInt(1000000));
+    //     // 是否使用向手机发送验证码的接口~~~
+    //     // authCodeComponent.sentTextMsg(phone,authcode);
+    //     log.warn(authcode);
+    //     String auth = encrypt.encryptToken(new MyToken(authcode, user.getId()));
+    //     response.setHeader(MyToken.AUTHORIZATION, auth);
+    //     return CommonResult.success(Map.of("phone", phone));
+    // }
 
     /**
      * ----------- <弃用> -------------
      * 对用户输入的验证进行校验
      *
-     * @param code     ：验证码
+     * @param /code     ：验证码
      * @param response ：响应体 {
      *                 token ：uid Role
      *                 }
      * @return 若验证成功 返回 User 对象
      */
-    @Deprecated
-    @PostMapping("checkAuthCode")
-    public CommonResult checkAuthCode(@Param("code") String code, HttpServletResponse response) {
-        log.warn(code);
-        log.warn(requestComponent.getAuthCode());
-        if (code.equals(requestComponent.getAuthCode())) {
-            User user = userService.getUserById(requestComponent.getUid());
-            String auth = encrypt.encryptToken(new MyToken(user.getRole(), user.getId()));
-            response.setHeader(MyToken.AUTHORIZATION, auth);
-            return CommonResult.success(Map.of("user", user));
-        } else return CommonResult.failed(ResultCode.FORBIDDEN);
-    }
+    // @PostMapping("checkAuthCode")
+    // public CommonResult checkAuthCode(@Param("code") String code, HttpServletResponse response) {
+    //     log.warn(code);
+    //     log.warn(requestComponent.getAuthCode());
+    //     if (code.equals(requestComponent.getAuthCode())) {
+    //         User user = userService.getUserById(requestComponent.getUid());
+    //         String auth = encrypt.encryptToken(new MyToken(user.getRole(), user.getId()));
+    //         response.setHeader(MyToken.AUTHORIZATION, auth);
+    //         return CommonResult.success(Map.of("user", user));
+    //     } else return CommonResult.failed(ResultCode.FORBIDDEN);
+    // }
 
     @PostMapping("login")
     public CommonResult userLogin(@RequestBody User loginUser, HttpServletResponse response) {
