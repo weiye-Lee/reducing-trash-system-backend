@@ -1,8 +1,10 @@
 package com.work.recycle.interceptor;
 
 
+import com.work.recycle.common.ResultCode;
 import com.work.recycle.component.EncryptComponent;
 import com.work.recycle.component.MyToken;
+import com.work.recycle.exception.ApiException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +32,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                     request.setAttribute(MyToken.ROLE, token.getRole());
                     request.setAttribute(MyToken.AUTHCODE,token.getAuthcode());
                 }, ()->{
-                    throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"未登录");
+                    throw new ApiException(ResultCode.UNAUTHORIZED);
                 });
         return true;
     }
