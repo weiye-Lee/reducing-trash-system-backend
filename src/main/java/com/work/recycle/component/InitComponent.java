@@ -7,6 +7,7 @@ import com.work.recycle.service.FarmerService;
 import com.work.recycle.service.UserService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -23,6 +24,8 @@ public class InitComponent implements InitializingBean {
     private UserRepository userRepository;
     @Autowired
     private UserService userService;
+    @Autowired
+    private PasswordEncoder encoder;
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -34,6 +37,7 @@ public class InitComponent implements InitializingBean {
             user3.setSex(User.Sex.MALE);
             user3.setRole(User.Role.DRIVER);
             user3.setPhoneNumber("13050496540");
+            user3.setPassword(encoder.encode("123456"));
             Driver driver = new Driver();
             driver.setUser(user3);
             driverRepository.save(driver);
@@ -47,6 +51,7 @@ public class InitComponent implements InitializingBean {
             user2.setSex(User.Sex.MALE);
             user2.setRole(User.Role.CLEANER);
             user2.setPhoneNumber("13050496541");
+            user2.setPassword(encoder.encode("123456"));
             Cleaner cleaner = new Cleaner();
             cleaner.setUser(user2);
             cleaner.setDriver(driverRepository.getDriverByPhoneNumber("13050496540"));
@@ -60,6 +65,7 @@ public class InitComponent implements InitializingBean {
             user.setSex(User.Sex.MALE);
             user.setRole(User.Role.FARMER);
             user.setPhoneNumber("13050496542");
+            user.setPassword(encoder.encode("123456"));
             Farmer farmer = new Farmer();
             farmer.setUser(user);
             farmer.setCleaner(cleanerRepository.getCleanerByPhoneNumber("13050496541"));

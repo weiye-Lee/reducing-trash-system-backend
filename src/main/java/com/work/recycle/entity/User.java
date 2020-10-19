@@ -35,7 +35,12 @@ public class User {
     @Column(length = 11,nullable = false)
     private String phoneNumber;
 
+    @Column(nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String password;
+
     @Column(length = 20)
+    @JsonIgnore
     private String IDNumber;
 
     private Sex sex;

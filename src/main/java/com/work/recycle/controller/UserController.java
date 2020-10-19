@@ -9,16 +9,19 @@ import com.work.recycle.component.EncryptComponent;
 import com.work.recycle.component.MyToken;
 import com.work.recycle.component.RequestComponent;
 import com.work.recycle.entity.User;
+import com.work.recycle.exception.ApiException;
 import com.work.recycle.service.UserService;
 import com.work.recycle.utils.PhoneUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 
 @RestController
@@ -33,17 +36,21 @@ public class UserController {
     private AuthCodeComponent authCodeComponent;
     @Autowired
     private RequestComponent requestComponent;
+    @Autowired
+    private PasswordEncoder encoder;
 
     /**
+     * ---------- <弃用> ------------
      * 验证码发送接口
      *
      * @param phone    用户手机号
      * @param response 响应体 {
      *                 token ：验证码 uid
      *                 （不包含uid是判断为完成登录和登录完成的标准）
-     * }
+     *                 }
      * @return 返回手机号
      */
+    @Deprecated
     @PostMapping("sentAuthCode")
     public CommonResult sentAuthCode(@Param("phone") String phone, HttpServletResponse response) {
 
@@ -64,23 +71,39 @@ public class UserController {
     }
 
     /**
+     * ----------- <弃用> -------------
      * 对用户输入的验证进行校验
-     * @param code ：验证码
+     *
+     * @param code     ：验证码
      * @param response ：响应体 {
      *                 token ：uid Role
-     * }
+     *                 }
      * @return 若验证成功 返回 User 对象
      */
+    @Deprecated
     @PostMapping("checkAuthCode")
     public CommonResult checkAuthCode(@Param("code") String code, HttpServletResponse response) {
         log.warn(code);
         log.warn(requestComponent.getAuthCode());
         if (code.equals(requestComponent.getAuthCode())) {
             User user = userService.getUserById(requestComponent.getUid());
-            String auth = encrypt.encryptToken(new MyToken(user.getRole(),user.getId()));
+            String auth = encrypt.encryptToken(new MyToken(user.getRole(), user.getId()));
             response.setHeader(MyToken.AUTHORIZATION, auth);
             return CommonResult.success(Map.of("user", user));
         } else return CommonResult.failed(ResultCode.FORBIDDEN);
+    }
+
+    @PostMapping("login")
+    public CommonResult userLogin(@RequestBody User loginUser, HttpServletResponse response) {
+        User user = Optional.ofNullable(userService.getUserByPhone(loginUser.getPhoneNumber()))
+                .filter(u -> encoder.matches(loginUser.getPassword(), u.getPassword()))
+                .orElseThrow(() -> new ApiException(ResultCode.UNAUTHORIZED));
+
+        MyToken token = new MyToken(user.getRole(), user.getId());
+        String auth = encrypt.encryptToken(token);
+        response.setHeader(MyToken.AUTHORIZATION, auth);
+        log.debug("{}", "登陆成功");
+        return CommonResult.success(Map.of("user",user));
     }
 
     /**
@@ -110,7 +133,7 @@ public class UserController {
      * @param user {
      *             String name,
      *             Sex sex,
-     * }
+     *             }
      * @return 若成功返回修改后的用户对象
      */
     @PostMapping("updateUserInfo")

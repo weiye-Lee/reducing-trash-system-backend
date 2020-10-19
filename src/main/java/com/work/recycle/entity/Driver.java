@@ -1,5 +1,6 @@
 package com.work.recycle.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -31,11 +32,13 @@ public class Driver {
     @OneToMany(mappedBy = "driver")
     private List<DTOrder> dtOrders;
 
+    @JsonIgnore
     @Column(columnDefinition = "timestamp default current_timestamp",
             insertable = false,
             updatable = false)
     private LocalDateTime insertTime;
 
+    @JsonIgnore
     @Column(columnDefinition = "timestamp default current_timestamp " +
             "on update current_timestamp",
             insertable = false,
