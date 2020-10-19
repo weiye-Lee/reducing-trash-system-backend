@@ -21,7 +21,7 @@ public class User {
     }
 
     public enum Role{
-        FARMER,CLEANER,DRIVER,RECYCLEFIRM,ADMIN,LENADER
+        FARMER,CLEANER,DRIVER,RECYCLEFIRM,ADMIN,LENADER,TRANSFERSTATION
     }
 
     @Id
