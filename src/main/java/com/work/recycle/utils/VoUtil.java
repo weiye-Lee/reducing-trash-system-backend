@@ -34,6 +34,11 @@ public class VoUtil {
         return msg.toString();
     }
 
+    /**
+     * 根据一条基础订单（baseOrder),生成一条订单vo
+     * @param baseOrder the baseOrder
+     * @return 订单Vo
+     */
     public static IndexOrderVo constructIndexOrder(BaseOrder baseOrder) {
             IndexOrderVo indexOrderVo = new IndexOrderVo();
             indexOrderVo.setAddress(baseOrder.getAddress());

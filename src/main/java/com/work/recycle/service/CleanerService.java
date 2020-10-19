@@ -2,14 +2,17 @@ package com.work.recycle.service;
 
 import com.work.recycle.component.OrdersComponent;
 import com.work.recycle.component.RequestComponent;
+import com.work.recycle.controller.vo.IndexOrderVo;
 import com.work.recycle.entity.*;
 import com.work.recycle.exception.Asserts;
 import com.work.recycle.repository.*;
 import com.work.recycle.utils.SwitchUtil;
+import com.work.recycle.utils.VoUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -62,10 +65,39 @@ public class CleanerService {
 
     }
 
-    public List<FCOrder> getFCOrders() {
+    /**
+     * 返回标准类型订单列表
+     * @param status 审核状态
+     * @return 标准订单类型 list
+     */
+    private List<IndexOrderVo> getCommonOrders(Boolean status) {
         int uid = requestComponent.getUid();
-        log.warn("{}",uid);
-        return fcOrderRepository.getCleanerFCOrdersById(uid);
+        List<FCOrder> fcOrders = fcOrderRepository.getCleanerFCOrdersById(uid,status);
+        List<IndexOrderVo> indexOrderVos = new ArrayList<>();
+        fcOrders.forEach(each -> {
+            IndexOrderVo indexOrderVo = VoUtil.constructIndexOrder(each.getBaseOrder());
+            indexOrderVos.add(indexOrderVo);
+        });
+        return indexOrderVos;
+    }
+
+    /**
+     * 获取保洁员审核完成的订单
+     *
+     * @return 订单vo list
+     */
+    public List<IndexOrderVo> getFCOrderChecked() {
+        return getCommonOrders(true);
+    }
+
+
+    /**
+     * 获取保洁员审核完成的订单
+     *
+     * @return 订单vo list
+     */
+    public List<IndexOrderVo> getFCOrderChecking() {
+        return getCommonOrders(false);
     }
 
     public int getScore() {

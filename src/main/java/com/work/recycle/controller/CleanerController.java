@@ -24,6 +24,8 @@ public class CleanerController {
     @Autowired
     private ObjectMapper mapper;
 
+
+
     /**
      * 获得农户提交待审核订单
      *
@@ -31,15 +33,17 @@ public class CleanerController {
      */
     @GetMapping("getFCOrders/checking")
     public CommonResult getFCOrdersChecking() {
-        return CommonResult.success(cleanerService.getFCOrders());
+        return CommonResult.success(cleanerService.getFCOrderChecking());
     }
+    
 
-
-    // TODO 2020/10/14 :  获取审核完成订单
-
+    /**
+     * 获得农户提交审核完成订单
+     * @return 订单vo list
+     */
     @GetMapping("getFCOrders/checked")
     public CommonResult getFCOrdersChecker() {
-        return CommonResult.success(null);
+        return CommonResult.success(cleanerService.getFCOrderChecked());
     }
 
     /**
@@ -111,4 +115,6 @@ public class CleanerController {
         cleaners.forEach(each -> rankListVos.add(new RankListVo(each.getUser().getName(),each.getScore(), each.getId())));
         return CommonResult.success(rankListVos);
     }
+
+
 }

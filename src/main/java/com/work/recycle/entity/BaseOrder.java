@@ -1,5 +1,6 @@
 package com.work.recycle.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ public class BaseOrder {
 
     private double score = 0;
 
+    @JsonIgnore
     private Boolean receiveStatus = false;
 
     private Boolean checkStatus = false;

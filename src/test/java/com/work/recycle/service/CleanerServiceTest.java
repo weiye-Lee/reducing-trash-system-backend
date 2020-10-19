@@ -43,18 +43,6 @@ class CleanerServiceTest {
 
     }
 
-    @Test
-    void test_getOrders() {
-        cleanerService.getFCOrders()
-                .forEach(each -> {
-                    try {
-                        log.warn(each.toString());
-                        log.warn(mapper.writeValueAsString(each));
-                    } catch (JsonProcessingException e) {
-                        e.printStackTrace();
-                    }
-                });
-    }
 
     @Test
     void test_saveAll() {

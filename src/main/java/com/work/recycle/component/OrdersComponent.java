@@ -102,6 +102,7 @@ public class OrdersComponent {
 
     }
 
+    // TODO 2002/10/19 : 修复bug
     private void checkFCOrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
         double score = getScore(garbageChooses);
 
@@ -136,7 +137,7 @@ public class OrdersComponent {
      * @param garbageChooses the garbageChoose list
      */
     private void checkCROrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
-
+        
     }
 
     private void addFCOrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
