@@ -109,4 +109,8 @@ public class CleanerService {
         return cleanerRepository.findTop10ByOrderByScoreDesc();
     }
 
+    public BaseOrder getBaseOrderById(int id) {
+        return baseOrderRepository.getBaseOrderById(id);
+    }
+
 }

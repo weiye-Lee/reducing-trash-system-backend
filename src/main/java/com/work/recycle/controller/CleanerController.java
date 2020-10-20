@@ -9,6 +9,7 @@ import com.work.recycle.repository.CleanerRepository;
 import com.work.recycle.service.CleanerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -116,5 +117,57 @@ public class CleanerController {
         return CommonResult.success(rankListVos);
     }
 
+    /**
+     * 获得基础订单信息
+     * @param id 基础订单id
+     * @return BaseOrder {
+     *   "code": 200,
+     *   "message": "操作成功",
+     *   "data": {
+     *     "id": 1,
+     *     "score": 20000.0,
+     *     "receiveStatus": false,
+     *     "checkStatus": false,
+     *     "address": "黑龙江省大庆市",
+     *     "remark": "农户zai插入提交一条记录",
+     *     "garbageChooses": [
+     *       {
+     *         "id": 1,
+     *         "garbage": {
+     *           "id": 1,
+     *           "name": "二手飞机",
+     *           "category": "可回收垃圾",
+     *           "score": 1,
+     *           "unit": "个",
+     *           "insertTime": "2020-10-15T15:14:46",
+     *           "updateTime": "2020-10-15T15:33:15"
+     *         },
+     *         "amount": 20.0
+     *       },
+     *       {
+     *         "id": 2,
+     *         "garbage": {
+     *           "id": 2,
+     *           "name": "厨余垃圾",
+     *           "category": "不可回收垃圾",
+     *           "score": 0,
+     *           "unit": "斤",
+     *           "insertTime": "2020-10-15T15:14:46",
+     *           "updateTime": "2020-10-15T15:14:46"
+     *         },
+     *         "amount": 20.0
+     *       }
+     *     ],
+     *     "insertTime": "2020-10-15T15:23:54",
+     *     "updateTime": "2020-10-15T15:23:54"
+     *   }
+     * }
+     *
+     * Response code: 200; Time: 127ms; Content length: 570 bytes
+     */
+    @GetMapping("getBaseOrderById")
+    public CommonResult getBaseOrderById(@Param("id") int id) {
+        return CommonResult.success(cleanerService.getBaseOrderById(id));
+    }
 
 }
