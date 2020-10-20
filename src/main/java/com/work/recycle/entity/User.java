@@ -43,6 +43,9 @@ public class User {
     @JsonIgnore
     private String IDNumber;
 
+    @Column(length = 20)
+    private String address;
+
     private Sex sex;
 
     private Role role;

@@ -38,6 +38,7 @@ public class InitComponent implements InitializingBean {
         if (u == null) {
             User user3 = new User();
             user3.setName("司机姓名");
+            user3.setAddress("黑龙江大庆市");
             user3.setSex(User.Sex.MALE);
             user3.setRole(User.Role.DRIVER);
             user3.setPhoneNumber("13050496540");
@@ -53,6 +54,7 @@ public class InitComponent implements InitializingBean {
         if (u == null) {
             User user2 = new User();
             user2.setName("保洁员姓名");
+            user2.setAddress("黑龙江大庆市");
             user2.setSex(User.Sex.MALE);
             user2.setRole(User.Role.CLEANER);
             user2.setPhoneNumber("13050496541");
@@ -67,6 +69,7 @@ public class InitComponent implements InitializingBean {
         if (u == null) {
             User user = new User();
             user.setName("农户姓名");
+            user.setAddress("黑龙江大庆市");
             user.setSex(User.Sex.MALE);
             user.setRole(User.Role.FARMER);
             user.setPhoneNumber("13050496542");
@@ -93,6 +96,7 @@ public class InitComponent implements InitializingBean {
         if (u == null) {
             User user = new User();
             user.setName("回收企业姓名");
+            user.setAddress("黑龙江大庆市");
             user.setRole(User.Role.RECYCLEFIRM);
             user.setPhoneNumber("13050496544");
             user.setPassword(encoder.encode("123456"));
