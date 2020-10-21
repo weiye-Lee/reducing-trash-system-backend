@@ -1,4 +1,44 @@
-GET http://localhost:8080/api/cleaner/getBaseOrderById?id=2
+GET http://localhost:8080/api/driver/getBaseOrderById?id=23
+Accept: application/json
+Authorization: a8a4963636dad72d4336e5c984885c9a3535978ff0479cfde2b8864bc8cbc29fd41428cd010c081a095a4e5280832754
+
+###
+GET http://localhost:8080/api/driver/getCDOrder/Checked
+Accept: application/json
+Authorization: a8a4963636dad72d4336e5c984885c9a3535978ff0479cfde2b8864bc8cbc29fd41428cd010c081a095a4e5280832754
+
+###
+POST http://localhost:8080/api/driver/checkCDOrder
+Content-Type: application/json
+Authorization: a8a4963636dad72d4336e5c984885c9a3535978ff0479cfde2b8864bc8cbc29fd41428cd010c081a095a4e5280832754
+
+{
+  "id": 23,
+  "garbageChooses": [
+    {
+      "id": 32,
+      "garbage": {
+        "id": 1
+      },
+      "amount": 10.1
+    },
+    {
+      "id": 33,
+      "garbage": {
+        "id": 2
+      },
+      "amount": 10
+    }
+  ]
+}
+
+###
+GET http://localhost:8080/api/driver/getCDOrder/Checked
+Accept: application/json
+Authorization: a8a4963636dad72d4336e5c984885c9a3535978ff0479cfde2b8864bc8cbc29fd41428cd010c081a095a4e5280832754
+
+###
+GET http://localhost:8080/api/cleaner/getBaseOrderById?id=8
 Accept: application/json
 Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e3d69a5f46c7f3b2bef6219155aa7d57
 
@@ -27,6 +67,7 @@ Authorization: 621ecd13f84b1bfee8fc7dcd2ce2c538068f9b9272039187efd6946302775132f
     }
   ]
 }
+
 ###
 POST http://localhost:8080/api/transferStation/addDTOrder?id=1
 Content-Type: application/json
@@ -91,6 +132,7 @@ Authorization: 139c2fbebadbd5a7d23baa1933854de84a3516e2c3b6cd8923ae7d40d1da32088
     }
   ]
 }
+
 ###
 GET http://localhost:8080/api/cleaner/getFCOrders/checking
 Accept: application/json
@@ -147,7 +189,7 @@ Accept: application/json
 Authorization: 6cc9b3328629c0569d43ea63b0800c3bb11ad1bea6357dd9f9fa2b2faed48dac6777e55db29d97b542838358fff6c16124b0c5be0a686f41b9cba1dad5fa3e8b
 
 ###
-GET http://localhost:8080/api/user/getUnRecycleGarbage
+GET http://119.3.178.83:8080/api/user/getUnRecycleGarbage
 Accept: application/json
 Authorization: 6cc9b3328629c0569d43ea63b0800c3bb11ad1bea6357dd9f9fa2b2faed48dac6777e55db29d97b542838358fff6c16124b0c5be0a686f41b9cba1dad5fa3e8b
 
@@ -157,7 +199,7 @@ Accept: application/json
 Authorization: 6cc9b3328629c0569d43ea63b0800c3bb11ad1bea6357dd9f9fa2b2faed48dac6777e55db29d97b542838358fff6c16124b0c5be0a686f41b9cba1dad5fa3e8b
 
 ###
-GET http://localhost:8080/api/farmer/getBaseOrderById?id=
+GET http://localhost:8080/api/farmer/getBaseOrderById?id=8
 Accept: application/json
 Authorization: 139c2fbebadbd5a7d23baa1933854de84a3516e2c3b6cd8923ae7d40d1da3208807c992e36c3c75f447151d4270b7612
 
@@ -180,6 +222,7 @@ Authorization: 96a45160cb1db954294ecc22baba66cc8c2e1bac3023c735ae00877c5b3de0855
 GET http://localhost:8080/api/farmer/getScore
 Accept: application/json
 Authorization: 96a45160cb1db954294ecc22baba66cc8c2e1bac3023c735ae00877c5b3de0855ca53402b3284a1690309f8c369f1c5e596165042e390f0964ddb2cb3435fb21
+
 ###
 POST http://localhost:8080/api/user/updateUserInfo
 Content-Type: application/json
@@ -203,46 +246,23 @@ Accept: application/json
 Authorization: 685636ef397549a3e086bdf314365d3f50d14531709a3e92cef67fbf0f80be69b5cff53db01a309b5481d436642a8f2c
 
 ###
-POST http://localhost:8080/api/driver/checkCDOrder
-Content-Type: application/json
-
-{
-  "id": 26,
-  "garbageChooses": [
-    {
-      "id": 58,
-      "garbage": {
-        "id": 1
-      },
-      "amount": 10
-    },
-    {
-      "id": 59,
-      "garbage": {
-        "id": 2
-      },
-      "amount": 10
-    }
-  ]
-}
-
-###
 GET http://localhost:8080/api/driver/receive/CDOrder/23
 Accept: application/json
 
 ###
 POST http://localhost:8080/api/cleaner/addCDOrder
 Content-Type: application/json
-Authorization: d6358ed60c3f72d93f0594fe7f5b2474aa17067c0e5927c6138cd5554e0f90fbcf8c8212b8eec2d0bd4718ec95ec6cba0240ded7e377229a7f3c8ccd4ae7b993
+Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e3d69a5f46c7f3b2bef6219155aa7d57
 
 {
-  "remark": "管理员提交一条记录",
+  "address": "火星",
+  "remark": "管理员提交一条保洁员司机订单",
   "garbageChooses": [
     {
       "garbage": {
         "id": 1
       },
-      "amount": 5
+      "amount": 5.3
     },
     {
       "garbage": {
@@ -262,8 +282,7 @@ Content-Type: application/json
 ###
 GET http://localhost:8080/api/farmer/getBaseOrder?id=1
 Accept: application/json
-Authorization: d6358ed60c3f72d93f0594fe7f5b2474aa17067c0e5927c6138cd5554e0f90fbcf8c8212b8eec2d0bd4718ec95ec6cba0240ded7e377229a7f3c8ccd4ae7b993
-
+Authorization: 139c2fbebadbd5a7d23baa1933854de84a3516e2c3b6cd8923ae7d40d1da3208807c992e36c3c75f447151d4270b7612
 
 ###
 POST http://localhost:8080/api/farmer/addFCOrder
@@ -299,6 +318,7 @@ Accept: application/json
 ###
 GET http://localhost:8080/api/user/getGarbage
 Accept: application/json
+
 ###
 POST http://localhost:8080/api/user/sentAuthCode?phone=111
 Content-Type: application/json

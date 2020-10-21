@@ -7,6 +7,7 @@ import com.work.recycle.entity.Driver;
 import com.work.recycle.entity.GarbageChoose;
 import com.work.recycle.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -62,6 +63,21 @@ public class DriverController {
         baseOrder.setGarbageChooses(null);
         driverService.checkCDOrder(baseOrder,garbageChooses);
         return CommonResult.success(null);
+    }
+    
+    @GetMapping("getCDOrder/Checking")
+    public CommonResult getCDOrderChecking() {
+        return CommonResult.success(driverService.getCDOrderChecking());
+    }
+
+    @GetMapping("getCDOrder/Checked")
+    public CommonResult getCDOrderChecker() {
+        return CommonResult.success(driverService.getCDOrderChecked());
+    }
+
+    @GetMapping("getBaseOrderById")
+    public CommonResult getBaseOrderById(@Param("id") int id) {
+        return CommonResult.success(driverService.getBaseOrderById(id));
     }
 
 }
