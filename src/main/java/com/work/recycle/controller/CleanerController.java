@@ -25,8 +25,6 @@ public class CleanerController {
     @Autowired
     private ObjectMapper mapper;
 
-
-
     /**
      * 获得农户提交待审核订单
      *

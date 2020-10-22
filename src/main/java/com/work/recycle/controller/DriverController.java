@@ -64,7 +64,7 @@ public class DriverController {
         driverService.checkCDOrder(baseOrder,garbageChooses);
         return CommonResult.success(null);
     }
-    
+
     @GetMapping("getCDOrder/Checking")
     public CommonResult getCDOrderChecking() {
         return CommonResult.success(driverService.getCDOrderChecking());

@@ -20,6 +20,7 @@ import java.util.List;
  */
 @Service
 @Slf4j
+// TODO 2020/10/21 : 实现权限分离，check订单时进行权限验证
 public class CleanerService {
     @Autowired
     private FCOrderRepository fcOrderRepository;

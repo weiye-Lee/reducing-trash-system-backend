@@ -66,6 +66,5 @@ public class AuthCodeComponent {
         }
 
         log.warn("{}",mapper.writeValueAsString(result));
-
     }
 }
