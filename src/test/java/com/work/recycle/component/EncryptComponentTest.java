@@ -61,9 +61,13 @@ class EncryptComponentTest {
 
     @Test
     void test_encrypt() {
-        String auth = "96a45160cb1db954294ecc22baba66cc8c2e1bac3023c735ae00877c5b3de0855ca53402b3284a1690309f8c369f1c5e596165042e390f0964ddb2cb3435fb21";
+        String auth = "dbf0eb6d717f08e22cf1fdc8e4514d3bfa023e04c0b719020f16d3cdeb52ae642c28726c1eb5271e864b87c357f0dc64598c08cb68032b5c0b5afbc3d214ae81";
         MyToken myToken = encryptComponent.decryptToken(auth);
-        log.warn("{}",myToken.getUid());
+        try {
+            log.warn(mapper.writeValueAsString(myToken));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
 
     }
 

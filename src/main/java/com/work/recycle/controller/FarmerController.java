@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @Slf4j
@@ -104,6 +105,31 @@ FarmerController {
         return CommonResult.success(farmerService.getOrderTimes());
     }
 
+
+    /**
+     * 获取积分和提交次数展示
+     * @return {
+     *   "code": 200,
+     *   "message": "操作成功",
+     *   "data": [
+     *     {
+     *       "score": 0
+     *     },
+     *     {
+     *       "times": 3
+     *     }
+     *   ]
+     * }
+     */
+    @GetMapping("getOrderInfo")
+    public CommonResult getOrderInfo() {
+        Map map = Map.of("score",farmerService.getScore());
+        Map map1 = Map.of("times",farmerService.getOrderTimes());
+        List<Map> list = new ArrayList<>();
+        list.add(map);
+        list.add(map1);
+        return CommonResult.success(list);
+    }
     /**
      * 获得基础订单信息
      * @param id 基础订单id
@@ -167,5 +193,13 @@ FarmerController {
         List<RankListVo> rankListVos = new ArrayList<>();
         farmers.forEach(each -> rankListVos.add(new RankListVo(each.getUser().getName(),each.getScore(), each.getId())));
         return CommonResult.success(rankListVos);
+    }
+
+
+
+    // TODO 2020/10/22 ：删除订单
+    @PostMapping("removeFCOrder")
+    public CommonResult removeFCOrder() {
+        return null;
     }
 }

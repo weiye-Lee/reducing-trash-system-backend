@@ -36,7 +36,7 @@ public class TransferStationService {
 
     // 中转站添加 司机-中转站订单
     public void addDTOrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses, int id) {
-        int uid = 4;
+        int uid = requestComponent.getUid();
         TransferStation transferStation = transferStationRepository.getTransferStationById(uid);
         DTOrder dtOrder = new DTOrder();
         Driver driver = driverRepository.getDriverById(id);
@@ -48,6 +48,12 @@ public class TransferStationService {
         dtOrder.setTransferStation(transferStation);
         dtOrderRepository.save(dtOrder);
         ordersComponent.addBaseOrderGarbageList(baseOrder,garbageChooses);
+    }
+
+    // TODO 2020/10/22 : 中转站获得订单记录
+    public List<DTOrder> getDTOrders() {
+        int uid = requestComponent.getUid();
+        return null;
     }
 
 }

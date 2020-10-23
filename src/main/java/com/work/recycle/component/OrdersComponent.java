@@ -53,13 +53,6 @@ public class OrdersComponent {
     @Autowired
     private RequestComponent requestComponent;
 
-    // ----------- 仅用于生产环境下 ------------
-    private static final int FARMERUID = 1;
-    private static final int CLEANERUID = 5;
-    private static final int DRIVERUID = 6;
-    private static final int RECYCLEFIRMUID = 8;
-    private static final int TRANSFERSTATIONUID = 9;
-    // ----------------------------------------
 
     /**
      * 插入订单统一处理方法
@@ -181,7 +174,12 @@ public class OrdersComponent {
                 });
     }
 
-    // TODO 2020/10/19 ：重构代码，增加一条id属性
+    /**
+     * 功能暂时不需要
+     *
+     * @param baseOrder      the baseOrder
+     * @param garbageChooses the garbageChoose list
+     */
     private void addDTOrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
 
     }

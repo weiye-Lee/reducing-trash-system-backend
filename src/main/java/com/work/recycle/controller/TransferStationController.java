@@ -13,10 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.AccessType;
 import org.springframework.data.repository.query.Param;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,9 +29,19 @@ public class TransferStationController {
 
     @PostMapping("addDTOrder")
     public CommonResult addDTOrder(@Param("id") int id, @RequestBody BaseOrder baseOrder) {
+        try {
+            log.warn(mapper.writeValueAsString(baseOrder));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
         List<GarbageChoose> garbageChooses = baseOrder.getGarbageChooses();
         baseOrder.setGarbageChooses(null);
         transferStationService.addDTOrder(baseOrder,garbageChooses,id);
         return CommonResult.success(null);
+    }
+
+    @GetMapping("getDTOrder")
+    public CommonResult getDTOrder() {
+        return null;
     }
 }

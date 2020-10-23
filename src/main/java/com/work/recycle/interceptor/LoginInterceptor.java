@@ -1,6 +1,7 @@
 package com.work.recycle.interceptor;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.work.recycle.common.ResultCode;
 import com.work.recycle.component.EncryptComponent;
 import com.work.recycle.component.MyToken;
@@ -22,9 +23,11 @@ import java.util.Optional;
 public class LoginInterceptor implements HandlerInterceptor {
     @Autowired
     private EncryptComponent encrypt;
-
+    @Autowired
+    private ObjectMapper mapper;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        log.warn(mapper.writeValueAsString(request.getHeader(MyToken.AUTHORIZATION)));
         Optional.ofNullable(request.getHeader(MyToken.AUTHORIZATION))
                 .map(auth->encrypt.decryptToken(auth))
                 .ifPresentOrElse(token -> {
