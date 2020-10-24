@@ -69,6 +69,7 @@ public class RecycleFirmService {
         return indexOrderVos;
     }
 
+
     public List<IndexOrderVo> getCROrders() {
         return getCommonOrders();
     }

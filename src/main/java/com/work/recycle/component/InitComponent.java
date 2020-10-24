@@ -198,7 +198,10 @@ public class InitComponent implements InitializingBean {
                 } else {
                     garbage[i].setCategory(UnRecycleCategory);
                 }
+                String picture = "http://localhost:8080/static/" + (i+1) + ".jpg";
+                garbage[i].setPicture(picture);
                 garbageRepository.save(garbage[i]);
+
             }
         }
 
@@ -208,11 +211,13 @@ public class InitComponent implements InitializingBean {
             String unit = "斤";
             double score = 0.1;
             Garbage garbage = new Garbage();
+            String picture = "http://localhost:8080/static/" + 17 + ".jpg";
             garbage.setCategory(category);
             garbage.setType(type);
             garbage.setUnit(unit);
             garbage.setName(type);
             garbage.setScore(score);
+            garbage.setPicture(picture);
             garbageRepository.save(garbage);
         }
 

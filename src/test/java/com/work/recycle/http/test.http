@@ -1,3 +1,8 @@
+GET http://localhost:8080/static/1.jpg
+Accept: application/json
+
+
+###
 GET http://localhost:8080/api/recycleFirm/getBaseOrderById?id=3
 Accept: application/json
 Authorization: 621ecd13f84b1bfee8fc7dcd2ce2c538068f9b9272039187efd6946302775132f8a88001ab8912cc7123e4e07d9a9bec
