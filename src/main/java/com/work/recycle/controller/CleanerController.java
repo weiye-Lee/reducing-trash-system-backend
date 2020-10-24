@@ -168,4 +168,15 @@ public class CleanerController {
         return CommonResult.success(cleanerService.getBaseOrderById(id));
     }
 
+    @GetMapping("getCDOrder/Checking")
+    public CommonResult getCDOrderChecking() {
+        return CommonResult.success(cleanerService.getCDOrderChecking());
+    }
+
+    @GetMapping("getCDOrder/Checked")
+    public CommonResult getCDOrderChecker() {
+        return CommonResult.success(cleanerService.getCDOrderChecked());
+    }
+
+
 }

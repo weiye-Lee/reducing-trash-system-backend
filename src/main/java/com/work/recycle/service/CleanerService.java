@@ -32,6 +32,8 @@ public class CleanerService {
     private RequestComponent requestComponent;
     @Autowired
     private CleanerRepository cleanerRepository;
+    @Autowired
+    private CDOrderRepository cdOrderRepository;
 
     public int getFCOrderTimes() {
         int uid = requestComponent.getUid();
@@ -114,4 +116,28 @@ public class CleanerService {
         return baseOrderRepository.getBaseOrderById(id);
     }
 
+    /**
+     * 返回标准类型订单列表
+     *
+     * @param status 审核状态
+     * @return 标准订单类型 list
+     */
+    private List<IndexOrderVo> getCommonCDOrders(Boolean status) {
+        int uid = requestComponent.getUid();
+        List<CDOrder> cdOrders = cdOrderRepository.getCDOrdersByCleanerAndBaseOrder(uid, status);
+        List<IndexOrderVo> indexOrderVos = new ArrayList<>();
+        cdOrders.forEach(each -> {
+            IndexOrderVo indexOrderVo = VoUtil.constructIndexOrder(each.getBaseOrder());
+            indexOrderVos.add(indexOrderVo);
+        });
+        return indexOrderVos;
+    }
+
+    public List<IndexOrderVo> getCDOrderChecking() {
+        return getCommonCDOrders(false);
+    }
+
+    public List<IndexOrderVo> getCDOrderChecked() {
+        return getCommonCDOrders(true);
+    }
 }

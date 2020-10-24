@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.work.recycle.entity.Garbage;
 import com.work.recycle.entity.User;
 import com.work.recycle.repository.BaseRepository;
+import com.work.recycle.repository.GarbageRepository;
 import com.work.recycle.repository.UserRepository;
 import com.work.recycle.repository.impl.BaseRepositoryImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,8 @@ import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.io.*;
+
 @SpringBootTest
 @Slf4j
 public class Testsome {
@@ -24,9 +27,8 @@ public class Testsome {
     private UserRepository userRepository;
     @Autowired
     private ObjectMapper mapper;
-
-    private JpaEntityInformation<User,Integer> jpaEntityInformation;
-    private EntityManager manager;
+    @Autowired
+    private GarbageRepository garbageRepository;
 
     private User user;
 
@@ -77,20 +79,20 @@ public class Testsome {
         String type6 = "农药包装";
 
         String[] names = {"纸壳、硬纸板",
-                "废旧资料、旧报纸 ",
+                "废旧资料、旧报纸",
                 "废旧塑料制品",
-                "饮料瓶 ",
+                "饮料瓶",
                 "玻璃瓶",
                 "废旧玻璃渣",
-                "废铁、废铁片 ",
+                "废铁、废铁片",
                 "废铝",
-                "废黄铜 ",
+                "废黄铜",
                 "废红铜",
-                "废旧衣物 ",
+                "废旧衣物",
                 "废电池",
-                "废灯管 ",
+                "废灯管",
                 "废旧灯泡",
-                "废旧农药空瓶 ",
+                "废旧农药空瓶",
                 "废旧农药袋"};
 
         String[] unit = {"斤",
@@ -159,6 +161,50 @@ public class Testsome {
             }
 
             log.warn(garbage[i].toString());
+        }
+    }
+
+
+
+
+    // 为图片重新命名
+    @Test
+    void renamePhone() {
+        File file = new File("C:\\Users\\doyen\\Desktop\\可回收垃圾");
+        func(file);
+    }
+
+    private static void func(File file){
+        File[] fs = file.listFiles();
+        for(File f:fs){
+            if(f.isDirectory())	//若是目录，则递归打印该目录下的文件
+                func(f);
+            if(f.isFile()) {
+                System.out.println(f);
+            }
+
+        }
+    }
+    private static void getTypeName() {
+
+    }
+    private static void copyFileUsingFileStreams(File source, File dest)
+            throws IOException {
+        InputStream input = null;
+        OutputStream output = null;
+        try {
+            input = new FileInputStream(source);
+            output = new FileOutputStream(dest);
+            byte[] buf = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = input.read(buf)) > 0) {
+                output.write(buf, 0, bytesRead);
+            }
+        } finally {
+            assert input != null;
+            input.close();
+            assert output != null;
+            output.close();
         }
     }
 

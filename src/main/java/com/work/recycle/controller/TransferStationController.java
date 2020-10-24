@@ -42,6 +42,6 @@ public class TransferStationController {
 
     @GetMapping("getDTOrder")
     public CommonResult getDTOrder() {
-        return null;
+        return CommonResult.success(transferStationService.getDTOrders());
     }
 }

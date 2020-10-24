@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
@@ -45,4 +46,12 @@ public class MyWebAppConfig implements WebMvcConfigurer {
         registry.addInterceptor(transferStationInterceptor)
                 .addPathPatterns("/api/transferStation/**");
     }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        //和页面有关的静态目录都放在项目的static目录下
+        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+
+    }
+
 }

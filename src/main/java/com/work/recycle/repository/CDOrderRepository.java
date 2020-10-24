@@ -14,5 +14,9 @@ public interface CDOrderRepository extends BaseRepository<CDOrder,Integer> {
     CDOrder getCDOrderById(@Param("id") int id);
 
     @Query("select cd from CDOrder cd where cd.driver.id = :id and cd.baseOrder.checkStatus = :status")
+    List<CDOrder> getCDOrdersByDriverAndBaseOrder(@Param("id") int id,@Param("status") Boolean status);
+
+    @Query("select cd from CDOrder cd where cd.cleaner.id = :id and cd.baseOrder.checkStatus = :status")
     List<CDOrder> getCDOrdersByCleanerAndBaseOrder(@Param("id") int id,@Param("status") Boolean status);
+
 }

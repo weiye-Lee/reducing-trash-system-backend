@@ -53,7 +53,7 @@ public class TransferStationService {
     // TODO 2020/10/22 : 中转站获得订单记录
     public List<DTOrder> getDTOrders() {
         int uid = requestComponent.getUid();
-        return null;
+        return dtOrderRepository.getDTOrdersByTransferStation(uid);
     }
 
 }

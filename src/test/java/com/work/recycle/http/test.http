@@ -1,3 +1,13 @@
+GET http://localhost:8080/api/cleaner/getCDOrder/Checking
+Accept: application/json
+Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e3d69a5f46c7f3b2bef6219155aa7d57
+
+###
+GET http://localhost:8080/api/transferStation/getDTOrder
+Accept: application/json
+Authorization: e2cf25451c687a1c48b0e6a74bd8303af273e18f8b60dbbddf610ff715ba0362ce36cee522e3adf17fe2dde1c927b2763eb6f633dcf42fbc44eb20cf2c4a8e05
+
+###
 GET http://localhost:8080/api/farmer/getOrderInfo
 Accept: application/json
 Authorization: 139c2fbebadbd5a7d23baa1933854de84a3516e2c3b6cd8923ae7d40d1da3208807c992e36c3c75f447151d4270b7612

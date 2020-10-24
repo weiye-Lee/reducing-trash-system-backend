@@ -55,7 +55,7 @@ public class DriverService {
      */
     private List<IndexOrderVo> getCommonOrders(Boolean status) {
         int uid = requestComponent.getUid();
-        List<CDOrder> cdOrders = cdOrderRepository.getCDOrdersByCleanerAndBaseOrder(uid, status);
+        List<CDOrder> cdOrders = cdOrderRepository.getCDOrdersByDriverAndBaseOrder(uid, status);
         List<IndexOrderVo> indexOrderVos = new ArrayList<>();
         cdOrders.forEach(each -> {
             IndexOrderVo indexOrderVo = VoUtil.constructIndexOrder(each.getBaseOrder());
