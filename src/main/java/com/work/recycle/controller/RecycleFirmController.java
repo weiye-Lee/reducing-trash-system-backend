@@ -9,10 +9,7 @@ import com.work.recycle.service.RecycleFirmService;
 import com.work.recycle.utils.SwitchUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,5 +25,15 @@ public class RecycleFirmController {
         baseOrder.setGarbageChooses(null);
         recycleFirmService.addCROrder(baseOrder,garbageChooses,id);
         return CommonResult.success(null);
+    }
+
+    @GetMapping("getCROrders")
+    public CommonResult getCROrders() {
+        return CommonResult.success(recycleFirmService.getCROrders());
+    }
+
+    @GetMapping("getBaseOrderById")
+    public CommonResult getBaseOrderById(@Param("id") int id) {
+        return CommonResult.success(recycleFirmService.getBaseOrderById(id));
     }
 }

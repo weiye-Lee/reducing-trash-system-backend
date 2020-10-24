@@ -1,3 +1,18 @@
+GET http://localhost:8080/api/recycleFirm/getBaseOrderById?id=3
+Accept: application/json
+Authorization: 621ecd13f84b1bfee8fc7dcd2ce2c538068f9b9272039187efd6946302775132f8a88001ab8912cc7123e4e07d9a9bec
+
+###
+GET http://localhost:8080/api/recycleFirm/getCROrders
+Accept: application/json
+Authorization: 621ecd13f84b1bfee8fc7dcd2ce2c538068f9b9272039187efd6946302775132f8a88001ab8912cc7123e4e07d9a9bec
+
+###
+GET http://localhost:8080/api/cleaner/getRankList
+Accept: application/json
+Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e3d69a5f46c7f3b2bef6219155aa7d57
+
+###
 GET http://localhost:8080/api/cleaner/getCDOrder/Checking
 Accept: application/json
 Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e3d69a5f46c7f3b2bef6219155aa7d57

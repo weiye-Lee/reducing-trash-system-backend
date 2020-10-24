@@ -3,10 +3,12 @@ package com.work.recycle.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.work.recycle.entity.*;
+import com.work.recycle.repository.CleanerRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +20,10 @@ class CleanerServiceTest {
     private CleanerService cleanerService;
     @Autowired
     private ObjectMapper mapper;
-
+    @Autowired
+    private PasswordEncoder encoder;
+    @Autowired
+    private CleanerRepository cleanerRepository;
     @Test
     void checkFCOrder() throws JsonProcessingException {
 
@@ -75,5 +80,21 @@ class CleanerServiceTest {
 
     @Test
     void testCheckFCOrder() {
+    }
+
+    @Test
+    void test_rankList() {
+        for (int i = 0; i < 10; i++) {
+            User user = new User();
+            user.setName("保洁员姓名");
+            String phone = "1305049656" + i;
+            user.setPhoneNumber(phone);
+            user.setPassword(encoder.encode("123456"));
+            user.setRole(User.Role.CLEANER);
+            Cleaner cleaner = new Cleaner();
+            cleaner.setUser(user);
+            cleaner.setScore(i);
+            cleanerRepository.save(cleaner);
+        }
     }
 }

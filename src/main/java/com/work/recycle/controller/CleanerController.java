@@ -99,14 +99,17 @@ public class CleanerController {
         return CommonResult.success(cleanerService.getScore());
     }
 
-    // TODO 2020/10/17 : 保洁员涉及多个订单，返回那个订单的次数
+
+    /**
+     * 返回保洁员审核fc订单的次数
+     * @return
+     */
     @GetMapping("getOrderTimes")
     public CommonResult getOrderTimes() {
         return CommonResult.success(cleanerService.getFCOrderTimes());
     }
 
 
-    // TODO 2020/10/14 : 进行测试
     @GetMapping("getRankList")
     public CommonResult getRankList() {
         List<Cleaner> cleaners = cleanerService.getRankList();

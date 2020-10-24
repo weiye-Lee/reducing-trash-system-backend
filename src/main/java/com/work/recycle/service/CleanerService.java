@@ -20,7 +20,6 @@ import java.util.List;
  */
 @Service
 @Slf4j
-// TODO 2020/10/21 : 实现权限分离，check订单时进行权限验证
 public class CleanerService {
     @Autowired
     private FCOrderRepository fcOrderRepository;
@@ -68,6 +67,9 @@ public class CleanerService {
 
     }
 
+
+
+    // TODO 2020/10/14 : 重构以下代码
     /**
      * 返回标准类型订单列表
      * @param status 审核状态

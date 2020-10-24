@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,8 @@ class FarmerServiceTest {
     private GarbageRepository garbageRepository;
     @Autowired
     private FarmerRepository farmerRepository;
+    @Autowired
+    private PasswordEncoder encoder;
 
     /*
     @Test
@@ -160,6 +163,8 @@ class FarmerServiceTest {
             User user = new User();
             user.setName(name);
             user.setPhoneNumber(phoneNum);
+            user.setPassword(encoder.encode("123456"));
+            user.setRole(User.Role.FARMER);
             Farmer farmer = new Farmer();
             farmer.setUser(user);
             farmer.setScore(i);
