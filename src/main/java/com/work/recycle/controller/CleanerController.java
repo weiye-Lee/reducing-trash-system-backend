@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -169,6 +170,31 @@ public class CleanerController {
     @GetMapping("getBaseOrderById")
     public CommonResult getBaseOrderById(@Param("id") int id) {
         return CommonResult.success(cleanerService.getBaseOrderById(id));
+    }
+
+    /**
+     * 获取积分和提交次数展示
+     * @return {
+     *   "code": 200,
+     *   "message": "操作成功",
+     *   "data": [
+     *     {
+     *       "score": 0
+     *     },
+     *     {
+     *       "times": 3
+     *     }
+     *   ]
+     * }
+     */
+    @GetMapping("getOrderInfo")
+    public CommonResult getOrderInfo() {
+        Map map = Map.of("score",cleanerService.getScore());
+        Map map1 = Map.of("times",cleanerService.getFCOrderTimes());
+        List<Map> list = new ArrayList<>();
+        list.add(map);
+        list.add(map1);
+        return CommonResult.success(list);
     }
 
     @GetMapping("getCDOrder/Checking")

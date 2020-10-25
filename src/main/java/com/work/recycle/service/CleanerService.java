@@ -1,5 +1,6 @@
 package com.work.recycle.service;
 
+import com.work.recycle.component.ConstructVo;
 import com.work.recycle.component.OrdersComponent;
 import com.work.recycle.component.RequestComponent;
 import com.work.recycle.controller.vo.IndexOrderVo;
@@ -12,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,6 +94,20 @@ public class CleanerService {
      * @return 订单vo list
      */
     public List<IndexOrderVo> getFCOrderChecked() {
+
+        int uid = requestComponent.getUid();
+        List<FCOrder> fcOrders = fcOrderRepository.getFarmerFCOrdersById(uid,false);
+        try {
+            ConstructVo.getCommonOrders(fcOrders);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
         return getCommonOrders(true);
     }
 
