@@ -93,6 +93,10 @@ public class CleanerController {
         return CommonResult.success(null);
     }
 
+    /**
+     * 获取积分排行榜
+     * @return the cleaner list
+     */
     @GetMapping("getRankList")
     public CommonResult getRankList() {
         List<Cleaner> cleaners = cleanerService.getRankList();
