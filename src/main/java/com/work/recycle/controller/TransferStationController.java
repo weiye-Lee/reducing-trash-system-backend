@@ -44,6 +44,10 @@ public class TransferStationController {
         return CommonResult.success(null);
     }
 
+    /**
+     * 获取订单列表
+     * @return 返回基础订单列表集合
+     */
     @GetMapping("getDTOrder")
     public CommonResult getDTOrder() {
         return CommonResult.success(transferStationService.getDTOrders());

@@ -10,6 +10,7 @@ import com.work.recycle.exception.ApiException;
 import com.work.recycle.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -144,5 +145,11 @@ public class UserController {
         } else {
             return Map.of("{}", null);
         }
+    }
+
+    // TODO 2020/10/25 : 用户更改密码
+    @PostMapping("updatePsw")
+    public CommonResult updatePsw(@Param("password") String password) {
+        return null;
     }
 }
