@@ -60,4 +60,12 @@ public class TransferStationService {
         return dtOrderRepository.getDTOrdersByTransferStation(uid);
     }
 
+    public String getDriverNameById(int id) {
+        User user = userRepository.getUserById(id);
+        if (user.getRole() != User.Role.DRIVER) {
+            throw new ApiException(ResultCode.FORBIDDEN);
+        }
+        return user.getName();
+    }
+
 }

@@ -54,4 +54,8 @@ public class TransferStationController {
         return CommonResult.success(userService.getBaseOrderById(id));
     }
 
+    @GetMapping("getDriver")
+    public CommonResult getCleaner(@Param("id") int id) {
+        return CommonResult.success(transferStationService.getDriverNameById(id));
+    }
 }
