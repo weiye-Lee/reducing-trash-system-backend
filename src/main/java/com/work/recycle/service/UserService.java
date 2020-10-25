@@ -2,9 +2,11 @@ package com.work.recycle.service;
 
 import com.work.recycle.component.RequestComponent;
 import com.work.recycle.controller.vo.GarbageVo;
+import com.work.recycle.entity.BaseOrder;
 import com.work.recycle.entity.FCOrder;
 import com.work.recycle.entity.Garbage;
 import com.work.recycle.entity.User;
+import com.work.recycle.repository.BaseOrderRepository;
 import com.work.recycle.repository.FCOrderRepository;
 import com.work.recycle.repository.GarbageRepository;
 import com.work.recycle.repository.UserRepository;
@@ -26,7 +28,8 @@ public class UserService {
     private FCOrderRepository fcOrderRepository;
     @Autowired
     private RequestComponent requestComponent;
-
+    @Autowired
+    private BaseOrderRepository baseOrderRepository;
     public User getUserById(int id) {
         return userRepository.getUserById(id);
     }
@@ -131,7 +134,6 @@ public class UserService {
     }
 
     public Garbage getGarbageById(int id) {
-
         return garbageRepository.getGarbageById(id);
     }
 
@@ -145,13 +147,12 @@ public class UserService {
         return user;
     }
 
-    public List<FCOrder> getFCOrders() {
-        int uid = requestComponent.getUid();
-        return fcOrderRepository.getFarmerFCOrdersById(uid);
-
-    }
 
     public Garbage getGarbage(String name) {
         return garbageRepository.getGarbageByName(name);
+    }
+
+    public BaseOrder getBaseOrderById(int id) {
+        return baseOrderRepository.getBaseOrderById(id);
     }
 }

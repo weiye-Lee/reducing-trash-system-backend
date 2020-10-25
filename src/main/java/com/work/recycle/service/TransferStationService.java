@@ -32,6 +32,8 @@ public class TransferStationService {
     @Autowired
     private DriverRepository driverRepository;
     @Autowired
+    private BaseOrderRepository baseOrderRepository;
+    @Autowired
     private ObjectMapper mapper;
     @Autowired
     private UserRepository userRepository;
@@ -57,6 +59,5 @@ public class TransferStationService {
         int uid = requestComponent.getUid();
         return dtOrderRepository.getDTOrdersByTransferStation(uid);
     }
-
 
 }

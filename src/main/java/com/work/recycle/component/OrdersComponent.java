@@ -20,8 +20,8 @@ import static java.util.Optional.ofNullable;
 
 
 /**
- * 插入，接收，审核订单统一处理组件
- * 接下来可以用泛型去简化代码
+ * 订单插入 审核组件
+ *
  */
 @Component
 @Slf4j

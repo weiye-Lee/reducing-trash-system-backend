@@ -44,36 +44,35 @@ public class FarmerService {
         return fcOrderRepository.getFarmerFCOrderTimesById(uid);
     }
 
-        public void addFCOrder(BaseOrder order, List<GarbageChoose> garbageChooses) {
+    public void addFCOrder(BaseOrder order, List<GarbageChoose> garbageChooses) {
 
-        ordersComponent.addOrder(order,garbageChooses,SwitchUtil.FCORDER);
+        ordersComponent.addOrder(order, garbageChooses, SwitchUtil.FCORDER);
     }
 
     /**
      * 获取审核完成订单
-     * @return  标准类型订单列表
+     *
+     * @return 标准类型订单列表
      */
     public List<IndexOrderVo> getFCOrderChecked() {
-        return constructVoComponent.getCommonOrders(true,SwitchUtil.FCORDER);
+        return constructVoComponent.getCommonOrders(true, SwitchUtil.FCORDER);
     }
 
     /**
      * 获取正在审核订单
+     *
      * @return 标准类型订单列表
      */
     public List<IndexOrderVo> getFCOrderChecking() {
-        return constructVoComponent.getCommonOrders(false,SwitchUtil.FCORDER);
+        return constructVoComponent.getCommonOrders(false, SwitchUtil.FCORDER);
     }
+
 
     /**
-     * 通过id获取订单详情
-     * @param id 基础订单id
-     * @return baseOrder
+     * 农户积分排行榜
+     *
+     * @return the farmer list
      */
-    public BaseOrder getBaseOrderById(int id) {
-        return baseOrderRepository.getBaseOrderById(id);
-    }
-
     public List<Farmer> getRankList() {
         return farmerRepository.findTop10ByOrderByScoreDesc();
     }

@@ -72,7 +72,4 @@ public class DriverService {
         return getCommonOrders(true);
     }
 
-    public BaseOrder getBaseOrderById(int id) {
-        return baseOrderRepository.getBaseOrderById(id);
-    }
 }

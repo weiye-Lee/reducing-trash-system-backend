@@ -10,6 +10,7 @@ import com.work.recycle.entity.FCOrder;
 import com.work.recycle.entity.Farmer;
 import com.work.recycle.entity.GarbageChoose;
 import com.work.recycle.service.FarmerService;
+import com.work.recycle.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -27,7 +28,7 @@ FarmerController {
     @Autowired
     private FarmerService farmerService;
     @Autowired
-    private RequestComponent requestComponent;
+    private UserService userService;
     @Autowired
     private ObjectMapper mapper;
 
@@ -68,16 +69,6 @@ FarmerController {
     }
 
     /**
-     * 获得积分数量
-     * @return score
-     */
-    @GetMapping("getScore")
-    public CommonResult getScore() {
-        return CommonResult.success(farmerService.getScore());
-    }
-
-
-    /**
      * 获取审核完成订单
      * @return the IndexOrderVo list
      */
@@ -93,16 +84,6 @@ FarmerController {
     @GetMapping("getFCOrder/checking")
     public CommonResult getFCOrderChecking() {
         return CommonResult.success(farmerService.getFCOrderChecking());
-    }
-
-
-    /**
-     * 获取投递次数
-     * @return times
-     */
-    @GetMapping("getOrderTimes")
-    public CommonResult getOrderTimes() {
-        return CommonResult.success(farmerService.getOrderTimes());
     }
 
 
@@ -180,7 +161,7 @@ FarmerController {
      */
     @GetMapping("getBaseOrderById")
     public CommonResult getBaseOrderById(@Param("id") int id) {
-        return CommonResult.success(farmerService.getBaseOrderById(id));
+        return CommonResult.success(userService.getBaseOrderById(id));
     }
 
     /**

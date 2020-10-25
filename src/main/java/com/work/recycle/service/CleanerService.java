@@ -103,10 +103,6 @@ public class CleanerService {
         return cleanerRepository.findTop10ByOrderByScoreDesc();
     }
 
-    public BaseOrder getBaseOrderById(int id) {
-        return baseOrderRepository.getBaseOrderById(id);
-    }
-
 
     public List<IndexOrderVo> getCDOrderChecking() {
         return constructVoComponent.getCommonOrders(false,SwitchUtil.CDORDER);

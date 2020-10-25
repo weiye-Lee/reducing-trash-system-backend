@@ -17,6 +17,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * 获取 构造标准订单列表组件
+ */
 @Component
 public class ConstructVoComponent {
     @Autowired
@@ -64,9 +68,10 @@ public class ConstructVoComponent {
     }
 
     /**
-     * 返回标准类型订单列表
-     * @param status 审核状态
-     * @return 标准订单类型 list
+     * 构造标准fc订单列表
+     * @param uid user id Notnull
+     * @param status 订单审核状态
+     * @return 标准订单列表集合
      */
     private List<IndexOrderVo> getCommonFCOrders(int uid,Boolean status) {
         User user = userRepository.getUserById(uid);

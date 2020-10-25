@@ -63,9 +63,6 @@ public class RecycleFirmService {
         return constructVoComponent.getCommonOrders(false,SwitchUtil.CRORDER);
     }
 
-    public BaseOrder getBaseOrderById(int id) {
-        return baseOrderRepository.getBaseOrderById(id);
-    }
 
     public String getCleanerNameById(int id) {
 

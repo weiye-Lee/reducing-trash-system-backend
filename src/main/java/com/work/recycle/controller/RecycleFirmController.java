@@ -8,6 +8,7 @@ import com.work.recycle.entity.CROrder;
 import com.work.recycle.entity.GarbageChoose;
 import com.work.recycle.exception.ApiException;
 import com.work.recycle.service.RecycleFirmService;
+import com.work.recycle.service.UserService;
 import com.work.recycle.utils.SwitchUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -20,6 +21,8 @@ import java.util.List;
 public class RecycleFirmController {
     @Autowired
     private RecycleFirmService recycleFirmService;
+    @Autowired
+    private UserService userService;
 
     @PostMapping("addCROrder")
     public CommonResult addCROrder(@RequestBody BaseOrder baseOrder, @Param("id") int id) {
@@ -36,7 +39,7 @@ public class RecycleFirmController {
 
     @GetMapping("getBaseOrderById")
     public CommonResult getBaseOrderById(@Param("id") int id) {
-        return CommonResult.success(recycleFirmService.getBaseOrderById(id));
+        return CommonResult.success(userService.getBaseOrderById(id));
     }
 
     @GetMapping("getCleaner")

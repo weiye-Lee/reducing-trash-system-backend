@@ -144,6 +144,5 @@ public class UserController {
         } else {
             return Map.of("{}", null);
         }
-
     }
 }

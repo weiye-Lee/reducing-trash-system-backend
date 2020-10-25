@@ -8,6 +8,7 @@ import com.work.recycle.entity.BaseOrder;
 import com.work.recycle.entity.DTOrder;
 import com.work.recycle.entity.GarbageChoose;
 import com.work.recycle.service.TransferStationService;
+import com.work.recycle.service.UserService;
 import com.work.recycle.utils.SwitchUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ public class TransferStationController {
     private TransferStationService transferStationService;
     @Autowired
     private ObjectMapper mapper;
+    @Autowired
+    private UserService userService;
 
     @PostMapping("addDTOrder")
     public CommonResult addDTOrder(@Param("id") int id, @RequestBody BaseOrder baseOrder) {
@@ -44,6 +47,11 @@ public class TransferStationController {
     @GetMapping("getDTOrder")
     public CommonResult getDTOrder() {
         return CommonResult.success(transferStationService.getDTOrders());
+    }
+
+    @GetMapping("getBaseOrderById")
+    public CommonResult getBaseOrderById(@Param("id") int id) {
+        return CommonResult.success(userService.getBaseOrderById(id));
     }
 
 }

@@ -7,6 +7,7 @@ import com.work.recycle.controller.vo.RankListVo;
 import com.work.recycle.entity.*;
 import com.work.recycle.repository.CleanerRepository;
 import com.work.recycle.service.CleanerService;
+import com.work.recycle.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -25,6 +26,8 @@ public class CleanerController {
     private CleanerService cleanerService;
     @Autowired
     private ObjectMapper mapper;
+    @Autowired
+    private UserService userService;
 
     /**
      * 获得农户提交待审核订单
@@ -91,26 +94,6 @@ public class CleanerController {
         return CommonResult.success(null);
     }
 
-    /**
-     * 获得保洁员积分数
-     * @return （int）积分
-     */
-    @GetMapping("getScore")
-    public CommonResult getScore() {
-        return CommonResult.success(cleanerService.getScore());
-    }
-
-
-    /**
-     * 返回保洁员审核fc订单的次数
-     * @return
-     */
-    @GetMapping("getOrderTimes")
-    public CommonResult getOrderTimes() {
-        return CommonResult.success(cleanerService.getFCOrderTimes());
-    }
-
-
     @GetMapping("getRankList")
     public CommonResult getRankList() {
         List<Cleaner> cleaners = cleanerService.getRankList();
@@ -169,7 +152,7 @@ public class CleanerController {
      */
     @GetMapping("getBaseOrderById")
     public CommonResult getBaseOrderById(@Param("id") int id) {
-        return CommonResult.success(cleanerService.getBaseOrderById(id));
+        return CommonResult.success(userService.getBaseOrderById(id));
     }
 
     /**

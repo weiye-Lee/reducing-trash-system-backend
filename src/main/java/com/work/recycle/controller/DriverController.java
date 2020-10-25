@@ -6,6 +6,7 @@ import com.work.recycle.entity.CDOrder;
 import com.work.recycle.entity.Driver;
 import com.work.recycle.entity.GarbageChoose;
 import com.work.recycle.service.DriverService;
+import com.work.recycle.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,8 @@ public class DriverController {
 
     @Autowired
     private DriverService driverService;
+    @Autowired
+    private UserService userService;
 
     /**
      * -------- 弃用 --------
@@ -77,7 +80,7 @@ public class DriverController {
 
     @GetMapping("getBaseOrderById")
     public CommonResult getBaseOrderById(@Param("id") int id) {
-        return CommonResult.success(driverService.getBaseOrderById(id));
+        return CommonResult.success(userService.getBaseOrderById(id));
     }
 
 }

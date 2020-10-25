@@ -51,10 +51,7 @@ public class PhoneUtil {
             Pattern pattern4 = Pattern.compile(pat4);
             Matcher match4 = pattern4.matcher(mobile);
             boolean isMatch4 = match4.matches();
-            if(isMatch4){
-                return true;
-            }
-            return false;
+            return isMatch4;
         }
     }
 }
