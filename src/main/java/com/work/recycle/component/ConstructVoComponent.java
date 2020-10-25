@@ -58,7 +58,14 @@ public class ConstructVoComponent {
      * @return 标准订单类型 list
      */
     private List<IndexOrderVo> getCommonCDOrders(int uid,Boolean status) {
-        List<CDOrder> cdOrders = cdOrderRepository.getCDOrdersByCleanerAndBaseOrder(uid, status);
+        User.Role role = requestComponent.getRole();
+        List<CDOrder> cdOrders = new ArrayList<>();
+        if (role == User.Role.CLEANER) {
+            cdOrders = cdOrderRepository.getCDOrdersByCleanerAndBaseOrder(uid, status);
+        } else if (role == User.Role.DRIVER) {
+            cdOrders = cdOrderRepository.getCDOrdersByDriverAndBaseOrder(uid,status);
+        }
+
         List<IndexOrderVo> indexOrderVos = new ArrayList<>();
         cdOrders.forEach(each -> {
             IndexOrderVo indexOrderVo = VoUtil.constructIndexOrder(each.getBaseOrder());
@@ -74,11 +81,11 @@ public class ConstructVoComponent {
      * @return 标准订单列表集合
      */
     private List<IndexOrderVo> getCommonFCOrders(int uid,Boolean status) {
-        User user = userRepository.getUserById(uid);
+        User.Role role = requestComponent.getRole();
         List<FCOrder> fcOrders = new ArrayList<>();
-        if (user.getRole() == User.Role.CLEANER) {
+        if (role == User.Role.CLEANER) {
            fcOrders = fcOrderRepository.getCleanerFCOrdersById(uid,status);
-        } else if(user.getRole() == User.Role.FARMER) {
+        } else if(role == User.Role.FARMER) {
            fcOrders = fcOrderRepository.getFarmerFCOrdersById(uid,status);
         }
         List<IndexOrderVo> indexOrderVos = new ArrayList<>();

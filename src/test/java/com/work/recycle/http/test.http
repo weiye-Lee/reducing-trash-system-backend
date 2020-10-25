@@ -52,11 +52,6 @@ Accept: application/json
 Authorization: a8a4963636dad72d4336e5c984885c9a3535978ff0479cfde2b8864bc8cbc29fd41428cd010c081a095a4e5280832754
 
 ###
-GET http://localhost:8080/api/driver/getCDOrder/Checked
-Accept: application/json
-Authorization: a8a4963636dad72d4336e5c984885c9a3535978ff0479cfde2b8864bc8cbc29fd41428cd010c081a095a4e5280832754
-
-###
 POST http://localhost:8080/api/driver/checkCDOrder
 Content-Type: application/json
 Authorization: a8a4963636dad72d4336e5c984885c9a3535978ff0479cfde2b8864bc8cbc29fd41428cd010c081a095a4e5280832754
@@ -80,11 +75,6 @@ Authorization: a8a4963636dad72d4336e5c984885c9a3535978ff0479cfde2b8864bc8cbc29fd
     }
   ]
 }
-
-###
-GET http://localhost:8080/api/driver/getCDOrder/Checking
-Accept: application/json
-Authorization: a8a4963636dad72d4336e5c984885c9a3535978ff0479cfde2b8864bc8cbc29fd41428cd010c081a095a4e5280832754
 
 ###
 POST http://localhost:8080/api/cleaner/addCDOrder
@@ -196,6 +186,16 @@ Content-Type: application/json
   "phoneNumber": "13050496540",
   "password": "123456"
 }
+
+###
+GET http://localhost:8080/api/driver/getCDOrder/Checking
+Accept: application/json
+Authorization: a8a4963636dad72d4336e5c984885c9a3535978ff0479cfde2b8864bc8cbc29fd41428cd010c081a095a4e5280832754
+
+###
+GET http://localhost:8080/api/driver/getCDOrder/Checked
+Accept: application/json
+Authorization: a8a4963636dad72d4336e5c984885c9a3535978ff0479cfde2b8864bc8cbc29fd41428cd010c081a095a4e5280832754
 
 ###
 GET http://localhost:8080/api/cleaner/getFCOrders/checking
