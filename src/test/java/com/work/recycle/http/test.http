@@ -1,3 +1,8 @@
+GET http://localhost:8080/api/transferStation/getCleaner?id=2
+Accept: application/json
+Authorization: e2cf25451c687a1c48b0e6a74bd8303af273e18f8b60dbbddf610ff715ba0362ce36cee522e3adf17fe2dde1c927b2763eb6f633dcf42fbc44eb20cf2c4a8e05
+
+###
 GET http://localhost:8080/api/cleaner/getOrderInfo
 Accept: application/json
 Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e3d69a5f46c7f3b2bef6219155aa7d57
@@ -15,8 +20,7 @@ Authorization: 621ecd13f84b1bfee8fc7dcd2ce2c538068f9b9272039187efd6946302775132f
 ###
 GET http://localhost:8080/api/recycleFirm/getCROrders
 Accept: application/json
-Authorization: 621ecd13f84b1bfee8fc7d
-cd2ce2c538068f9b9272039187efd6946302775132f8a88001ab8912cc7123e4e07d9a9bec
+Authorization: 621ecd13f84b1bfee8fc7dcd2ce2c538068f9b9272039187efd6946302775132f8a88001ab8912cc7123e4e07d9a9bec
 
 ###
 GET http://localhost:8080/api/cleaner/getRankList
@@ -74,7 +78,7 @@ Authorization: a8a4963636dad72d4336e5c984885c9a3535978ff0479cfde2b8864bc8cbc29fd
 }
 
 ###
-GET http://localhost:8080/api/driver/getCDOrder/Checked
+GET http://localhost:8080/api/driver/getCDOrder/Checking
 Accept: application/json
 Authorization: a8a4963636dad72d4336e5c984885c9a3535978ff0479cfde2b8864bc8cbc29fd41428cd010c081a095a4e5280832754
 
@@ -82,6 +86,56 @@ Authorization: a8a4963636dad72d4336e5c984885c9a3535978ff0479cfde2b8864bc8cbc29fd
 GET http://localhost:8080/api/cleaner/getBaseOrderById?id=8
 Accept: application/json
 Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e3d69a5f46c7f3b2bef6219155aa7d57
+
+###
+POST http://localhost:8080/api/cleaner/addCDOrder
+Content-Type: application/json
+Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e3d69a5f46c7f3b2bef6219155aa7d57
+
+{
+  "address": "火星",
+  "remark": "管理员提交一条保洁员司机订单",
+  "garbageChooses": [
+    {
+      "garbage": {
+        "id": 1
+      },
+      "amount": 5.3
+    },
+    {
+      "garbage": {
+        "id": 2
+      },
+      "amount": 6
+    }
+  ]
+}
+
+###
+POST http://localhost:8080/api/farmer/addFCOrder
+Content-Type: application/json
+Authorization: 139c2fbebadbd5a7d23baa1933854de84a3516e2c3b6cd8923ae7d40d1da3208807c992e36c3c75f447151d4270b7612
+
+{
+  "address": "黑龙江省大庆市",
+  "remark": "农户zai插入提交一条记录",
+  "name": "李伟业",
+  "phone": "13050496540",
+  "garbageChooses": [
+    {
+      "garbage": {
+        "id": 1
+      },
+      "amount": 5.5
+    },
+    {
+      "garbage": {
+        "id": 2
+      },
+      "amount": 1.2
+    }
+  ]
+}
 
 ###
 POST http://localhost:8080/api/recycleFirm/addCROrder?id=2
@@ -149,29 +203,6 @@ Content-Type: application/json
 {
   "phoneNumber": "13050496540",
   "password": "123456"
-}
-
-###
-POST http://localhost:8080/api/farmer/addFCOrder
-Content-Type: application/json
-Authorization: 139c2fbebadbd5a7d23baa1933854de84a3516e2c3b6cd8923ae7d40d1da3208807c992e36c3c75f447151d4270b7612
-
-{
-  "remark": "管理员提交一条记录",
-  "garbageChooses": [
-    {
-      "garbage": {
-        "id": 1
-      },
-      "amount": 5
-    },
-    {
-      "garbage": {
-        "id": 2
-      },
-      "amount": 6
-    }
-  ]
 }
 
 ###
@@ -291,30 +322,6 @@ GET http://localhost:8080/api/driver/receive/CDOrder/23
 Accept: application/json
 
 ###
-POST http://localhost:8080/api/cleaner/addCDOrder
-Content-Type: application/json
-Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e3d69a5f46c7f3b2bef6219155aa7d57
-
-{
-  "address": "火星",
-  "remark": "管理员提交一条保洁员司机订单",
-  "garbageChooses": [
-    {
-      "garbage": {
-        "id": 1
-      },
-      "amount": 5.3
-    },
-    {
-      "garbage": {
-        "id": 2
-      },
-      "amount": 6
-    }
-  ]
-}
-
-###
 POST http://localhost:8080/api/cleaner/receive/order/22
 Content-Type: application/json
 
@@ -324,32 +331,6 @@ Content-Type: application/json
 GET http://localhost:8080/api/farmer/getBaseOrder?id=1
 Accept: application/json
 Authorization: 139c2fbebadbd5a7d23baa1933854de84a3516e2c3b6cd8923ae7d40d1da3208807c992e36c3c75f447151d4270b7612
-
-###
-POST http://localhost:8080/api/farmer/addFCOrder
-Content-Type: application/json
-Authorization: 139c2fbebadbd5a7d23baa1933854de84a3516e2c3b6cd8923ae7d40d1da3208807c992e36c3c75f447151d4270b7612
-
-{
-  "address": "黑龙江省大庆市",
-  "remark": "农户zai插入提交一条记录",
-  "name": "李伟业",
-  "phone": "13050496540",
-  "garbageChooses": [
-    {
-      "garbage": {
-        "id": 1
-      },
-      "amount": 5.5
-    },
-    {
-      "garbage": {
-        "id": 2
-      },
-      "amount": 1.2
-    }
-  ]
-}
 
 ###
 

@@ -33,6 +33,8 @@ public class TransferStationService {
     private DriverRepository driverRepository;
     @Autowired
     private ObjectMapper mapper;
+    @Autowired
+    private UserRepository userRepository;
 
     // 中转站添加 司机-中转站订单
     public void addDTOrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses, int id) {
@@ -50,10 +52,19 @@ public class TransferStationService {
         ordersComponent.addBaseOrderGarbageList(baseOrder,garbageChooses);
     }
 
-    // TODO 2020/10/22 : 中转站获得订单记录
+    // TODO 2020/10/22 : 重构中转站获得订单记录（暂时不清楚要返回什么类型）
     public List<DTOrder> getDTOrders() {
         int uid = requestComponent.getUid();
         return dtOrderRepository.getDTOrdersByTransferStation(uid);
+    }
+
+    public String getCleanerNameById(int id) {
+        User user = userRepository.getUserById(id);
+        if (user.getRole() != User.Role.CLEANER) {
+            throw new ApiException(ResultCode.FORBIDDEN);
+        }
+
+        return user.getName();
     }
 
 }

@@ -1,5 +1,6 @@
 package com.work.recycle.service;
 
+import com.work.recycle.component.ConstructVoComponent;
 import com.work.recycle.component.OrdersComponent;
 import com.work.recycle.component.RequestComponent;
 import com.work.recycle.controller.vo.IndexOrderVo;
@@ -30,7 +31,8 @@ public class FarmerService {
     private OrdersComponent ordersComponent;
     @Autowired
     private RequestComponent requestComponent;
-
+    @Autowired
+    private ConstructVoComponent constructVoComponent;
 
     public int getScore() {
         int uid = requestComponent.getUid();
@@ -48,27 +50,11 @@ public class FarmerService {
     }
 
     /**
-     * 返回标准类型订单列表
-     * @param status 审核状态
-     * @return 标准订单类型 list
-     */
-    private List<IndexOrderVo> getCommonOrders(Boolean status) {
-        int uid = requestComponent.getUid();
-        List<FCOrder> fcOrders = fcOrderRepository.getFarmerFCOrdersById(uid,status);
-        List<IndexOrderVo> indexOrderVos = new ArrayList<>();
-        fcOrders.forEach(each -> {
-            IndexOrderVo indexOrderVo = VoUtil.constructIndexOrder(each.getBaseOrder());
-            indexOrderVos.add(indexOrderVo);
-        });
-        return indexOrderVos;
-    }
-
-    /**
      * 获取审核完成订单
      * @return  标准类型订单列表
      */
     public List<IndexOrderVo> getFCOrderChecked() {
-        return getCommonOrders(true);
+        return constructVoComponent.getCommonOrders(true,SwitchUtil.FCORDER);
     }
 
     /**
@@ -76,7 +62,7 @@ public class FarmerService {
      * @return 标准类型订单列表
      */
     public List<IndexOrderVo> getFCOrderChecking() {
-        return getCommonOrders(false);
+        return constructVoComponent.getCommonOrders(false,SwitchUtil.FCORDER);
     }
 
     /**

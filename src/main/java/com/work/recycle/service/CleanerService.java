@@ -1,6 +1,6 @@
 package com.work.recycle.service;
 
-import com.work.recycle.component.ConstructVo;
+import com.work.recycle.component.ConstructVoComponent;
 import com.work.recycle.component.OrdersComponent;
 import com.work.recycle.component.RequestComponent;
 import com.work.recycle.controller.vo.IndexOrderVo;
@@ -35,6 +35,8 @@ public class CleanerService {
     private CleanerRepository cleanerRepository;
     @Autowired
     private CDOrderRepository cdOrderRepository;
+    @Autowired
+    private ConstructVoComponent constructVoComponent;
 
     public int getFCOrderTimes() {
         int uid = requestComponent.getUid();
@@ -71,22 +73,6 @@ public class CleanerService {
 
 
 
-    // TODO 2020/10/14 : 重构以下代码
-    /**
-     * 返回标准类型订单列表
-     * @param status 审核状态
-     * @return 标准订单类型 list
-     */
-    private List<IndexOrderVo> getCommonOrders(Boolean status) {
-        int uid = requestComponent.getUid();
-        List<FCOrder> fcOrders = fcOrderRepository.getCleanerFCOrdersById(uid,status);
-        List<IndexOrderVo> indexOrderVos = new ArrayList<>();
-        fcOrders.forEach(each -> {
-            IndexOrderVo indexOrderVo = VoUtil.constructIndexOrder(each.getBaseOrder());
-            indexOrderVos.add(indexOrderVo);
-        });
-        return indexOrderVos;
-    }
 
     /**
      * 获取保洁员审核完成的订单
@@ -94,21 +80,8 @@ public class CleanerService {
      * @return 订单vo list
      */
     public List<IndexOrderVo> getFCOrderChecked() {
+        return constructVoComponent.getCommonOrders(true,SwitchUtil.FCORDER);
 
-        int uid = requestComponent.getUid();
-        List<FCOrder> fcOrders = fcOrderRepository.getFarmerFCOrdersById(uid,false);
-        try {
-            ConstructVo.getCommonOrders(fcOrders);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
-        return getCommonOrders(true);
     }
 
 
@@ -118,7 +91,7 @@ public class CleanerService {
      * @return 订单vo list
      */
     public List<IndexOrderVo> getFCOrderChecking() {
-        return getCommonOrders(false);
+        return constructVoComponent.getCommonOrders(false,SwitchUtil.FCORDER);
     }
 
     public int getScore() {
@@ -134,28 +107,12 @@ public class CleanerService {
         return baseOrderRepository.getBaseOrderById(id);
     }
 
-    /**
-     * 返回标准类型订单列表
-     *
-     * @param status 审核状态
-     * @return 标准订单类型 list
-     */
-    private List<IndexOrderVo> getCommonCDOrders(Boolean status) {
-        int uid = requestComponent.getUid();
-        List<CDOrder> cdOrders = cdOrderRepository.getCDOrdersByCleanerAndBaseOrder(uid, status);
-        List<IndexOrderVo> indexOrderVos = new ArrayList<>();
-        cdOrders.forEach(each -> {
-            IndexOrderVo indexOrderVo = VoUtil.constructIndexOrder(each.getBaseOrder());
-            indexOrderVos.add(indexOrderVo);
-        });
-        return indexOrderVos;
-    }
 
     public List<IndexOrderVo> getCDOrderChecking() {
-        return getCommonCDOrders(false);
+        return constructVoComponent.getCommonOrders(false,SwitchUtil.CDORDER);
     }
 
     public List<IndexOrderVo> getCDOrderChecked() {
-        return getCommonCDOrders(true);
+        return constructVoComponent.getCommonOrders(true,SwitchUtil.CDORDER);
     }
 }
