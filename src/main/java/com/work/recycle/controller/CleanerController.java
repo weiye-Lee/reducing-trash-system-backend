@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.work.recycle.common.CommonResult;
 import com.work.recycle.controller.vo.RankListVo;
 import com.work.recycle.entity.*;
-import com.work.recycle.repository.CleanerRepository;
 import com.work.recycle.service.CleanerService;
 import com.work.recycle.service.UserService;
 import lombok.extern.slf4j.Slf4j;

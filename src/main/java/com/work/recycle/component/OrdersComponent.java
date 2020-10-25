@@ -39,17 +39,9 @@ public class OrdersComponent {
     @Autowired
     private CDOrderRepository cdOrderRepository;
     @Autowired
-    private TransferStationRepository transferStationRepository;
-    @Autowired
-    private DTOrderRepository dtOrderRepository;
-    @Autowired
     private CROrderRepository crOrderRepository;
     @Autowired
     private RecycleFirmRepository recycleFirmRepository;
-    @Autowired
-    private BaseOrderRepository baseOrderRepository;
-    @Autowired
-    private DriverRepository driverRepository;
     @Autowired
     private RequestComponent requestComponent;
 

@@ -23,8 +23,7 @@ import java.util.Map;
 @RestController
 @Slf4j
 @RequestMapping("api/farmer/")
-public class
-FarmerController {
+public class FarmerController {
     @Autowired
     private FarmerService farmerService;
     @Autowired
@@ -157,7 +156,6 @@ FarmerController {
      *   }
      * }
      *
-     * Response code: 200; Time: 127ms; Content length: 570 bytes
      */
     @GetMapping("getBaseOrderById")
     public CommonResult getBaseOrderById(@Param("id") int id) {
@@ -175,8 +173,6 @@ FarmerController {
         farmers.forEach(each -> rankListVos.add(new RankListVo(each.getUser().getName(),each.getScore(), each.getId())));
         return CommonResult.success(rankListVos);
     }
-
-
 
     // TODO 2020/10/22 ：删除订单
     @PostMapping("removeFCOrder")
