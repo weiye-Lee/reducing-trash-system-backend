@@ -36,6 +36,8 @@ public class RecycleFirmService {
     private BaseOrderRepository baseOrderRepository;
     @Autowired
     private ConstructVoComponent constructVoComponent;
+    @Autowired
+    private UserRepository userRepository;
 
     public void addCROrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses,int id) {
         CROrder crOrder = new CROrder();
@@ -63,5 +65,15 @@ public class RecycleFirmService {
 
     public BaseOrder getBaseOrderById(int id) {
         return baseOrderRepository.getBaseOrderById(id);
+    }
+
+    public String getCleanerNameById(int id) {
+
+        User user = userRepository.getUserById(id);
+        if (user.getRole() != User.Role.CLEANER) {
+            throw new ApiException(ResultCode.FORBIDDEN);
+        }
+
+        return user.getName();
     }
 }

@@ -1,10 +1,12 @@
 package com.work.recycle.controller;
 
 import com.work.recycle.common.CommonResult;
+import com.work.recycle.common.ResultCode;
 import com.work.recycle.component.OrdersComponent;
 import com.work.recycle.entity.BaseOrder;
 import com.work.recycle.entity.CROrder;
 import com.work.recycle.entity.GarbageChoose;
+import com.work.recycle.exception.ApiException;
 import com.work.recycle.service.RecycleFirmService;
 import com.work.recycle.utils.SwitchUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +37,10 @@ public class RecycleFirmController {
     @GetMapping("getBaseOrderById")
     public CommonResult getBaseOrderById(@Param("id") int id) {
         return CommonResult.success(recycleFirmService.getBaseOrderById(id));
+    }
+
+    @GetMapping("getCleaner")
+    public CommonResult getCleaner(@Param("id") int id) {
+        return CommonResult.success(recycleFirmService.getCleanerNameById(id));
     }
 }

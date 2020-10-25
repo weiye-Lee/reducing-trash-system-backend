@@ -1,6 +1,6 @@
-GET http://localhost:8080/api/transferStation/getCleaner?id=2
+GET http://localhost:8080/api/recycleFirm/getCleaner
 Accept: application/json
-Authorization: e2cf25451c687a1c48b0e6a74bd8303af273e18f8b60dbbddf610ff715ba0362ce36cee522e3adf17fe2dde1c927b2763eb6f633dcf42fbc44eb20cf2c4a8e05
+Authorization: 621ecd13f84b1bfee8fc7dcd2ce2c538068f9b9272039187efd6946302775132f8a88001ab8912cc7123e4e07d9a9bec
 
 ###
 GET http://localhost:8080/api/cleaner/getOrderInfo

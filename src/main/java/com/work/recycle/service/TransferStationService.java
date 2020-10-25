@@ -58,13 +58,5 @@ public class TransferStationService {
         return dtOrderRepository.getDTOrdersByTransferStation(uid);
     }
 
-    public String getCleanerNameById(int id) {
-        User user = userRepository.getUserById(id);
-        if (user.getRole() != User.Role.CLEANER) {
-            throw new ApiException(ResultCode.FORBIDDEN);
-        }
-
-        return user.getName();
-    }
 
 }

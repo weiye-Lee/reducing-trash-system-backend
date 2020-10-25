@@ -46,13 +46,4 @@ public class TransferStationController {
         return CommonResult.success(transferStationService.getDTOrders());
     }
 
-    /**
-     * @return
-     */
-    @GetMapping("getCleaner")
-    public CommonResult getCleaner(@Param("id") int id) {
-        return CommonResult.success(
-                Map.of("name", transferStationService.getCleanerNameById(id))
-        );
-    }
 }
