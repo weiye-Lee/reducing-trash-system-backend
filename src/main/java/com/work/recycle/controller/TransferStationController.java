@@ -16,6 +16,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -36,12 +37,22 @@ public class TransferStationController {
         }
         List<GarbageChoose> garbageChooses = baseOrder.getGarbageChooses();
         baseOrder.setGarbageChooses(null);
-        transferStationService.addDTOrder(baseOrder,garbageChooses,id);
+        transferStationService.addDTOrder(baseOrder, garbageChooses, id);
         return CommonResult.success(null);
     }
 
     @GetMapping("getDTOrder")
     public CommonResult getDTOrder() {
         return CommonResult.success(transferStationService.getDTOrders());
+    }
+
+    /**
+     * @return
+     */
+    @GetMapping("getCleaner")
+    public CommonResult getCleaner(@Param("id") int id) {
+        return CommonResult.success(
+                Map.of("name", transferStationService.getCleanerNameById(id))
+        );
     }
 }
