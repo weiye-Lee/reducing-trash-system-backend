@@ -11,6 +11,7 @@ public class GarbageVo {
     private static final String METAL = "metal";
     private static final String WEAVE = "weave";
     private static final String PESTICIDE = "pesticide";
+    private static final String OTHRERS = "others";
 
     private static final String type = "纸张类";
     private static final String type1 = "塑料类";
@@ -19,6 +20,7 @@ public class GarbageVo {
     private static final String type4 = "纺织品";
     private static final String type5 = "金属类";
     private static final String type6 = "农药包装";
+    private static final String type7 = "其他垃圾";
 
 
     public static final String RECYCLE_CATEGORY = "recycleGarbage";
@@ -40,6 +42,7 @@ public class GarbageVo {
         map.put(METAL,type3);
         map.put(WEAVE,type4);
         map.put(PESTICIDE,type6);
+        map.put(OTHRERS,type7);
         return map;
     }
 
@@ -56,7 +59,7 @@ public class GarbageVo {
     public static String[] recycleTypeName = {PAPER,PLASTIC,GLASS,METAL,WEAVE};
 
     // 不可回收垃圾类别数组
-    public static String[] UnRecycleTypeName = {METAL,PESTICIDE};
+    public static String[] UnRecycleTypeName = {METAL,PESTICIDE,OTHRERS};
 
 
 }

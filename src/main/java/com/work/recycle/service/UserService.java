@@ -1,21 +1,26 @@
 package com.work.recycle.service;
 
+import com.work.recycle.common.ResultCode;
 import com.work.recycle.component.RequestComponent;
 import com.work.recycle.controller.vo.GarbageVo;
 import com.work.recycle.entity.BaseOrder;
 import com.work.recycle.entity.FCOrder;
 import com.work.recycle.entity.Garbage;
 import com.work.recycle.entity.User;
+import com.work.recycle.exception.ApiException;
 import com.work.recycle.repository.BaseOrderRepository;
 import com.work.recycle.repository.FCOrderRepository;
 import com.work.recycle.repository.GarbageRepository;
 import com.work.recycle.repository.UserRepository;
+import org.apache.tomcat.util.net.AprEndpoint;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 @Service
@@ -25,11 +30,12 @@ public class UserService {
     @Autowired
     private GarbageRepository garbageRepository;
     @Autowired
-    private FCOrderRepository fcOrderRepository;
-    @Autowired
     private RequestComponent requestComponent;
     @Autowired
     private BaseOrderRepository baseOrderRepository;
+    @Autowired
+    private PasswordEncoder encoder;
+
     public User getUserById(int id) {
         return userRepository.getUserById(id);
     }
@@ -154,5 +160,22 @@ public class UserService {
 
     public BaseOrder getBaseOrderById(int id) {
         return baseOrderRepository.getBaseOrderById(id);
+    }
+
+    public String updatePsw(String password) {
+        int uid = requestComponent.getUid();
+        User user = userRepository.getUserById(uid);
+        if (user == null) {
+            throw new ApiException(ResultCode.VALIDATE_FAILED);
+        }
+
+        if (encoder.matches(password,user.getPassword())) {
+            throw new ApiException("密码重复");
+        }
+
+        user.setPassword(encoder.encode(password));
+        userRepository.save(user);
+        return password;
+
     }
 }

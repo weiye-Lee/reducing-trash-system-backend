@@ -1,6 +1,14 @@
+POST http://localhost:8080/api/user/updatePsw?password=123456
+Content-Type: application/json
+Authorization: 154040a9ba5aa6c919742ae41b1e39b4b9784931d6ae29495f267f432eae0bd08e1e52b6d5b0fb6562856c6d26e890d2788ca59a0a5f92da500ce6502d30a083
+
+{}
+
+###
 GET http://localhost:8080/api/transferStation/getDriver?id=1
 Accept: application/json
 Authorization: 154040a9ba5aa6c919742ae41b1e39b4b9784931d6ae29495f267f432eae0bd08e1e52b6d5b0fb6562856c6d26e890d2788ca59a0a5f92da500ce6502d30a083
+
 ###
 GET http://localhost:8080/api/recycleFirm/getCleaner?id=2
 Accept: application/json
@@ -253,7 +261,7 @@ Accept: application/json
 Authorization: 6cc9b3328629c0569d43ea63b0800c3bb11ad1bea6357dd9f9fa2b2faed48dac6777e55db29d97b542838358fff6c16124b0c5be0a686f41b9cba1dad5fa3e8b
 
 ###
-GET http://119.3.178.83:8080/api/user/getUnRecycleGarbage
+GET http://localhost:8080/api/user/getUnRecycleGarbage
 Accept: application/json
 Authorization: 6cc9b3328629c0569d43ea63b0800c3bb11ad1bea6357dd9f9fa2b2faed48dac6777e55db29d97b542838358fff6c16124b0c5be0a686f41b9cba1dad5fa3e8b
 

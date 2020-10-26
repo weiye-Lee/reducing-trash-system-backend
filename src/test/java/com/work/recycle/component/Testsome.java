@@ -208,6 +208,13 @@ public class Testsome {
         }
     }
 
+    @Test
+    void test_java() {
+        if (true) {
+            log.warn("hello");
+        }
+    }
+
 
 
 }

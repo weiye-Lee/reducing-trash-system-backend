@@ -82,6 +82,15 @@ public class UserController {
     //     } else return CommonResult.failed(ResultCode.FORBIDDEN);
     // }
 
+    /**
+     * 用户登录接口
+     * @param loginUser {
+     *   "phoneNumber": "13050496540",
+     *   "password": "123456"
+     * }
+     * @param response 响应体
+     * @return User
+     */
     @PostMapping("login")
     public CommonResult userLogin(@RequestBody User loginUser, HttpServletResponse response) {
         User user = Optional.ofNullable(userService.getUserByPhone(loginUser.getPhoneNumber()))
@@ -147,9 +156,8 @@ public class UserController {
         }
     }
 
-    // TODO 2020/10/25 : 用户更改密码
     @PostMapping("updatePsw")
     public CommonResult updatePsw(@Param("password") String password) {
-        return null;
+        return CommonResult.success(userService.updatePsw(password));
     }
 }

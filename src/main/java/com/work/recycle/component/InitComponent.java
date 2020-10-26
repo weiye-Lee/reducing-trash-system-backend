@@ -221,5 +221,22 @@ public class InitComponent implements InitializingBean {
             garbageRepository.save(garbage);
         }
 
+        if (userService.getGarbage("其他垃圾") == null) {
+            String category = "不可回收垃圾";
+            String type = "其他垃圾";
+            String name = "其他垃圾";
+            String unit = "斤";
+            double score = 0;
+            Garbage garbage = new Garbage();
+            String picture = "http://localhost:8080/static/" + 17 + ".jpg";
+            garbage.setCategory(category);
+            garbage.setType(type);
+            garbage.setName(name);
+            garbage.setUnit(unit);
+            garbage.setScore(score);
+            garbage.setPicture(picture);
+            garbageRepository.save(garbage);
+        }
+
     }
 }
