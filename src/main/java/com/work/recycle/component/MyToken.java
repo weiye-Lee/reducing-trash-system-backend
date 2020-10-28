@@ -16,14 +16,10 @@ public class MyToken implements Serializable {
     public static final String ROLE = "role";
     public static final String AUTHCODE = "authcode";
 
-    private String authcode;
+    private String authcode; // 验证码
     private User.Role role;
     private Integer uid;
 
-    public MyToken(String authcode,Integer uid) {
-        this.authcode = authcode;
-        this.uid = uid;
-    }
     public MyToken(User.Role role,Integer uid) {
         this.role = role;
         this.uid = uid;

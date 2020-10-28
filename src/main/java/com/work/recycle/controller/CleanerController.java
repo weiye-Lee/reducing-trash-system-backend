@@ -81,12 +81,6 @@ public class CleanerController {
      */
     @PostMapping("addCDOrder")
     public CommonResult addCDOrder(@RequestBody BaseOrder baseOrder) {
-        try {
-            log.warn(mapper.writeValueAsString(baseOrder));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
         List<GarbageChoose> garbageChooses = baseOrder.getGarbageChooses();
         baseOrder.setGarbageChooses(null);
         cleanerService.addCDOrder(baseOrder,garbageChooses);
@@ -107,51 +101,46 @@ public class CleanerController {
 
     /**
      * 获得基础订单信息
-     * @param id 基础订单id
-     * @return BaseOrder {
+     * {
      *   "code": 200,
      *   "message": "操作成功",
      *   "data": {
-     *     "id": 1,
-     *     "score": 20000.0,
-     *     "receiveStatus": false,
+     *     "id": 3,
+     *     "score": 485.0,
      *     "checkStatus": false,
-     *     "address": "黑龙江省大庆市",
-     *     "remark": "农户zai插入提交一条记录",
+     *     "remark": "管理员提交一条记录",
      *     "garbageChooses": [
      *       {
-     *         "id": 1,
+     *         "id": 5,
      *         "garbage": {
      *           "id": 1,
-     *           "name": "二手飞机",
+     *           "name": "纸壳、硬纸板",
      *           "category": "可回收垃圾",
-     *           "score": 1,
-     *           "unit": "个",
-     *           "insertTime": "2020-10-15T15:14:46",
-     *           "updateTime": "2020-10-15T15:33:15"
+     *           "type": "纸张类",
+     *           "score": 25.0,
+     *           "unit": "斤",
+     *           "picture": "http://localhost:8080/static/1.jpg"
      *         },
-     *         "amount": 20.0
+     *         "amount": 5.0
      *       },
      *       {
-     *         "id": 2,
+     *         "id": 6,
      *         "garbage": {
      *           "id": 2,
-     *           "name": "厨余垃圾",
-     *           "category": "不可回收垃圾",
-     *           "score": 0,
+     *           "name": "废旧资料、旧报纸 ",
+     *           "category": "可回收垃圾",
+     *           "type": "纸张类",
+     *           "score": 60.0,
      *           "unit": "斤",
-     *           "insertTime": "2020-10-15T15:14:46",
-     *           "updateTime": "2020-10-15T15:14:46"
+     *           "picture": "http://localhost:8080/static/2.jpg"
      *         },
-     *         "amount": 20.0
+     *         "amount": 6.0
      *       }
      *     ],
-     *     "insertTime": "2020-10-15T15:23:54",
-     *     "updateTime": "2020-10-15T15:23:54"
+     *     "insertTime": "2020-10-25T11:28:51",
+     *     "updateTime": "2020-10-25T11:28:51"
      *   }
      * }
-     *
-     * Response code: 200; Time: 127ms; Content length: 570 bytes
      */
     @GetMapping("getBaseOrderById")
     public CommonResult getBaseOrderById(@Param("id") int id) {
@@ -191,6 +180,11 @@ public class CleanerController {
     @GetMapping("getCDOrder/Checked")
     public CommonResult getCDOrderChecker() {
         return CommonResult.success(cleanerService.getCDOrderChecked());
+    }
+
+    @GetMapping("getCROrders")
+    public CommonResult getCROrdres() {
+        return CommonResult.success(cleanerService.getCROrders());
     }
 
 

@@ -114,7 +114,7 @@ public class OrdersComponent {
 
         addBaseOrderGarbageList(baseOrder, garbageChooses);
 
-        cdOrder.getCleaner().setScore(score);
+        cdOrder.getCleaner().addScore(score);
         cdOrder.getBaseOrder().setCheckStatus(true);
         cdOrder.getBaseOrder().setScore(score);
         cdOrderRepository.save(cdOrder);

@@ -1,3 +1,8 @@
+GET http://localhost:8080/api/cleaner/getCROrders
+Accept: application/json
+Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e3d69a5f46c7f3b2bef6219155aa7d57
+
+###
 POST http://localhost:8080/api/user/updatePsw?password=123456
 Content-Type: application/json
 Authorization: 154040a9ba5aa6c919742ae41b1e39b4b9784931d6ae29495f267f432eae0bd08e1e52b6d5b0fb6562856c6d26e890d2788ca59a0a5f92da500ce6502d30a083
@@ -274,11 +279,6 @@ Authorization: 6cc9b3328629c0569d43ea63b0800c3bb11ad1bea6357dd9f9fa2b2faed48dac6
 GET http://localhost:8080/api/farmer/getBaseOrderById?id=1
 Accept: application/json
 Authorization: 139c2fbebadbd5a7d23baa1933854de84a3516e2c3b6cd8923ae7d40d1da3208807c992e36c3c75f447151d4270b7612
-
-###
-GET http://localhost:8080/api/farmer/test
-Accept: application/json
-Authorization: 96a45160cb1db954294ecc22baba66cc8c2e1bac3023c735ae00877c5b3de0855ca53402b3284a1690309f8c369f1c5e596165042e390f0964ddb2cb3435fb21
 
 ###
 GET http://localhost:8080/api/farmer/getOrderTimes

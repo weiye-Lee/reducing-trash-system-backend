@@ -8,13 +8,10 @@ import com.work.recycle.entity.*;
 import com.work.recycle.exception.Asserts;
 import com.work.recycle.repository.*;
 import com.work.recycle.utils.SwitchUtil;
-import com.work.recycle.utils.VoUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -111,4 +108,11 @@ public class CleanerService {
     public List<IndexOrderVo> getCDOrderChecked() {
         return constructVoComponent.getCommonOrders(true,SwitchUtil.CDORDER);
     }
+
+    public List<IndexOrderVo> getCROrders() {
+        return constructVoComponent.getCommonOrders(false,SwitchUtil.CRORDER);
+    }
+
+
+
 }

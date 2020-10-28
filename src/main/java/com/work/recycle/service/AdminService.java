@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class Admin {
+public class AdminService {
     @Autowired
     private CleanerRepository cleanerRepository;
     @Autowired
