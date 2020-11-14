@@ -1,6 +1,5 @@
 package com.work.recycle.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.work.recycle.common.CommonResult;
 import com.work.recycle.controller.vo.RankListVo;
