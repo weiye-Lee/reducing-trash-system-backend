@@ -5,6 +5,7 @@ import com.work.recycle.component.ConstructVoComponent;
 import com.work.recycle.component.OrdersComponent;
 import com.work.recycle.component.RequestComponent;
 import com.work.recycle.controller.vo.IndexOrderVo;
+import com.work.recycle.controller.vo.SiftOrderVo;
 import com.work.recycle.entity.*;
 import com.work.recycle.exception.ApiException;
 import com.work.recycle.exception.Asserts;
@@ -59,8 +60,8 @@ public class RecycleFirmService {
     }
 
 
-    public List<IndexOrderVo> getCROrders() {
-        return constructVoComponent.getCommonOrders(false,SwitchUtil.CRORDER);
+    public List<IndexOrderVo> getCROrders(SiftOrderVo siftOrderVo) {
+        return constructVoComponent.getCommonOrders(false,SwitchUtil.CRORDER,siftOrderVo);
     }
 
 

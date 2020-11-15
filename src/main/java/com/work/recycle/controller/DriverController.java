@@ -1,6 +1,7 @@
 package com.work.recycle.controller;
 
 import com.work.recycle.common.CommonResult;
+import com.work.recycle.controller.vo.SiftOrderVo;
 import com.work.recycle.entity.BaseOrder;
 import com.work.recycle.entity.GarbageChoose;
 import com.work.recycle.service.DriverService;
@@ -66,14 +67,14 @@ public class DriverController {
         return CommonResult.success(null);
     }
 
-    @GetMapping("getCDOrder/Checking")
-    public CommonResult getCDOrderChecking() {
-        return CommonResult.success(driverService.getCDOrderChecking());
+    @PostMapping("getCDOrder/Checking")
+    public CommonResult getCDOrderChecking(@RequestBody SiftOrderVo siftOrderVo) {
+        return CommonResult.success(driverService.getCDOrderChecking(siftOrderVo));
     }
 
-    @GetMapping("getCDOrder/Checked")
-    public CommonResult getCDOrderChecker() {
-        return CommonResult.success(driverService.getCDOrderChecked());
+    @PostMapping("getCDOrder/Checked")
+    public CommonResult getCDOrderChecker(@RequestBody SiftOrderVo siftOrderVo) {
+        return CommonResult.success(driverService.getCDOrderChecked(siftOrderVo));
     }
 
     @GetMapping("getBaseOrderById")

@@ -3,12 +3,13 @@ package com.work.recycle.controller.vo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.tomcat.jni.Local;
 
 import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
- * 订单列表vo
+ * 标准订单列表返回Vo
  *
  */
 @Data
@@ -20,5 +21,9 @@ public class IndexOrderVo {
     private LocalDateTime date;
     private Boolean status;
     private String address;
-
+    private String province;
+    private String city;
+    private String area;
+    private String street;
+    private String village;
 }

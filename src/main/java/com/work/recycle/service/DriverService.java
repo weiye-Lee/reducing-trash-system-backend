@@ -4,6 +4,7 @@ import com.work.recycle.component.ConstructVoComponent;
 import com.work.recycle.component.OrdersComponent;
 import com.work.recycle.component.RequestComponent;
 import com.work.recycle.controller.vo.IndexOrderVo;
+import com.work.recycle.controller.vo.SiftOrderVo;
 import com.work.recycle.entity.*;
 import com.work.recycle.repository.*;
 import com.work.recycle.utils.SwitchUtil;
@@ -51,12 +52,12 @@ public class DriverService {
         return uid;
     }
 
-    public List<IndexOrderVo> getCDOrderChecking() {
-        return constructVoComponent.getCommonOrders(false,SwitchUtil.CDORDER);
+    public List<IndexOrderVo> getCDOrderChecking(SiftOrderVo siftOrderVo) {
+        return constructVoComponent.getCommonOrders(false,SwitchUtil.CDORDER,siftOrderVo);
     }
 
-    public List<IndexOrderVo> getCDOrderChecked() {
-        return constructVoComponent.getCommonOrders(true,SwitchUtil.CDORDER);
+    public List<IndexOrderVo> getCDOrderChecked(SiftOrderVo siftOrderVo) {
+        return constructVoComponent.getCommonOrders(true,SwitchUtil.CDORDER,siftOrderVo);
     }
 
 }

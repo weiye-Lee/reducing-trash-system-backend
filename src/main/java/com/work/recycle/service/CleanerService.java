@@ -1,10 +1,14 @@
 package com.work.recycle.service;
 
+import com.work.recycle.common.ResultCode;
 import com.work.recycle.component.ConstructVoComponent;
 import com.work.recycle.component.OrdersComponent;
 import com.work.recycle.component.RequestComponent;
+import com.work.recycle.controller.vo.AddressVo;
 import com.work.recycle.controller.vo.IndexOrderVo;
+import com.work.recycle.controller.vo.SiftOrderVo;
 import com.work.recycle.entity.*;
+import com.work.recycle.exception.ApiException;
 import com.work.recycle.exception.Asserts;
 import com.work.recycle.repository.*;
 import com.work.recycle.utils.SwitchUtil;
@@ -34,7 +38,8 @@ public class CleanerService {
     private CDOrderRepository cdOrderRepository;
     @Autowired
     private ConstructVoComponent constructVoComponent;
-
+    @Autowired
+    private FarmerRepository farmerRepository;
     public int getFCOrderTimes() {
         int uid = requestComponent.getUid();
         return fcOrderRepository.getCleanerFCOrderTimesById(uid);
@@ -63,21 +68,14 @@ public class CleanerService {
 
     }
 
-    public void addCROrder(BaseOrder order,List<GarbageChoose> garbageChooses) {
-        ordersComponent.addOrder(order,garbageChooses,SwitchUtil.CRORDER);
-
-    }
-
-
-
 
     /**
      * 获取保洁员审核完成的订单
      *
      * @return 订单vo list
      */
-    public List<IndexOrderVo> getFCOrderChecked() {
-        return constructVoComponent.getCommonOrders(true,SwitchUtil.FCORDER);
+    public List<IndexOrderVo> getFCOrderChecked(SiftOrderVo siftOrderVo) {
+        return constructVoComponent.getCommonOrders(true,SwitchUtil.FCORDER,siftOrderVo);
 
     }
 
@@ -87,8 +85,8 @@ public class CleanerService {
      *
      * @return 订单vo list
      */
-    public List<IndexOrderVo> getFCOrderChecking() {
-        return constructVoComponent.getCommonOrders(false,SwitchUtil.FCORDER);
+    public List<IndexOrderVo> getFCOrderChecking(SiftOrderVo siftOrderVo) {
+        return constructVoComponent.getCommonOrders(false,SwitchUtil.FCORDER,siftOrderVo);
     }
 
     public int getScore() {
@@ -96,23 +94,54 @@ public class CleanerService {
         return cleanerRepository.getScoreById(uid);
     }
 
-    public List<Cleaner> getRankList() {
+    // TODO 2020:11/15 代码重构
+    public List<Cleaner> getRankList(AddressVo addressVo) {
+        // 从 村 -> 街道 -> 区 -> 市 -> 省 依次判空，如果区域级别小，则按照小的查询
+        if (addressVo == null) {
+            return cleanerRepository.findTop10ByOrderByScoreDesc();
+        } else if (addressVo.getVillage() != null) {
+            return cleanerRepository.findTop10ByUser_VillageOrderByScoreDesc(addressVo.getVillage());
+        } else if (addressVo.getStreet() != null) {
+            return cleanerRepository.findTop10ByUser_StreetOrderByScoreDesc(addressVo.getStreet());
+        } else if (addressVo.getArea() != null) {
+            return cleanerRepository.findTop10ByUser_AreaOrderByScoreDesc(addressVo.getArea());
+        } else if (addressVo.getCity() != null) {
+            return cleanerRepository.findTop10ByUser_CityOrderByScoreDesc(addressVo.getCity());
+        } else if (addressVo.getProvince() != null) {
+            return cleanerRepository.findTop10ByUser_ProvinceOrderByScoreDesc(addressVo.getProvince());
+        }
+
         return cleanerRepository.findTop10ByOrderByScoreDesc();
+
     }
 
 
-    public List<IndexOrderVo> getCDOrderChecking() {
-        return constructVoComponent.getCommonOrders(false,SwitchUtil.CDORDER);
+    public List<IndexOrderVo> getCDOrderChecking(SiftOrderVo siftOrderVo) {
+        return constructVoComponent.getCommonOrders(false,SwitchUtil.CDORDER,siftOrderVo);
     }
 
-    public List<IndexOrderVo> getCDOrderChecked() {
-        return constructVoComponent.getCommonOrders(true,SwitchUtil.CDORDER);
+    public List<IndexOrderVo> getCDOrderChecked(SiftOrderVo siftOrderVo) {
+        return constructVoComponent.getCommonOrders(true,SwitchUtil.CDORDER,siftOrderVo);
     }
 
-    public List<IndexOrderVo> getCROrders() {
-        return constructVoComponent.getCommonOrders(false,SwitchUtil.CRORDER);
+    /**
+     * 保洁员获取 CleanerRecycleFirm订单 ，没有预约审核关系
+     * @param siftOrderVo 过滤因子
+     * @return the IndexOrderVo list
+     */
+    public List<IndexOrderVo> getCROrders(SiftOrderVo siftOrderVo) {
+        return constructVoComponent.getCommonOrders(false,SwitchUtil.CRORDER,siftOrderVo);
     }
 
-
+    public Farmer addFarmer(User user) {
+        int uid = requestComponent.getUid();
+        Cleaner cleaner = cleanerRepository.getCleanerById(uid);
+        user.setRole(User.Role.FARMER);
+        Farmer farmer = new Farmer();
+        farmer.setUser(user);
+        farmer.setCleaner(cleaner);
+        farmerRepository.save(farmer);
+        return farmer;
+    }
 
 }

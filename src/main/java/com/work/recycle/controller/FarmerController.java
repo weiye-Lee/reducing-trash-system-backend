@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.work.recycle.common.CommonResult;
 import com.work.recycle.component.RequestComponent;
+import com.work.recycle.controller.vo.AddressVo;
 import com.work.recycle.controller.vo.RankListVo;
+import com.work.recycle.controller.vo.SiftOrderVo;
 import com.work.recycle.entity.BaseOrder;
 import com.work.recycle.entity.FCOrder;
 import com.work.recycle.entity.Farmer;
@@ -14,8 +16,10 @@ import com.work.recycle.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -69,25 +73,25 @@ public class FarmerController {
 
     /**
      * 获取审核完成订单
-     * @return the IndexOrderVo list
+     * @return the IndexOrderVo list、
      */
-    @GetMapping("getFCOrder/checked")
-    public CommonResult getFCOrderChecker() {
-        return CommonResult.success(farmerService.getFCOrderChecked());
+    @PostMapping("getFCOrder/checked")
+    public CommonResult getFCOrderChecker(@RequestBody SiftOrderVo siftOrderVo) {
+        return CommonResult.success(farmerService.getFCOrderChecked(siftOrderVo));
     }
 
     /**
      * 获取审核未完成订单
      * @return the IndexOrderVo list
      */
-    @GetMapping("getFCOrder/checking")
-    public CommonResult getFCOrderChecking() {
-        return CommonResult.success(farmerService.getFCOrderChecking());
+    @PostMapping("getFCOrder/checking")
+    public CommonResult getFCOrderChecking(@Valid @RequestBody SiftOrderVo siftOrderVo) {
+        return CommonResult.success(farmerService.getFCOrderChecking(siftOrderVo));
     }
 
 
     /**
-     * 获取积分和提交次数展示
+     * 获取积分和提交次数
      * @return {
      *   "code": 200,
      *   "message": "操作成功",
@@ -163,13 +167,15 @@ public class FarmerController {
         return CommonResult.success(userService.getBaseOrderById(id));
     }
 
+
+    // TODO 2020:11/15 进行测试
     /**
      * 获取积分前十名的用户
      * @return 返回农户排行榜集合
      */
     @GetMapping("getRankList")
-    public CommonResult getRankList() {
-        List<Farmer> farmers = farmerService.getRankList();
+    public CommonResult getRankList(AddressVo addressVo) {
+        List<Farmer> farmers = farmerService.getRankList(addressVo);
         List<RankListVo> rankListVos = new ArrayList<>();
         farmers.forEach(each -> rankListVos.add(new RankListVo(each.getUser().getName(),each.getScore(), each.getId())));
         return CommonResult.success(rankListVos);

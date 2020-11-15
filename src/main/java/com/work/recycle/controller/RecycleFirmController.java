@@ -3,6 +3,7 @@ package com.work.recycle.controller;
 import com.work.recycle.common.CommonResult;
 import com.work.recycle.common.ResultCode;
 import com.work.recycle.component.OrdersComponent;
+import com.work.recycle.controller.vo.SiftOrderVo;
 import com.work.recycle.entity.BaseOrder;
 import com.work.recycle.entity.CROrder;
 import com.work.recycle.entity.GarbageChoose;
@@ -32,9 +33,9 @@ public class RecycleFirmController {
         return CommonResult.success(null);
     }
 
-    @GetMapping("getCROrders")
-    public CommonResult getCROrders() {
-        return CommonResult.success(recycleFirmService.getCROrders());
+    @PostMapping("getCROrders")
+    public CommonResult getCROrders(@RequestBody SiftOrderVo siftOrderVo) {
+        return CommonResult.success(recycleFirmService.getCROrders(siftOrderVo));
     }
 
     @GetMapping("getBaseOrderById")

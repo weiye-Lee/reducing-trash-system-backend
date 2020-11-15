@@ -1,5 +1,6 @@
 package com.work.recycle.utils;
 
+import com.work.recycle.controller.vo.AddressVo;
 import com.work.recycle.controller.vo.IndexOrderVo;
 import com.work.recycle.entity.BaseOrder;
 import com.work.recycle.entity.GarbageChoose;
@@ -41,10 +42,34 @@ public class VoUtil {
      */
     public static IndexOrderVo constructIndexOrder(BaseOrder baseOrder) {
             IndexOrderVo indexOrderVo = new IndexOrderVo();
+            indexOrderVo.setProvince(baseOrder.getProvince());
+            indexOrderVo.setCity(baseOrder.getCity());
+            indexOrderVo.setArea(baseOrder.getArea());
+            indexOrderVo.setStreet(baseOrder.getStreet());
+            indexOrderVo.setVillage(baseOrder.getVillage());
             indexOrderVo.setAddress(baseOrder.getAddress());
             indexOrderVo.setId(baseOrder.getId());
             indexOrderVo.setMsg(getMsg(baseOrder.getGarbageChooses()));
             indexOrderVo.setDate(baseOrder.getInsertTime());
             return indexOrderVo;
+    }
+
+    public static String getAddresslevel(AddressVo addressVo) {
+        // 从 村 -> 街道 -> 区 -> 市 -> 省 依次判空，如果区域级别小，则按照小的查询
+        if (addressVo == null) {
+            return AddressVo.NONE;
+        } else if (addressVo.getVillage() != null) {
+            return AddressVo.VILLAGE;
+        } else if (addressVo.getStreet() != null) {
+            return AddressVo.STREET;
+        } else if (addressVo.getArea() != null) {
+            return AddressVo.AREA;
+        } else if (addressVo.getCity() != null) {
+            return AddressVo.CITY;
+        } else if (addressVo.getProvince() != null) {
+            return AddressVo.PROVINCE;
+        } else {
+            return AddressVo.NONE;
+        }
     }
 }

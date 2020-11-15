@@ -1,10 +1,14 @@
 package com.work.recycle.service;
 
+import com.work.recycle.common.ResultCode;
 import com.work.recycle.component.ConstructVoComponent;
 import com.work.recycle.component.OrdersComponent;
 import com.work.recycle.component.RequestComponent;
+import com.work.recycle.controller.vo.AddressVo;
 import com.work.recycle.controller.vo.IndexOrderVo;
+import com.work.recycle.controller.vo.SiftOrderVo;
 import com.work.recycle.entity.*;
+import com.work.recycle.exception.ApiException;
 import com.work.recycle.repository.*;
 import com.work.recycle.utils.SwitchUtil;
 import com.work.recycle.utils.VoUtil;
@@ -54,8 +58,8 @@ public class FarmerService {
      *
      * @return 标准类型订单列表
      */
-    public List<IndexOrderVo> getFCOrderChecked() {
-        return constructVoComponent.getCommonOrders(true, SwitchUtil.FCORDER);
+    public List<IndexOrderVo> getFCOrderChecked(SiftOrderVo siftOrderVo) {
+        return constructVoComponent.getCommonOrders(true, SwitchUtil.FCORDER,siftOrderVo);
     }
 
     /**
@@ -63,8 +67,8 @@ public class FarmerService {
      *
      * @return 标准类型订单列表
      */
-    public List<IndexOrderVo> getFCOrderChecking() {
-        return constructVoComponent.getCommonOrders(false, SwitchUtil.FCORDER);
+    public List<IndexOrderVo> getFCOrderChecking(SiftOrderVo siftOrderVo) {
+        return constructVoComponent.getCommonOrders(false, SwitchUtil.FCORDER,siftOrderVo);
     }
 
 
@@ -73,7 +77,22 @@ public class FarmerService {
      *
      * @return the farmer list
      */
-    public List<Farmer> getRankList() {
-        return farmerRepository.findTop10ByOrderByScoreDesc();
+    public List<Farmer> getRankList(AddressVo addressVo) {
+        // 从 村 -> 街道 -> 区 -> 市 -> 省 依次判空，如果区域级别小，则按照小的查询
+        if (addressVo == null) {
+            return farmerRepository.findTop10ByOrderByScoreDesc();
+        } else if (addressVo.getVillage() != null) {
+            return farmerRepository.findTop10ByUser_VillageOrderByScoreDesc(addressVo.getVillage());
+        } else if (addressVo.getStreet() != null) {
+            return farmerRepository.findTop10ByUser_StreetOrderByScoreDesc(addressVo.getStreet());
+        } else if (addressVo.getArea() != null) {
+            return farmerRepository.findTop10ByUser_AreaOrderByScoreDesc(addressVo.getArea());
+        } else if (addressVo.getCity() != null) {
+            return farmerRepository.findTop10ByUser_CityOrderByScoreDesc(addressVo.getCity());
+        } else if (addressVo.getProvince() != null) {
+            return farmerRepository.findTop10ByUser_ProvinceOrderByScoreDesc(addressVo.getProvince());
+        } else {
+            return farmerRepository.findTop10ByOrderByScoreDesc();
+        }
     }
 }

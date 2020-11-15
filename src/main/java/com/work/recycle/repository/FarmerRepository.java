@@ -1,5 +1,6 @@
 package com.work.recycle.repository;
 
+import com.work.recycle.entity.Cleaner;
 import com.work.recycle.entity.Farmer;
 import com.work.recycle.entity.User;
 import org.springframework.data.jpa.repository.Query;
@@ -20,5 +21,16 @@ public interface FarmerRepository extends BaseRepository<Farmer,Integer> {
     @Query("select f from Farmer f where f.user.phoneNumber = :phoneNumber")
     Farmer getFarmerByPhoneNumber(@Param("phoneNumber") String PhoneNumber);
 
+
     List<Farmer> findTop10ByOrderByScoreDesc();
+
+    List<Farmer> findTop10ByUser_ProvinceOrderByScoreDesc(String province);
+
+    List<Farmer> findTop10ByUser_CityOrderByScoreDesc(String city);
+
+    List<Farmer> findTop10ByUser_AreaOrderByScoreDesc(String area);
+
+    List<Farmer> findTop10ByUser_StreetOrderByScoreDesc(String street);
+
+    List<Farmer> findTop10ByUser_VillageOrderByScoreDesc(String village);
 }

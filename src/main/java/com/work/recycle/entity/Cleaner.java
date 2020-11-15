@@ -29,7 +29,8 @@ public class Cleaner {
     @Min(0)
     private double score = 0;
 
-    private String serviceArea;
+    // 用来存储
+    private String otherVillage;
 
     @OneToMany(mappedBy = "cleaner")
     @JsonIgnore

@@ -146,14 +146,7 @@ class FarmerServiceTest {
 
 
     }
-
-    @Test
-    void getRankList() {
-        List<Farmer> farmers = farmerService.getRankList();
-        farmers.forEach(a -> {
-            log.warn(a.getUser().getName());
-        });
-    }
+    
 
     @Test
     void test_addFarmer() {

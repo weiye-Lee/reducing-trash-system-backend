@@ -2,7 +2,9 @@ package com.work.recycle.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.work.recycle.common.CommonResult;
+import com.work.recycle.controller.vo.AddressVo;
 import com.work.recycle.controller.vo.RankListVo;
+import com.work.recycle.controller.vo.SiftOrderVo;
 import com.work.recycle.entity.*;
 import com.work.recycle.service.CleanerService;
 import com.work.recycle.service.UserService;
@@ -32,9 +34,9 @@ public class CleanerController {
      *
      * @return the fc orders checking
      */
-    @GetMapping("getFCOrders/checking")
-    public CommonResult getFCOrdersChecking() {
-        return CommonResult.success(cleanerService.getFCOrderChecking());
+    @PostMapping("getFCOrders/checking")
+    public CommonResult getFCOrdersChecking(@RequestBody SiftOrderVo siftOrderVo) {
+        return CommonResult.success(cleanerService.getFCOrderChecking(siftOrderVo));
     }
     
 
@@ -42,9 +44,9 @@ public class CleanerController {
      * 获得农户提交审核完成订单
      * @return 订单vo list
      */
-    @GetMapping("getFCOrders/checked")
-    public CommonResult getFCOrdersChecker() {
-        return CommonResult.success(cleanerService.getFCOrderChecked());
+    @PostMapping("getFCOrders/checked")
+    public CommonResult getFCOrdersChecker(@RequestBody SiftOrderVo siftOrderVo) {
+        return CommonResult.success(cleanerService.getFCOrderChecked(siftOrderVo));
     }
 
     /**
@@ -86,17 +88,6 @@ public class CleanerController {
         return CommonResult.success(null);
     }
 
-    /**
-     * 获取积分排行榜
-     * @return the cleaner list
-     */
-    @GetMapping("getRankList")
-    public CommonResult getRankList() {
-        List<Cleaner> cleaners = cleanerService.getRankList();
-        List<RankListVo> rankListVos = new ArrayList<>();
-        cleaners.forEach(each -> rankListVos.add(new RankListVo(each.getUser().getName(),each.getScore(), each.getId())));
-        return CommonResult.success(rankListVos);
-    }
 
     /**
      * 获得基础订单信息
@@ -171,19 +162,47 @@ public class CleanerController {
         return CommonResult.success(list);
     }
 
-    @GetMapping("getCDOrder/Checking")
-    public CommonResult getCDOrderChecking() {
-        return CommonResult.success(cleanerService.getCDOrderChecking());
+    @PostMapping("getCDOrder/Checking")
+    public CommonResult getCDOrderChecking(@RequestBody SiftOrderVo siftOrderVo) {
+        return CommonResult.success(cleanerService.getCDOrderChecking(siftOrderVo));
     }
 
-    @GetMapping("getCDOrder/Checked")
-    public CommonResult getCDOrderChecker() {
-        return CommonResult.success(cleanerService.getCDOrderChecked());
+    @PostMapping("getCDOrder/Checked")
+    public CommonResult getCDOrderChecker(@RequestBody SiftOrderVo siftOrderVo) {
+        return CommonResult.success(cleanerService.getCDOrderChecked(siftOrderVo));
     }
 
-    @GetMapping("getCROrders")
-    public CommonResult getCROrdres() {
-        return CommonResult.success(cleanerService.getCROrders());
+    @PostMapping("getCROrders")
+    public CommonResult getCROrders(@RequestBody SiftOrderVo siftOrderVo) {
+        return CommonResult.success(cleanerService.getCROrders(siftOrderVo));
+    }
+
+
+    // TODO 2020:11/14 进行测试
+    @PostMapping("addFarmer")
+    public CommonResult addFarmer(@RequestBody User user) {
+        return CommonResult.success(cleanerService.addFarmer(user));
+    }
+
+    //  /**
+    //   * 获取积分排行榜
+    //   * @return the cleaner list
+    //   */
+    //  @GetMapping("getRankList")
+    //  public CommonResult getRankList() {
+    //      List<Cleaner> cleaners = cleanerService.getRankList();
+    //      List<RankListVo> rankListVos = new ArrayList<>();
+    //      cleaners.forEach(each -> rankListVos.add(new RankListVo(each.getUser().getName(),each.getScore(), each.getId())));
+    //      return CommonResult.success(rankListVos);
+    //  }
+
+    // TODO 2020:11/15 进行测试
+    @GetMapping("getRankList")
+    public CommonResult getRankList(@RequestBody AddressVo addressVo) {
+        List<Cleaner> cleaners = cleanerService.getRankList(addressVo);
+        List<RankListVo> rankListVos = new ArrayList<>();
+        cleaners.forEach(each -> rankListVos.add(new RankListVo(each.getUser().getName(),each.getScore(), each.getId())));
+        return CommonResult.success(rankListVos);
     }
 
 

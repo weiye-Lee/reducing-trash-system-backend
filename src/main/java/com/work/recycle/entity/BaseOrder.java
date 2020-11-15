@@ -51,4 +51,18 @@ public class BaseOrder {
             updatable = false)
     private LocalDateTime updateTime;
 
+    @Column(length = 10)
+    private String province;
+
+    @Column(length = 10)
+    private String city;
+
+    @Column(length = 10)
+    private String area;
+
+    @Column(length = 10)
+    private String street;
+
+    @Column(length = 20)
+    private String village;
 }

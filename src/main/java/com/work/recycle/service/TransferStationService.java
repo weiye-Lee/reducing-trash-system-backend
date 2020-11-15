@@ -50,6 +50,10 @@ public class TransferStationService {
         ordersComponent.addBaseOrderGarbageList(baseOrder,garbageChooses);
     }
 
+    /**
+     * 中转站订单列表查询
+     * @return 基础订单集合 ——> 中转站需要展示的信息极少，故直接返回基础订单
+     */
     public List<BaseOrder> getDTOrders() {
         int uid = requestComponent.getUid();
         return dtOrderRepository.getBaseOrdersByTransferStation(uid);

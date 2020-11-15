@@ -21,4 +21,15 @@ public interface CleanerRepository extends BaseRepository<Cleaner,Integer>{
     Cleaner getCleanerByPhoneNumber(@Param("phoneNumber") String phoneNumber);
 
     List<Cleaner> findTop10ByOrderByScoreDesc();
+
+    List<Cleaner> findTop10ByUser_ProvinceOrderByScoreDesc(String province);
+
+    List<Cleaner> findTop10ByUser_CityOrderByScoreDesc(String city);
+
+    List<Cleaner> findTop10ByUser_AreaOrderByScoreDesc(String area);
+
+    List<Cleaner> findTop10ByUser_StreetOrderByScoreDesc(String street);
+
+    List<Cleaner> findTop10ByUser_VillageOrderByScoreDesc(String village);
+
 }

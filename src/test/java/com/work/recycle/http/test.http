@@ -1,3 +1,50 @@
+POST http://localhost:8080/api/farmer/getFCOrder/checking
+Content-Type: application/json
+Authorization: 139c2fbebadbd5a7d23baa1933854de84a3516e2c3b6cd8923ae7d40d1da3208807c992e36c3c75f447151d4270b7612
+
+{
+  "col": "none"
+}
+
+###
+POST http://localhost:8080/api/farmer/getFCOrder/checking
+Content-Type: application/json
+Authorization: 139c2fbebadbd5a7d23baa1933854de84a3516e2c3b6cd8923ae7d40d1da3208807c992e36c3c75f447151d4270b7612
+
+{
+  "col": "t_a",
+  "startTime": "2020-11-14 18:50:41",
+  "endTime": "2020-11-16 18:50:42",
+  "addressVo": {
+    "province": "黑龙江省",
+    "village": "伟业村"
+  }
+}
+
+###
+POST http://localhost:8080/api/farmer/getFCOrder/checking
+Content-Type: application/json
+Authorization: 139c2fbebadbd5a7d23baa1933854de84a3516e2c3b6cd8923ae7d40d1da3208807c992e36c3c75f447151d4270b7612
+
+{
+  "col": "t",
+  "startTime": "2020-11-15 18:50:41",
+  "endTime": "2020-11-16 18:50:42"
+}
+
+###
+POST http://localhost:8080/api/farmer/getFCOrder/checking
+Content-Type: application/json
+Authorization: 139c2fbebadbd5a7d23baa1933854de84a3516e2c3b6cd8923ae7d40d1da3208807c992e36c3c75f447151d4270b7612
+
+{
+  "col": "a",
+  "addressVo": {
+    "village": "伟业村"
+  }
+}
+
+###
 GET http://localhost:8080/api/cleaner/getCROrders
 Accept: application/json
 Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e3d69a5f46c7f3b2bef6219155aa7d57
@@ -114,7 +161,12 @@ Content-Type: application/json
 Authorization: 139c2fbebadbd5a7d23baa1933854de84a3516e2c3b6cd8923ae7d40d1da3208807c992e36c3c75f447151d4270b7612
 
 {
-  "address": "黑龙江省大庆市",
+  "province": "黑龙江省",
+  "city": "大庆市",
+  "area": "双城区",
+  "street": "平安街道",
+  "village": "伟业村",
+  "address": "村口大槐树下",
   "remark": "农户zai插入提交一条记录",
   "name": "李伟业",
   "phone": "13050496540",
