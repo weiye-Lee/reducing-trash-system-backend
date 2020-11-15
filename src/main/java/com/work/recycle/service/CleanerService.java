@@ -14,6 +14,7 @@ import com.work.recycle.repository.*;
 import com.work.recycle.utils.SwitchUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,6 +41,8 @@ public class CleanerService {
     private ConstructVoComponent constructVoComponent;
     @Autowired
     private FarmerRepository farmerRepository;
+    @Autowired
+    private PasswordEncoder encoder;
     public int getFCOrderTimes() {
         int uid = requestComponent.getUid();
         return fcOrderRepository.getCleanerFCOrderTimesById(uid);
@@ -137,6 +140,7 @@ public class CleanerService {
         int uid = requestComponent.getUid();
         Cleaner cleaner = cleanerRepository.getCleanerById(uid);
         user.setRole(User.Role.FARMER);
+        user.setPassword(encoder.encode("123456"));
         Farmer farmer = new Farmer();
         farmer.setUser(user);
         farmer.setCleaner(cleaner);

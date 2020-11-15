@@ -158,6 +158,7 @@ class FarmerServiceTest {
             user.setPhoneNumber(phoneNum);
             user.setPassword(encoder.encode("123456"));
             user.setRole(User.Role.FARMER);
+            user.setVillage("手机村");
             Farmer farmer = new Farmer();
             farmer.setUser(user);
             farmer.setScore(i);

@@ -1,3 +1,37 @@
+POST http://localhost:8080/api/cleaner/getRankList
+Content-Type: application/json
+Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e3d69a5f46c7f3b2bef6219155aa7d57
+
+{
+  "village": "水杯村"
+}
+
+###
+POST http://localhost:8080/api/farmer/getRankList
+Content-Type: application/json
+Authorization: 139c2fbebadbd5a7d23baa1933854de84a3516e2c3b6cd8923ae7d40d1da3208807c992e36c3c75f447151d4270b7612
+
+{
+  "village":"手机村"
+}
+
+###
+POST http://localhost:8080/api/cleaner/addFarmer
+Content-Type: application/json
+Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e3d69a5f46c7f3b2bef6219155aa7d57
+
+{
+  "province": "黑龙江省",
+  "city": "大庆市",
+  "area": "双城区",
+  "street": "平安街道",
+  "village": "伟业村",
+  "name": "安慕希",
+  "IDNumber": "20207878549017382",
+  "phoneNumber": "15941627298"
+}
+
+###
 POST http://localhost:8080/api/farmer/getFCOrder/checking
 Content-Type: application/json
 Authorization: 139c2fbebadbd5a7d23baa1933854de84a3516e2c3b6cd8923ae7d40d1da3208807c992e36c3c75f447151d4270b7612

@@ -32,7 +32,7 @@ public class User {
     @Size(min = 2,max = 6,message = "用户名长度超出限制")
     private String name;
 
-    @Column(length = 11,nullable = false)
+    @Column(length = 11,nullable = false,unique = true)
     private String phoneNumber;
 
     @Column(nullable = false)
@@ -40,7 +40,7 @@ public class User {
     private String password;
 
     @Column(length = 20)
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String IDNumber;
 
     @Column(length = 20)

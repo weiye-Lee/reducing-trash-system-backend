@@ -173,8 +173,8 @@ public class FarmerController {
      * 获取积分前十名的用户
      * @return 返回农户排行榜集合
      */
-    @GetMapping("getRankList")
-    public CommonResult getRankList(AddressVo addressVo) {
+    @PostMapping("getRankList")
+    public CommonResult getRankList(@RequestBody AddressVo addressVo) {
         List<Farmer> farmers = farmerService.getRankList(addressVo);
         List<RankListVo> rankListVos = new ArrayList<>();
         farmers.forEach(each -> rankListVos.add(new RankListVo(each.getUser().getName(),each.getScore(), each.getId())));

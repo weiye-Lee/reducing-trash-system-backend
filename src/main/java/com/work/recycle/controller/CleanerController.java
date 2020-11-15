@@ -197,7 +197,7 @@ public class CleanerController {
     //  }
 
     // TODO 2020:11/15 进行测试
-    @GetMapping("getRankList")
+    @PostMapping("getRankList")
     public CommonResult getRankList(@RequestBody AddressVo addressVo) {
         List<Cleaner> cleaners = cleanerService.getRankList(addressVo);
         List<RankListVo> rankListVos = new ArrayList<>();

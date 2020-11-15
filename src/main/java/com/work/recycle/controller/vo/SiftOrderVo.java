@@ -25,7 +25,7 @@ public class SiftOrderVo {
      * ====== > but i don't want to realize the function of select by id < ======
      * A Address
      * 例 T_I : select by time and id
-     * 例 T_I_A : select by time and id and address
+     * 例 T__A : select by time and address
      * etc ..
      */
     public static final String T = "t";

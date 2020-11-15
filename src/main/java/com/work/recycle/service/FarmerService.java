@@ -79,6 +79,7 @@ public class FarmerService {
      */
     public List<Farmer> getRankList(AddressVo addressVo) {
         // 从 村 -> 街道 -> 区 -> 市 -> 省 依次判空，如果区域级别小，则按照小的查询
+        log.warn(addressVo.getVillage());
         if (addressVo == null) {
             return farmerRepository.findTop10ByOrderByScoreDesc();
         } else if (addressVo.getVillage() != null) {

@@ -91,6 +91,7 @@ class CleanerServiceTest {
             user.setPhoneNumber(phone);
             user.setPassword(encoder.encode("123456"));
             user.setRole(User.Role.CLEANER);
+            user.setVillage("水杯村");
             Cleaner cleaner = new Cleaner();
             cleaner.setUser(user);
             cleaner.setScore(i);
