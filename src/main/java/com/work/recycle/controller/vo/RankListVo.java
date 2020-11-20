@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RankListVo {
     private String name;
-    private String address;
     private double score;
     private Integer id;
+    private AddressVo addressVo;
 
     public RankListVo(String name,double score,Integer id) {
         this.name = name;
@@ -20,4 +20,5 @@ public class RankListVo {
         this.id = id;
 
     }
+
 }

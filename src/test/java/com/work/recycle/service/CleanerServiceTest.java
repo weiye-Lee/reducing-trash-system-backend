@@ -98,4 +98,9 @@ class CleanerServiceTest {
             cleanerRepository.save(cleaner);
         }
     }
+
+    @Test
+    void removeCDOrder() {
+        cleanerService.removeCDOrder(6);
+    }
 }

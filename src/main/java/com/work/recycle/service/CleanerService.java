@@ -1,5 +1,7 @@
 package com.work.recycle.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.work.recycle.common.ResultCode;
 import com.work.recycle.component.ConstructVoComponent;
 import com.work.recycle.component.OrdersComponent;
@@ -43,6 +45,10 @@ public class CleanerService {
     private FarmerRepository farmerRepository;
     @Autowired
     private PasswordEncoder encoder;
+    @Autowired
+    private GarbageChooseRepository chooseRepository;
+    @Autowired
+    private ObjectMapper mapper;
     public int getFCOrderTimes() {
         int uid = requestComponent.getUid();
         return fcOrderRepository.getCleanerFCOrderTimesById(uid);
@@ -146,6 +152,39 @@ public class CleanerService {
         farmer.setCleaner(cleaner);
         farmerRepository.save(farmer);
         return farmer;
+    }
+
+    public List<Farmer> getFarmerRankList() {
+        int uid = requestComponent.getUid();
+        return farmerRepository.findTop10ByCleaner_IdOrderByScoreDesc(uid);
+    }
+
+    public CDOrder removeCDOrder(int id) {
+        CDOrder cdOrder = cdOrderRepository.getCDOrderById(id);
+        if (cdOrder == null || cdOrder.getBaseOrder() == null) {
+            throw new ApiException(ResultCode.VALIDATE_FAILED);
+        } else if (cdOrder.getBaseOrder().getCheckStatus() == null) {
+            throw new ApiException("审核完成订单不允许删除");
+        }
+        cdOrderRepository.delete(cdOrder);
+        chooseRepository.getGarbageChooseByBaseOrder_Id(id)
+                .forEach(garbageChoose -> {
+                    log.warn("{}",garbageChoose.getId());
+                    chooseRepository.delete(garbageChoose);
+                });
+        baseOrderRepository.deleteById(id);
+        return cdOrder;
+
+    }
+
+    public List<Farmer> getFarmer() {
+        int id = requestComponent.getUid();
+        return farmerRepository.findByCleaner_Id(id);
+    }
+
+    public Farmer getFarmerIndex(int id) {
+        return farmerRepository.getFarmerById(id);
+
     }
 
 }

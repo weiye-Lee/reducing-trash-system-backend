@@ -16,8 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
+import static java.util.Optional.ofNullable;
 
 /**
  * The type Farmer service.
@@ -37,6 +38,8 @@ public class FarmerService {
     private RequestComponent requestComponent;
     @Autowired
     private ConstructVoComponent constructVoComponent;
+    @Autowired
+    private GarbageChooseRepository chooseRepository;
 
     public int getScore() {
         int uid = requestComponent.getUid();
@@ -59,7 +62,7 @@ public class FarmerService {
      * @return 标准类型订单列表
      */
     public List<IndexOrderVo> getFCOrderChecked(SiftOrderVo siftOrderVo) {
-        return constructVoComponent.getCommonOrders(true, SwitchUtil.FCORDER,siftOrderVo);
+        return constructVoComponent.getCommonOrders(true, SwitchUtil.FCORDER, siftOrderVo);
     }
 
     /**
@@ -68,7 +71,7 @@ public class FarmerService {
      * @return 标准类型订单列表
      */
     public List<IndexOrderVo> getFCOrderChecking(SiftOrderVo siftOrderVo) {
-        return constructVoComponent.getCommonOrders(false, SwitchUtil.FCORDER,siftOrderVo);
+        return constructVoComponent.getCommonOrders(false, SwitchUtil.FCORDER, siftOrderVo);
     }
 
 
@@ -96,4 +99,41 @@ public class FarmerService {
             return farmerRepository.findTop10ByOrderByScoreDesc();
         }
     }
+
+    public Map getCleaner() {
+        int uid = requestComponent.getUid();
+        Cleaner cleaner = farmerRepository.getCleaner(uid);
+        Map map = new HashMap();
+        if (cleaner == null || cleaner.getUser() == null) {
+            throw new ApiException(ResultCode.FAILED);
+        }
+        map.put("name", cleaner.getUser().getName());
+        map.put("id",cleaner.getId());
+        map.put("province", cleaner.getUser().getProvince());
+        map.put("city", cleaner.getUser().getCity());
+        map.put("area", cleaner.getUser().getArea());
+        map.put("street", cleaner.getUser().getStreet());
+        map.put("village", cleaner.getUser().getVillage());
+
+        return map;
+    }
+
+    // TODO 2020:11/20 代码重构
+    public FCOrder removeFCOrder(int id) {
+        FCOrder fcOrder = fcOrderRepository.getFCOrderById(id);
+        if (fcOrder == null || fcOrder.getBaseOrder() == null) {
+            throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
+        } else if (fcOrder.getBaseOrder().getCheckStatus()) {
+            throw new ApiException("审核完成订单不允许删除");
+        }
+        fcOrderRepository.delete(fcOrder);
+        chooseRepository.getGarbageChooseByBaseOrder_Id(id)
+                .forEach(garbageChoose -> chooseRepository.delete(garbageChoose));
+
+        baseOrderRepository.deleteById(id);
+
+
+        return fcOrder;
+    }
+
 }

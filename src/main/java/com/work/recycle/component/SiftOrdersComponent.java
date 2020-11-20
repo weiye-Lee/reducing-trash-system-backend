@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// TODO 2020:11/15 进行测试
 @Slf4j
 @Component
 public class SiftOrdersComponent {

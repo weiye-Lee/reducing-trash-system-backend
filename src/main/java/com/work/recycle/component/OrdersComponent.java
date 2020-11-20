@@ -21,7 +21,6 @@ import static java.util.Optional.ofNullable;
 
 /**
  * 订单插入 审核组件
- *
  */
 @Component
 @Slf4j
@@ -228,6 +227,11 @@ public class OrdersComponent {
 
      */
 
+    /**
+     * 保存垃圾选择集合
+     * @param baseOrder 基础订单
+     * @param garbageChooses 垃圾选择信息集合
+     */
     public void addBaseOrderGarbageList(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
         ofNullable(garbageChooses)
                 .ifPresent(item -> item.forEach(each -> garbageRepository.findById(

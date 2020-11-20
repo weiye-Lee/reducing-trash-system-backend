@@ -21,6 +21,8 @@ public interface FarmerRepository extends BaseRepository<Farmer,Integer> {
     @Query("select f from Farmer f where f.user.phoneNumber = :phoneNumber")
     Farmer getFarmerByPhoneNumber(@Param("phoneNumber") String PhoneNumber);
 
+    @Query("select f.cleaner from Farmer f where f.id = :id")
+    Cleaner getCleaner(@Param("id") int id);
 
     List<Farmer> findTop10ByOrderByScoreDesc();
 
@@ -33,4 +35,8 @@ public interface FarmerRepository extends BaseRepository<Farmer,Integer> {
     List<Farmer> findTop10ByUser_StreetOrderByScoreDesc(String street);
 
     List<Farmer> findTop10ByUser_VillageOrderByScoreDesc(String village);
+
+    List<Farmer> findTop10ByCleaner_IdOrderByScoreDesc(int id);
+
+    List<Farmer> findByCleaner_Id(int id);
 }

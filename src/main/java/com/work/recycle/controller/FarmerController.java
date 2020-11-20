@@ -168,7 +168,6 @@ public class FarmerController {
     }
 
 
-    // TODO 2020:11/15 进行测试
     /**
      * 获取积分前十名的用户
      * @return 返回农户排行榜集合
@@ -183,7 +182,20 @@ public class FarmerController {
 
     // TODO 2020/10/22 ：删除订单
     @PostMapping("removeFCOrder")
-    public CommonResult removeFCOrder() {
-        return null;
+    public CommonResult removeFCOrder(@Param("id") int id) {
+        return CommonResult.success(farmerService.removeFCOrder(id));
+    }
+
+    // TODO 2020:11/20 获取对应保洁员
+    /**
+     * 农户获取对应保洁员
+     * @return {
+     *     name : XXX,
+     *     id : XX
+     * }
+     */
+    @GetMapping("getCleaner")
+    public CommonResult getCleaner() {
+        return CommonResult.success(farmerService.getCleaner());
     }
 }
