@@ -41,12 +41,15 @@ public class Cleaner {
     private Driver driver;
 
     @OneToMany(mappedBy = "cleaner")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<FCOrder> fcOrders;
 
     @OneToMany(mappedBy = "cleaner")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<CDOrder> cdOrders;
 
     @OneToMany(mappedBy = "cleaner")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<CROrder> crOrders;
 
     @Column(columnDefinition = "timestamp default current_timestamp",

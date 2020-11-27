@@ -161,6 +161,11 @@ public class CleanerService {
 
     public CDOrder removeCDOrder(int id) {
         CDOrder cdOrder = cdOrderRepository.getCDOrderById(id);
+        try {
+            log.warn(mapper.writeValueAsString(cdOrder));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
         if (cdOrder == null || cdOrder.getBaseOrder() == null) {
             throw new ApiException(ResultCode.VALIDATE_FAILED);
         } else if (cdOrder.getBaseOrder().getCheckStatus() == null) {

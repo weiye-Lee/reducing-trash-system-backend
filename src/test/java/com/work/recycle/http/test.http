@@ -10,7 +10,7 @@ Accept: application/json
 Authorization: 139c2fbebadbd5a7d23baa1933854de84a3516e2c3b6cd8923ae7d40d1da3208807c992e36c3c75f447151d4270b7612
 
 ###
-POST http://localhost:8080/api/cleaner/removeCROrders?id=3
+POST http://localhost:8080/api/cleaner/removeCDOrders?id=7
 Content-Type: application/json
 Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e3d69a5f46c7f3b2bef6219155aa7d57
 

@@ -1,6 +1,7 @@
 package com.work.recycle.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,15 +22,18 @@ public class Driver {
     private User user;
 
     @OneToMany(mappedBy = "driver")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Cleaner> cleaners;
 
     @Column(length = 40)
     private String serviceArea;
 
     @OneToMany(mappedBy = "driver")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<CDOrder> cdOrders;
 
     @OneToMany(mappedBy = "driver")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<DTOrder> dtOrders;
 
     @JsonIgnore
