@@ -159,6 +159,7 @@ public class CleanerService {
         return farmerRepository.findTop10ByCleaner_IdOrderByScoreDesc(uid);
     }
 
+    // TODO 2020/11/17 权限验证，只应该可以删除提交的 自己 的订单
     public CDOrder removeCDOrder(int id) {
         CDOrder cdOrder = cdOrderRepository.getCDOrderById(id);
         try {

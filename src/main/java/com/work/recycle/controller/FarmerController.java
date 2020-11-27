@@ -186,7 +186,6 @@ public class FarmerController {
         return CommonResult.success(farmerService.removeFCOrder(id));
     }
 
-    // TODO 2020:11/20 获取对应保洁员
     /**
      * 农户获取对应保洁员
      * @return {
