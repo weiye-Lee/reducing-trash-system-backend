@@ -179,8 +179,7 @@ public class FarmerController {
         farmers.forEach(each -> rankListVos.add(new RankListVo(each.getUser().getName(),each.getScore(), each.getId())));
         return CommonResult.success(rankListVos);
     }
-
-    // TODO 2020/10/22 ：删除订单
+    
     @PostMapping("removeFCOrder")
     public CommonResult removeFCOrder(@Param("id") int id) {
         return CommonResult.success(farmerService.removeFCOrder(id));

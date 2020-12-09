@@ -164,11 +164,6 @@ public class UserController {
         return CommonResult.success(userService.updatePsw(password));
     }
 
-    // TODO 2020:11/14 获取地理位置关系结构表
-    @GetMapping("getAddress")
-    public CommonResult getAddress() {
-        return null;
-    }
 
     @GetMapping("test")
     public CommonResult test() {
