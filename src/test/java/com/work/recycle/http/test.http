@@ -1,11 +1,11 @@
-POST http://localhost:8080/api/farmer/removeFCOrder?id=9
+POST http://localhost:8080/api/farmer/removeFCOrder?id=15
 Content-Type: application/json
 Authorization: 139c2fbebadbd5a7d23baa1933854de84a3516e2c3b6cd8923ae7d40d1da3208807c992e36c3c75f447151d4270b7612
 
 {}
 
 ###
-GET http://localhost:8080/api/farmer/getCleaner
+GET http://122.9.39.109:8080/api/farmer/getCleaner
 Accept: application/json
 Authorization: 139c2fbebadbd5a7d23baa1933854de84a3516e2c3b6cd8923ae7d40d1da3208807c992e36c3c75f447151d4270b7612
 

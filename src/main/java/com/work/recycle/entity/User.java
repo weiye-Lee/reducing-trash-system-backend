@@ -81,4 +81,7 @@ public class User {
 
     @Column(length = 20)
     private String village;
+
+    @Column(length = 5) // 账户状态 默认可用
+    private Boolean usable = true;
 }

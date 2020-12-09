@@ -97,6 +97,9 @@ public class UserController {
                 .filter(u -> encoder.matches(loginUser.getPassword(), u.getPassword()))
                 .orElseThrow(() -> new ApiException(ResultCode.UNAUTHORIZED));
 
+        if (!user.getUsable()) {
+            throw new ApiException("账号已注销");
+        }
         MyToken token = new MyToken(user.getRole(), user.getId());
         String auth = encrypt.encryptToken(token);
         response.setHeader(MyToken.AUTHORIZATION, auth);
@@ -165,5 +168,10 @@ public class UserController {
     @GetMapping("getAddress")
     public CommonResult getAddress() {
         return null;
+    }
+
+    @GetMapping("test")
+    public CommonResult test() {
+        return CommonResult.success("every thing is ok");
     }
 }
