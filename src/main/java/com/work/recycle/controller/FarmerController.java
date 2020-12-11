@@ -179,7 +179,7 @@ public class FarmerController {
         farmers.forEach(each -> rankListVos.add(new RankListVo(each.getUser().getName(),each.getScore(), each.getId())));
         return CommonResult.success(rankListVos);
     }
-    
+
     @PostMapping("removeFCOrder")
     public CommonResult removeFCOrder(@Param("id") int id) {
         return CommonResult.success(farmerService.removeFCOrder(id));

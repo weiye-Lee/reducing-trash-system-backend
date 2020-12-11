@@ -32,4 +32,6 @@ public interface CleanerRepository extends BaseRepository<Cleaner,Integer>{
 
     List<Cleaner> findTop10ByUser_VillageOrderByScoreDesc(String village);
 
+    List<Cleaner> findByDriver_Id(int id);
+
 }

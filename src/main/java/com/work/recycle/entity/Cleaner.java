@@ -73,4 +73,7 @@ public class Cleaner {
         }
     }
 
+    public Cleaner(User user) {
+        this.user = user;
+    }
 }

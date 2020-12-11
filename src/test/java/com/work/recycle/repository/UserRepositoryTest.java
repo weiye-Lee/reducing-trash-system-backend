@@ -38,4 +38,10 @@ class UserRepositoryTest {
         User user = userRepository.getUserByPhoneNumber("13050496540");
         log.warn(mapper.writeValueAsString(user));
     }
+
+    @Test
+    void findByRole() {
+        userRepository.findByRole(User.Role.FARMER)
+                .forEach(user -> log.warn(user.getName()));
+    }
 }
