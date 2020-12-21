@@ -38,11 +38,13 @@ class EncryptComponentTest {
         MyToken myToken2 = new MyToken(User.Role.DRIVER, 1);
         MyToken myToken3 = new MyToken(User.Role.TRANSFERSTATION,4);
         MyToken myToken4 = new MyToken(User.Role.RECYCLEFIRM,5);
+        MyToken myToken5 = new MyToken(User.Role.ADMIN,61);
         log.warn(encryptComponent.encryptToken(myToken));
         log.warn(encryptComponent.encryptToken(myToken1));
         log.warn(encryptComponent.encryptToken(myToken2));
         log.warn(encryptComponent.encryptToken(myToken3));
         log.warn(encryptComponent.encryptToken(myToken4));
+        log.warn("admin="+encryptComponent.encryptToken(myToken5));
 
         /*
             farmer
@@ -60,6 +62,10 @@ class EncryptComponentTest {
             transferStaion
 
             154040a9ba5aa6c919742ae41b1e39b4b9784931d6ae29495f267f432eae0bd08e1e52b6d5b0fb6562856c6d26e890d2788ca59a0a5f92da500ce6502d30a083
+
+            admin
+
+            d173d91045a96d6a0350969c17a8ac077082b7f98448491c2cd477ecdb61b9985be10d33db85874e3fe1606c33de3588
          */
     }
 

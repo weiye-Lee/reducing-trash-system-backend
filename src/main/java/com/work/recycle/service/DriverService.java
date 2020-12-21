@@ -1,11 +1,13 @@
 package com.work.recycle.service;
 
+import com.work.recycle.common.ResultCode;
 import com.work.recycle.component.ConstructVoComponent;
 import com.work.recycle.component.OrdersComponent;
 import com.work.recycle.component.RequestComponent;
 import com.work.recycle.controller.vo.IndexOrderVo;
 import com.work.recycle.controller.vo.SiftOrderVo;
 import com.work.recycle.entity.*;
+import com.work.recycle.exception.ApiException;
 import com.work.recycle.repository.*;
 import com.work.recycle.utils.SwitchUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +47,9 @@ public class DriverService {
         int uid = requestComponent.getUid();
         BaseOrder baseOrder = baseOrderRepository.getBaseOrderById(id);
         CDOrder cdOrder = cdOrderRepository.getCDOrderById(id);
+        if (cdOrder == null) {
+            throw new ApiException(ResultCode.VALIDATE_FAILED);
+        }
         Driver driver = driverRepository.getDriverById(uid);
         cdOrder.setDriver(driver);
         baseOrder.setReceiveStatus(true);

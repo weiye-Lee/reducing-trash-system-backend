@@ -1,6 +1,7 @@
 package com.work.recycle.component;
 
 import ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.work.recycle.entity.Garbage;
 import com.work.recycle.entity.User;
@@ -8,6 +9,7 @@ import com.work.recycle.repository.BaseRepository;
 import com.work.recycle.repository.GarbageRepository;
 import com.work.recycle.repository.UserRepository;
 import com.work.recycle.repository.impl.BaseRepositoryImpl;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,10 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.io.*;
+import java.sql.Time;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootTest
 @Slf4j
@@ -213,6 +219,22 @@ public class Testsome {
         if (true) {
             log.warn("hello");
         }
+    }
+
+    @Test
+    void make_json() {
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(10);
+        try {
+            log.warn(mapper.writeValueAsString(list));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    void test_data() {
+
     }
 
 

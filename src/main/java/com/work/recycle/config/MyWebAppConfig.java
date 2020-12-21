@@ -23,6 +23,8 @@ public class MyWebAppConfig implements WebMvcConfigurer {
     private RecycleFirmInterceptor recycleFirmInterceptor;
     @Autowired
     private TransferStationInterceptor transferStationInterceptor;
+    @Autowired
+    private AdminInterceptor adminInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -45,6 +47,9 @@ public class MyWebAppConfig implements WebMvcConfigurer {
 
         registry.addInterceptor(transferStationInterceptor)
                 .addPathPatterns("/api/transferStation/**");
+
+        registry.addInterceptor(adminInterceptor)
+                .addPathPatterns("/api/admin/**");
     }
 
     @Override

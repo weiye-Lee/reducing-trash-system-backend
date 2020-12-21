@@ -1,10 +1,13 @@
 package com.work.recycle.repository;
 
+import com.work.recycle.entity.BaseOrder;
 import com.work.recycle.entity.FCOrder;
+import org.apache.tomcat.jni.Local;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -31,5 +34,13 @@ public interface FCOrderRepository extends BaseRepository<FCOrder, Integer> {
 
     @Query("select fc from FCOrder fc where fc.id = :id")
     FCOrder getFCOrderById(@Param("id") int id);
+
+    @Query("select fc from FCOrder fc where " +
+            " fc.baseOrder.street = :street" +
+            " and fc.baseOrder.insertTime >= :startTime" +
+            " and fc.baseOrder.insertTime <= :endTime")
+    List<FCOrder> getByAddressAndTime(@Param("street") String street,
+                                      @Param("startTime")LocalDateTime startTime,
+                                      @Param("endTime")LocalDateTime endTime);
 
 }

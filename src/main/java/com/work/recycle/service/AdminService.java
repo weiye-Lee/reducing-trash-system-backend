@@ -1,10 +1,10 @@
 package com.work.recycle.service;
 
-import com.work.recycle.common.ResultCode;
 import com.work.recycle.entity.*;
 import com.work.recycle.exception.ApiException;
 import com.work.recycle.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,17 +28,20 @@ public class AdminService {
     private FCOrderRepository fcOrderRepository;
     @Autowired
     private CDOrderRepository cdOrderRepository;
-
+    @Autowired
+    private PasswordEncoder encoder;
     private User validateUser(User user) {
         if (user.getName() == null || user.getPhoneNumber() == null) {
             throw new ApiException("数据不全");
         }
         user.setId(null);
+        user.setPassword(encoder.encode("123456"));
         return user;
     }
 
     public User addCleaner(User user) {
         user = validateUser(user);
+        user.setRole(User.Role.CLEANER);
         Cleaner cleaner = new Cleaner(user);
         cleanerRepository.save(cleaner);
         return user;
@@ -46,6 +49,7 @@ public class AdminService {
 
     public User addDriver(User user) {
         user = validateUser(user);
+        user.setRole(User.Role.DRIVER);
         Driver driver = new Driver();
         driver.setUser(user);
         driverRepository.save(driver);
@@ -54,6 +58,7 @@ public class AdminService {
 
     public User addRecycleFirm(User user) {
         user = validateUser(user);
+        user.setRole(User.Role.RECYCLEFIRM);
         RecycleFirm recycleFirm = new RecycleFirm();
         recycleFirm.setUser(user);
         recycleFirmRepository.save(recycleFirm);
@@ -62,6 +67,7 @@ public class AdminService {
 
     public User addTransferStation(User user) {
         user = validateUser(user);
+        user.setRole(User.Role.TRANSFERSTATION);
         TransferStation transferStation = new TransferStation();
         transferStation.setUser(user);
         transferStationRepository.save(transferStation);
@@ -116,14 +122,21 @@ public class AdminService {
                 });
         // 为农户定义新的保洁员
         farmerIds.forEach(id -> farmerRepository.findById(id)
-                .ifPresentOrElse(farmer -> farmer.setCleaner(newCleaner)
+                .ifPresentOrElse(farmer -> {
+                            farmer.setCleaner(newCleaner);
+                            farmerRepository.save(farmer);
+                        }
                         , () -> {
                             throw new ApiException("农户信息错误");
                         }));
 
         // 将fc订单转移到新的保洁员身上
         fcOrderRepository.getCleanerFCOrdersById(oldId, false)
-                .forEach(a -> a.setCleaner(newCleaner));
+                .forEach(a -> {
+                            a.setCleaner(newCleaner);
+                            fcOrderRepository.save(a);
+                        }
+                );
 
         return farmerIds.size();
     }
@@ -139,14 +152,27 @@ public class AdminService {
                 });
 
         cleanerIds.forEach(id -> cleanerRepository.findById(id)
-                .ifPresentOrElse(cleaner -> cleaner.setDriver(newDriver)
+                .ifPresentOrElse(cleaner -> {
+                            cleaner.setDriver(newDriver);
+                            cleanerRepository.save(cleaner);
+                        }
                         , () -> {
                             throw new ApiException("农户信息错误");
                         }));
 
+
         cdOrderRepository.getCDOrdersByDriverAndBaseOrder(oldId,false)
-                .forEach(a -> a.setDriver(newDriver));
+                .forEach(a -> {
+                    a.setDriver(newDriver);
+                    cdOrderRepository.save(a);
+                });
 
         return cleanerIds.size();
+    }
+    public Boolean setUsable(int id,Boolean bool) {
+        User user = userRepository.getUserById(id);
+        user.setUsable(bool);
+        userRepository.save(user);
+        return bool;
     }
 }

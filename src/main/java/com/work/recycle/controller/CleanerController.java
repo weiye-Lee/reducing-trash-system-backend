@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,7 +37,7 @@ public class CleanerController {
      * @return the fc orders checking
      */
     @PostMapping("getFCOrders/checking")
-    public CommonResult getFCOrdersChecking(@RequestBody SiftOrderVo siftOrderVo) {
+    public CommonResult getFCOrdersChecking(@Valid @RequestBody SiftOrderVo siftOrderVo) {
         return CommonResult.success(cleanerService.getFCOrderChecking(siftOrderVo));
     }
 
@@ -47,7 +48,7 @@ public class CleanerController {
      * @return 订单vo list
      */
     @PostMapping("getFCOrders/checked")
-    public CommonResult getFCOrdersChecker(@RequestBody SiftOrderVo siftOrderVo) {
+    public CommonResult getFCOrdersChecker(@Valid @RequestBody SiftOrderVo siftOrderVo) {
         return CommonResult.success(cleanerService.getFCOrderChecked(siftOrderVo));
     }
 
