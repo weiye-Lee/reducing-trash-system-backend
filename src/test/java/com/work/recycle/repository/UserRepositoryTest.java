@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
@@ -16,6 +17,8 @@ class UserRepositoryTest {
     private UserRepository userRepository;
     @Autowired
     private ObjectMapper mapper;
+    @Autowired
+    private PasswordEncoder encoder;
 
 
     @Test
@@ -43,5 +46,21 @@ class UserRepositoryTest {
     void findByRole() {
         userRepository.findByRole(User.Role.FARMER)
                 .forEach(user -> log.warn(user.getName()));
+    }
+
+//    @Autowired
+//    private UserRepository userRepository;
+//    @Autowired
+//    private ObjectMapper mapper;
+//    @Autowired
+//    private PasswordEncoder encoder;
+    @Test
+    void add_Admin() {
+        User user = new User();
+        user.setName("管理员");
+        user.setPhoneNumber("12050496540");
+        user.setRole(User.Role.ADMIN);
+        user.setPassword(encoder.encode("123456"));
+        userRepository.save(user);
     }
 }

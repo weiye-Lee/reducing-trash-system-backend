@@ -20,4 +20,9 @@ class AdminServiceTest {
         adminService.addCleaner(user);
     }
 
+    @Test
+    void add_admin() {
+
+    }
+
 }

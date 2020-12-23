@@ -19,13 +19,15 @@ public class UserVo {
     private String phoneNumber;
     private AddressVo addressVo;
     private Boolean usable;
+    private int id;
 
     public static UserVo conversionUserVo(User user) {
         UserVo userVo = new UserVo();
         AddressVo addressVo = new AddressVo();
         userVo.setName(user.getName());
         userVo.setPhoneNumber(user.getPhoneNumber());
-        userVo.setUsable(user.getUsable());;
+        userVo.setUsable(user.getUsable());
+        userVo.setId(user.getId());
         addressVo.setProvince(user.getProvince());
         addressVo.setCity(user.getCity());
         addressVo.setArea(user.getArea());

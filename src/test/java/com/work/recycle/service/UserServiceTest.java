@@ -24,4 +24,6 @@ class UserServiceTest {
         User u = userService.getUserByPhone("13050496540");
         log.warn(mapper.writeValueAsString(u));
     }
+
+
 }
