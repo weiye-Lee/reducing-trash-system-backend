@@ -73,6 +73,11 @@ Accept: application/json
 Authorization: d173d91045a96d6a0350969c17a8ac077082b7f98448491c2cd477ecdb61b9985be10d33db85874e3fe1606c33de3588
 
 ###
+GET http://122.9.39.109/api/admin/get/Driver
+Accept: application/json
+Authorization: d173d91045a96d6a0350969c17a8ac077082b7f98448491c2cd477ecdb61b9985be10d33db85874e3fe1606c33de3588
+
+###
 GET http://localhost:8080/api/admin/get/Driver
 Accept: application/json
 Authorization: d173d91045a96d6a0350969c17a8ac077082b7f98448491c2cd477ecdb61b9985be10d33db85874e3fe1606c33de3588

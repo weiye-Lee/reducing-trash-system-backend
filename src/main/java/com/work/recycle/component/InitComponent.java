@@ -104,6 +104,19 @@ public class InitComponent implements InitializingBean {
             recycleFirm.setUser(user);
             recycleFirmRepository.save(recycleFirm);
         }
+
+        u = userService.getUserByPhone("13050406666");
+        if (u == null) {
+            User user = new User();
+            user.setName("王根源");
+            user.setAddress("黑龙江大庆市");
+            user.setRole(User.Role.ADMIN);
+            user.setPhoneNumber("13050406666");
+            user.setPassword(encoder.encode("123456"));
+            userRepository.save(user);
+        }
+
+
         if (garbageRepository.getGarbageById(1) == null) {
             String RecycleCategory = "可回收垃圾";
             String UnRecycleCategory = "不可回收垃圾";
