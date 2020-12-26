@@ -1,37 +1,50 @@
 # 垃圾回收减量系统
 
 #### 介绍
-没什么想说的，太难了
-
+基于springboot 框架开发的“回收宝小程序”后端，通过查询对数据总量进行统计，生成垃圾减量数据
+author by weiye
+#### 运行环境
+jdk11
+mysql 8.0 +
+springboot 2.3.4
+Lombok
+swagger 2
 #### 软件架构
-软件架构说明
-没有说明
+|─src
+   ├─main
+     ├─java
+     │  └─com
+     │      └─work
+     │          ├─lib
+     │          └─recycle
+     │              ├─common
+     │              ├─component
+     │              ├─config
+     │              ├─controller
+     │              │  └─vo
+     │              ├─entity
+     │              ├─exception
+     │              ├─interceptor
+     │              ├─repository
+     │              │  └─impl
+     │              ├─service
+     │              └─utils
+     └─resources
+         └─static
+
 
 
 #### 安装教程
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.idea 2020.3
+2.执行mvn构建
+3.执行src/main/java/com/work/recycle/RecycleApplication.java 启动项
+4.修改配置的mysql密码和本地数据库密码
 
 #### 使用说明
 
-1.  xxxx
-2.  产生冲突
+you shouldn't change anything
 
 #### 参与贡献
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
-
-
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+weiye Lee
+Tongtong Xia

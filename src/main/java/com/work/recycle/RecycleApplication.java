@@ -19,7 +19,6 @@ public class RecycleApplication {
     // 自动将方法注入到容器当中
     @Bean
     public PasswordEncoder getPasswordEncoder() {
-
         return new BCryptPasswordEncoder();
     }
 

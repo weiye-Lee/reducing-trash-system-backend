@@ -461,6 +461,15 @@ Authorization: e2cf25451c687a1c48b0e6a74bd8303af273e18f8b60dbbddf610ff715ba0362c
 }
 
 ###
+POST http://124.70.7.201:8080/api/user/login
+Content-Type: application/json
+
+{
+  "phoneNumber": "13050496540",
+  "password": "123456"
+}
+
+###
 POST http://localhost:8080/api/user/login
 Content-Type: application/json
 
