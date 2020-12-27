@@ -1,5 +1,6 @@
 package com.work.recycle.service;
 
+import com.work.recycle.common.ResultCode;
 import com.work.recycle.entity.*;
 import com.work.recycle.exception.ApiException;
 import com.work.recycle.repository.*;
@@ -7,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,6 +31,16 @@ public class AdminService {
     private CDOrderRepository cdOrderRepository;
     @Autowired
     private PasswordEncoder encoder;
+    @Autowired
+    private GarbageRepository garbageRepository;
+    @Autowired
+    private RecyclePriceListRepository recyclePriceListRepository;
+    @Autowired
+    private RecyclePriceRecordRepository recyclePriceRecordRepository;
+    @Autowired
+    private SuggestPriceListRepository suggestPriceListRepository;
+    @Autowired
+    private SuggestPriceRecordRepository suggestPriceRecordRepository;
     private User validateUser(User user) {
         if (user.getName() == null || user.getPhoneNumber() == null) {
             throw new ApiException("数据不全");
@@ -161,7 +172,7 @@ public class AdminService {
                         }));
 
 
-        cdOrderRepository.getCDOrdersByDriverAndBaseOrder(oldId,false)
+        cdOrderRepository.getCDOrdersByDriverAndBaseOrder(oldId, false)
                 .forEach(a -> {
                     a.setDriver(newDriver);
                     cdOrderRepository.save(a);
@@ -169,10 +180,85 @@ public class AdminService {
 
         return cleanerIds.size();
     }
-    public Boolean setUsable(int id,Boolean bool) {
+
+    public Boolean setUsable(int id, Boolean bool) {
         User user = userRepository.getUserById(id);
         user.setUsable(bool);
         userRepository.save(user);
         return bool;
+    }
+
+    /**
+     * 设置回收企业垃圾回收价格
+     *
+     * @param recyclePriceLists 新垃圾价格表，新价格表要包括所有的垃圾
+     */
+    public void setRecyclePrice(List<RecyclePriceList> recyclePriceLists) {
+        if (recyclePriceLists == null) {
+            throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
+        }
+
+        Map<Integer, Double> priceMap = new HashMap<>();
+        Map<Integer, String> unitMap = new HashMap<>();
+        /*
+        recyclePriceLists.forEach(a -> {
+            Double price = Optional.ofNullable(a)
+                    .map(RecyclePriceList::getGarbage)
+                    .map(Garbage::getRecyclePrice)
+                    .orElseThrow(() -> {
+                        throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
+                    });
+
+            String unit = Optional.ofNullable(a)
+                    .map(RecyclePriceList::getGarbage)
+                    .map(Garbage::getUnit)
+                    .orElseThrow(() -> {
+                        throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
+                    });
+
+            int id = Optional.ofNullable(a)
+                    .map(RecyclePriceList::getGarbage)
+                    .map(Garbage::getId)
+                    .orElseThrow(() -> {
+                        throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
+                    });
+
+            priceMap.put(id, price);
+            unitMap.put(id, unit);
+
+
+         */
+        // 构造迭代器，遍历裂变，生成价格，单位和垃圾id的对应关系，并检查是否存在输入为空
+        Iterator<RecyclePriceList> listIterator = recyclePriceLists.iterator();
+        while (listIterator.hasNext()) {
+            Garbage garbage = listIterator.next().getGarbage();
+            if (garbage == null || garbage.getId() == null
+                    || garbage.getRecyclePrice() == null
+                    || garbage.getUnit() == null) {
+                throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
+            } else {
+                priceMap.put(garbage.getId(), garbage.getRecyclePrice());
+                unitMap.put(garbage.getId(), garbage.getUnit());
+            }
+        }
+
+        // 更新最新垃圾回收价格表
+        List<Garbage> garbageList = garbageRepository.findAll();
+        garbageList.forEach(garbage -> {
+            int garbageId = garbage.getId();
+            if (priceMap.get(garbageId) == null || unitMap.get(garbageId) == null) {
+                throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
+            }
+            garbage.setRecyclePrice(priceMap.get(garbageId));
+            garbage.setRecyclePriceUnit(unitMap.get(garbageId));
+        });
+
+        // 新增价格改动记录
+        RecyclePriceRecord recyclePriceRecord = new RecyclePriceRecord();
+        recyclePriceRecordRepository.save(recyclePriceRecord);
+        recyclePriceLists.forEach(a -> {
+            a.setRecyclePriceRecord(recyclePriceRecord);
+            recyclePriceListRepository.save(a);
+        });
     }
 }

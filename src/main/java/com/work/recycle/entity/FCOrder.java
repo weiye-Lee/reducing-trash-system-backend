@@ -24,6 +24,8 @@ public class FCOrder {
     @MapsId
     private BaseOrder baseOrder;
 
+    private Double tradePrice; // 订单交易价格
+
     @ManyToOne
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Farmer farmer;
