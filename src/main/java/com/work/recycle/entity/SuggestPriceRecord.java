@@ -14,7 +14,7 @@ public class SuggestPriceRecord{
     private Integer id;
 
     @OneToMany(mappedBy = "suggestPriceRecord")
-    private List<SuggestPriceList> suggestPriceLists;
+    private List<SuggestPrice> suggestPrices;
 
     @JsonIgnore
     @Column(columnDefinition = "timestamp default current_timestamp",

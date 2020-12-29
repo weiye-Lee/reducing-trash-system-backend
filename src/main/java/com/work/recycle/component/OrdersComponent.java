@@ -95,11 +95,13 @@ public class OrdersComponent {
         if (fcOrder == null || fcOrder.getBaseOrder() == null || fcOrder.getFarmer() == null)
             throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
         double score = getScore(garbageChooses);
-        addBaseOrderGarbageList(baseOrder, garbageChooses);
+//        addBaseOrderGarbageList(baseOrder, garbageChooses);
+        checkBaseOrderGarbage(baseOrder,garbageChooses);
 
         fcOrder.getFarmer().setScore(score);
         fcOrder.getBaseOrder().setScore(score);
         fcOrder.getBaseOrder().setCheckStatus(true);
+        fcOrder.setTradePrice(getFCPrice(garbageChooses));
         fcOrderRepository.save(fcOrder);
 
     }
@@ -111,7 +113,8 @@ public class OrdersComponent {
             throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
         double score = getScore(garbageChooses);
 
-        addBaseOrderGarbageList(baseOrder, garbageChooses);
+        // addBaseOrderGarbageList(baseOrder, garbageChooses);
+        checkBaseOrderGarbage(baseOrder,garbageChooses);
 
         cdOrder.getCleaner().addScore(score);
         cdOrder.getBaseOrder().setCheckStatus(true);
@@ -163,6 +166,7 @@ public class OrdersComponent {
                 }, () -> {
                     throw new ApiException(ResultCode.FAILED);
                 });
+
     }
 
     /**
@@ -211,6 +215,51 @@ public class OrdersComponent {
     }
 
 
+    // TODO: 2020/12/29 代码内聚度不够
+    public Double getFCPrice(List<GarbageChoose> garbageChooses) {
+        try {
+            Iterator<GarbageChoose> iterator = garbageChooses.iterator();
+            double price = 0.0;
+            while (iterator.hasNext()) {
+                GarbageChoose choose = iterator.next();
+                int id = choose.getGarbage().getId();
+                Garbage garbage = garbageRepository.getGarbageById(id);
+                price += mathMult(choose.getAmount(),garbage.getSuggestPrice());
+            }
+            return price;
+        } catch (NullPointerException e) {
+            throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
+        }
+    }
+    public Double getCRPrice(List<GarbageChoose> garbageChooses) {
+        try {
+            Iterator<GarbageChoose> iterator = garbageChooses.iterator();
+            double price = 0.0;
+            while (iterator.hasNext()) {
+                GarbageChoose choose = iterator.next();
+                int id = choose.getGarbage().getId();
+                Garbage garbage = garbageRepository.getGarbageById(id);
+                price += mathMult(choose.getAmount() , garbage.getRecyclePrice());
+            }
+            return price;
+        } catch (NullPointerException e) {
+            throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
+        }
+    }
+
+    /**
+     * 保留一位小数，计算两个数成绩
+     * @param amount 数量
+     * @param weight 权重
+     * @return the ans
+     */
+    private Double mathMult(double amount,double weight) {
+        DecimalFormat df = new DecimalFormat("0.0");
+        return Double.parseDouble(
+                df.format(amount * weight)
+        );
+    }
+
     /*
     private void addBaseOrderGarbageList(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
         garbageChooses.forEach(each -> {
@@ -226,9 +275,9 @@ public class OrdersComponent {
     }
 
      */
-
     /**
      * 保存垃圾选择集合
+     * 这里代码耦合性较大，维护记得重构
      * @param baseOrder 基础订单
      * @param garbageChooses 垃圾选择信息集合
      */
@@ -250,6 +299,11 @@ public class OrdersComponent {
                             throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
                         }))
                 );
+    }
+
+    private void checkBaseOrderGarbage(BaseOrder baseOrder,List<GarbageChoose> garbageChooses) {
+        chooseRepository.deleteByBaseOrder_Id(baseOrder.getId());
+        addBaseOrderGarbageList(baseOrder,garbageChooses);
     }
 
 }

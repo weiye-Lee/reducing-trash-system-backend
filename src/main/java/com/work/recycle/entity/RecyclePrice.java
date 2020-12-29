@@ -3,15 +3,15 @@ package com.work.recycle.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-@Entity
 @Data
-public class SuggestPriceList {
+@Entity
+public class RecyclePrice {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @ManyToOne
-    private SuggestPriceRecord suggestPriceRecord;
+    private RecyclePriceRecord recyclePriceRecord;
 
     @OneToOne
     private Garbage garbage;

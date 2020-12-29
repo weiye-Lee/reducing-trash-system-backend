@@ -34,13 +34,14 @@ public class AdminService {
     @Autowired
     private GarbageRepository garbageRepository;
     @Autowired
-    private RecyclePriceListRepository recyclePriceListRepository;
+    private RecyclePriceRepository recyclePriceRepository;
     @Autowired
     private RecyclePriceRecordRepository recyclePriceRecordRepository;
     @Autowired
-    private SuggestPriceListRepository suggestPriceListRepository;
+    private SuggestPriceRepository suggestPriceRepository;
     @Autowired
     private SuggestPriceRecordRepository suggestPriceRecordRepository;
+
     private User validateUser(User user) {
         if (user.getName() == null || user.getPhoneNumber() == null) {
             throw new ApiException("数据不全");
@@ -188,77 +189,97 @@ public class AdminService {
         return bool;
     }
 
+    // TODO: 2020/12/28 重构代码！-赶工-代码太丑了
     /**
      * 设置回收企业垃圾回收价格
      *
-     * @param recyclePriceLists 新垃圾价格表，新价格表要包括所有的垃圾
+     * @param garbageList 新垃圾价格表，新价格表要包括所有的垃圾
      */
-    public void setRecyclePrice(List<RecyclePriceList> recyclePriceLists) {
-        if (recyclePriceLists == null) {
+    public int setRecyclePrice(List<Garbage> garbageList) {
+        if (garbageList == null) {
             throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
         }
-
         Map<Integer, Double> priceMap = new HashMap<>();
         Map<Integer, String> unitMap = new HashMap<>();
-        /*
-        recyclePriceLists.forEach(a -> {
-            Double price = Optional.ofNullable(a)
-                    .map(RecyclePriceList::getGarbage)
-                    .map(Garbage::getRecyclePrice)
-                    .orElseThrow(() -> {
-                        throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
-                    });
+        RecyclePriceRecord recyclePriceRecord = new RecyclePriceRecord();
+        recyclePriceRecordRepository.save(recyclePriceRecord);
 
-            String unit = Optional.ofNullable(a)
-                    .map(RecyclePriceList::getGarbage)
-                    .map(Garbage::getUnit)
-                    .orElseThrow(() -> {
-                        throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
-                    });
-
-            int id = Optional.ofNullable(a)
-                    .map(RecyclePriceList::getGarbage)
-                    .map(Garbage::getId)
-                    .orElseThrow(() -> {
-                        throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
-                    });
-
-            priceMap.put(id, price);
-            unitMap.put(id, unit);
-
-
-         */
-        // 构造迭代器，遍历裂变，生成价格，单位和垃圾id的对应关系，并检查是否存在输入为空
-        Iterator<RecyclePriceList> listIterator = recyclePriceLists.iterator();
-        while (listIterator.hasNext()) {
-            Garbage garbage = listIterator.next().getGarbage();
-            if (garbage == null || garbage.getId() == null
+        // 判空并将id 和 价格 or unit 的值插入到map中
+        garbageList.forEach(garbage -> {
+            if (garbage.getId() == null
                     || garbage.getRecyclePrice() == null
                     || garbage.getUnit() == null) {
                 throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
-            } else {
-                priceMap.put(garbage.getId(), garbage.getRecyclePrice());
-                unitMap.put(garbage.getId(), garbage.getUnit());
             }
-        }
+            priceMap.put(garbage.getId(), garbage.getRecyclePrice());
+            unitMap.put(garbage.getId(), garbage.getUnit());
 
-        // 更新最新垃圾回收价格表
-        List<Garbage> garbageList = garbageRepository.findAll();
+            // 生成价格记录表
+            RecyclePrice recyclePrice = new RecyclePrice();
+            recyclePrice.setPrice(priceMap.get(garbage.getId()));
+            recyclePrice.setUnit(unitMap.get(garbage.getId()));
+            recyclePrice.setRecyclePriceRecord(recyclePriceRecord);
+            recyclePrice.setGarbage(garbage);
+            recyclePriceRepository.save(recyclePrice);
+        });
+
+        // 更新垃圾列表中企业回收价格
+        List<Garbage> list = garbageRepository.findAll();
+        list.forEach(garbage -> {
+            int id = garbage.getId();
+            System.out.println(id);
+            garbage.setRecyclePrice(priceMap.get(id));
+            garbage.setRecyclePriceUnit(unitMap.get(id));
+            garbageRepository.save(garbage);
+        });
+        return garbageList.size();
+    }
+
+    /**
+     * 设置建议农户回收价格
+     * @param garbageList the garbage list
+     */
+    public int setSuggestPrice(List<Garbage> garbageList) {
+        if (garbageList == null) {
+            throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
+        }
+        Map<Integer, Double> priceMap = new HashMap<>();
+        Map<Integer, String> unitMap = new HashMap<>();
+        SuggestPriceRecord suggestPriceRecord = new SuggestPriceRecord();
+        suggestPriceRecordRepository.save(suggestPriceRecord);
+
+        // 判空并将id 和 价格 or unit 的值插入到map中
         garbageList.forEach(garbage -> {
-            int garbageId = garbage.getId();
-            if (priceMap.get(garbageId) == null || unitMap.get(garbageId) == null) {
+            if (garbage.getId() == null
+                    || garbage.getRecyclePrice() == null
+                    || garbage.getUnit() == null) {
                 throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
             }
-            garbage.setRecyclePrice(priceMap.get(garbageId));
-            garbage.setRecyclePriceUnit(unitMap.get(garbageId));
+            priceMap.put(garbage.getId(), garbage.getRecyclePrice());
+            unitMap.put(garbage.getId(), garbage.getUnit());
+
+            // 生成价格记录表
+            SuggestPrice suggestPrice = new SuggestPrice();
+            suggestPrice.setPrice(priceMap.get(garbage.getId()));
+            suggestPrice.setUnit(unitMap.get(garbage.getId()));
+            suggestPrice.setSuggestPriceRecord(suggestPriceRecord);
+            suggestPrice.setGarbage(garbage);
+            suggestPriceRepository.save(suggestPrice);
         });
 
-        // 新增价格改动记录
-        RecyclePriceRecord recyclePriceRecord = new RecyclePriceRecord();
-        recyclePriceRecordRepository.save(recyclePriceRecord);
-        recyclePriceLists.forEach(a -> {
-            a.setRecyclePriceRecord(recyclePriceRecord);
-            recyclePriceListRepository.save(a);
+        // 更新垃圾列表中企业回收价格
+        List<Garbage> list = garbageRepository.findAll();
+        list.forEach(garbage -> {
+            int id = garbage.getId();
+            System.out.println(id);
+            garbage.setSuggestPrice(priceMap.get(id));
+            garbage.setSuggestPriceUnit(unitMap.get(id));
+            garbageRepository.save(garbage);
         });
+        return garbageList.size();
+    }
+
+    public Garbage addGarbage(Garbage garbage) {
+        return null;
     }
 }

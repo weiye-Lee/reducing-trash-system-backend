@@ -14,7 +14,7 @@ public class RecyclePriceRecord {
     private Integer id;
 
     @OneToMany(mappedBy = "recyclePriceRecord")
-    private List<RecyclePriceList> recyclePriceLists;
+    private List<RecyclePrice> recyclePriceLists;
 
     @JsonIgnore
     @Column(columnDefinition = "timestamp default current_timestamp",

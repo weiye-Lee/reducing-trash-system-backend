@@ -55,10 +55,10 @@ public class RecycleFirmService {
         crOrder.setCleaner(cleaner);
         crOrder.setRecycleFirm(recycleFirm);
         crOrder.setBaseOrder(baseOrder);
+        crOrder.setTradePrice(ordersComponent.getCRPrice(garbageChooses));
         crOrderRepository.save(crOrder);
         ordersComponent.addBaseOrderGarbageList(baseOrder,garbageChooses);
     }
-
 
     public List<IndexOrderVo> getCROrders(SiftOrderVo siftOrderVo) {
         return constructVoComponent.getCommonOrders(false,SwitchUtil.CRORDER,siftOrderVo);

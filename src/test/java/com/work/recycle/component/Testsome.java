@@ -238,5 +238,10 @@ public class Testsome {
     }
 
 
+    @Test
+    void test_int() {
+
+    }
+
 
 }

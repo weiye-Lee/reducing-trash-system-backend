@@ -1,14 +1,16 @@
 package com.work.recycle.controller;
 
 import com.work.recycle.common.CommonResult;
+import com.work.recycle.common.ResultCode;
 import com.work.recycle.controller.vo.SiftOrderVo;
 import com.work.recycle.controller.vo.UserVo;
+import com.work.recycle.entity.Garbage;
 import com.work.recycle.entity.User;
+import com.work.recycle.exception.ApiException;
 import com.work.recycle.service.AdminService;
 import com.work.recycle.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,9 +19,9 @@ import java.util.List;
 @RequestMapping("/api/admin/")
 public class AdminController {
     @Autowired
-    private AdminService adminService;
-    @Autowired
     private UserService userService;
+    @Autowired
+    private AdminService adminService;
 
     /**
      * 新增保洁员用户
@@ -215,5 +217,46 @@ public class AdminController {
     public CommonResult setUsable(@PathVariable("id") int id,@PathVariable("bool") Boolean bool) {
         return CommonResult.success(adminService.setUsable(id,bool));
     }
+
+    /**
+     * 设置企业回收价格
+     * @param garbageList the garbage list that must include the recyclePrice
+     *                    and recycleUnit
+     * @return thr length of garbageList
+     */
+    @PostMapping("set/recycle/price")
+    public CommonResult setRecyclePrice(@RequestBody List<Garbage> garbageList) {
+        if (garbageList == null) {
+            throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
+        }
+        return CommonResult.success(adminService.setRecyclePrice(garbageList));
+    }
+
+    /**
+     * 这是建议保洁员回收价格
+     * @param garbageList the garbage list that must include the suggestPrice
+     *                    and suggestUnit
+     * @return thr length of garbageList
+     */
+    @PostMapping("set/suggest/price")
+    public CommonResult setSuggestPrice(@RequestBody List<Garbage> garbageList) {
+        if (garbageList == null) {
+            throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
+        }
+        return CommonResult.success(adminService.setSuggestPrice(garbageList));
+    }
+
+    /**
+     * 插入一条垃圾
+     * @param garbage 垃圾类（范畴，类别，单位，积分，回收价格，建议价格）
+     * @return the garbage
+     */
+    @PostMapping("add/garbage")
+    public CommonResult addRecycleGarbage(Garbage garbage) {
+        return CommonResult.success(null);
+    }
+
+
+
 
 }

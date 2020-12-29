@@ -25,6 +25,8 @@ public class CROrder {
     @ManyToOne
     private RecycleFirm recycleFirm;
 
+    private Double tradePrice;
+
 
 
 }

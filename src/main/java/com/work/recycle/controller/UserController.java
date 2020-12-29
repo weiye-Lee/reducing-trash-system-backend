@@ -107,6 +107,7 @@ public class UserController {
         return CommonResult.success(Map.of("user",user));
     }
 
+    // TODO: 2020/12/28 增强安全性，将某些重要信息置空
     /**
      * 获得垃圾列表
      *
@@ -165,6 +166,7 @@ public class UserController {
     }
 
 
+    // TODO: 2020/12/28 新建测试
     @GetMapping("test")
     public CommonResult test() {
         return CommonResult.success("every thing is ok");
