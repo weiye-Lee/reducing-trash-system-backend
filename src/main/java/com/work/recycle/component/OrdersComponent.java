@@ -89,23 +89,24 @@ public class OrdersComponent {
                 break;
         }
 
-        addBaseOrderGarbageList(baseOrder, garbageChooses);
+        checkBaseOrderGarbage(baseOrder, garbageChooses);
 
     }
 
     private void checkFCOrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
 
         FCOrder fcOrder = fcOrderRepository.getFCOrderById(baseOrder.getId());
+        if (fcOrder.getBaseOrder().getCheckStatus()) {
+            throw new ApiException("审核完成订单不能修改");
+        }
         if (fcOrder == null || fcOrder.getBaseOrder() == null || fcOrder.getFarmer() == null)
             throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
         double score = getScore(garbageChooses);
-        addBaseOrderGarbageList(baseOrder, garbageChooses);
-        //checkBaseOrderGarbage(baseOrder, garbageChooses);
 
         fcOrder.getFarmer().addScore(score);
         fcOrder.getBaseOrder().setScore(score);
         fcOrder.getBaseOrder().setCheckStatus(true);
-        fcOrder.getBaseOrder().setGarbageChooses(null);
+        fcOrder.setBaseOrder(null);
         fcOrder.setTradePrice(getFCPrice(garbageChooses));
         fcOrderRepository.save(fcOrder);
 
@@ -222,6 +223,7 @@ public class OrdersComponent {
 
     // TODO: 2020/12/29 代码内聚度不够
     public Double getFCPrice(List<GarbageChoose> garbageChooses) {
+        DecimalFormat df = new DecimalFormat("0.0");
         try {
             Iterator<GarbageChoose> iterator = garbageChooses.iterator();
             double price = 0.0;
@@ -229,15 +231,19 @@ public class OrdersComponent {
                 GarbageChoose choose = iterator.next();
                 int id = choose.getGarbage().getId();
                 Garbage garbage = garbageRepository.getGarbageById(id);
-                price += mathMult(choose.getAmount(), garbage.getSuggestPrice());
+                price += choose.getAmount()*garbage.getSuggestPrice();
+
             }
-            return price;
+            return Double.parseDouble(
+                    df.format(price)
+            );
         } catch (NullPointerException e) {
             throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
         }
     }
 
     public Double getCRPrice(List<GarbageChoose> garbageChooses) {
+        DecimalFormat df = new DecimalFormat("0.0");
         try {
             Iterator<GarbageChoose> iterator = garbageChooses.iterator();
             double price = 0.0;
@@ -245,9 +251,12 @@ public class OrdersComponent {
                 GarbageChoose choose = iterator.next();
                 int id = choose.getGarbage().getId();
                 Garbage garbage = garbageRepository.getGarbageById(id);
-                price += mathMult(choose.getAmount(), garbage.getRecyclePrice());
+                price += choose.getAmount()*garbage.getRecyclePrice();
+
             }
-            return price;
+            return Double.parseDouble(
+                    df.format(price)
+            );
         } catch (NullPointerException e) {
             throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
         }
@@ -314,16 +323,18 @@ public class OrdersComponent {
     public void checkBaseOrderGarbage(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
         List<GarbageChoose> list = chooseRepository.getGarbageChooseByBaseOrder_Id(baseOrder.getId());
         chooseRepository.deleteAll(list);
-        garbageChooses.forEach(garbageChoose -> {
-                    if (garbageChoose.getGarbage() == null || garbageChoose.getGarbage().getId() == null){
-                        throw new ApiException("数据集错误");
-                    }else if (garbageRepository.getGarbageById(garbageChoose.getGarbage().getId()) == null) {
-                        throw new ApiException("数据集错误");
-                    }
-                    garbageChoose.setBaseOrder(baseOrder);
-                }
-        );
-        chooseRepository.saveAll(garbageChooses);
+//        garbageChooses.forEach(garbageChoose -> {
+//                    if (garbageChoose.getGarbage() == null || garbageChoose.getGarbage().getId() == null){
+//                        throw new ApiException("数据集错误");
+//                    }else if (garbageRepository.getGarbageById(garbageChoose.getGarbage().getId()) == null) {
+//                        throw new ApiException("数据集错误");
+//                    }
+//                    garbageChoose.setBaseOrder(baseOrder);
+//                }
+//        );
+//        chooseRepository.saveAll(garbageChooses);
+
+        addBaseOrderGarbageList(baseOrder,garbageChooses);
     }
 
 }

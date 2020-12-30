@@ -1,3 +1,29 @@
+POST http://localhost:8080/api/recycleFirm/addCROrder?id=2
+Content-Type: application/json
+Authorization: 621ecd13f84b1bfee8fc7dcd2ce2c538068f9b9272039187efd6946302775132f8a88001ab8912cc7123e4e07d9a9bec
+
+{
+  "address": "黑龙江省大庆市",
+  "remark": "提交一条保洁员-回收企业订单",
+  "name": "回收企业",
+  "phoneNumber": "13050496544",
+  "garbageChooses": [
+    {
+      "garbage": {
+        "id": 1
+      },
+      "amount": 100.1
+    },
+    {
+      "garbage": {
+        "id": 2
+      },
+      "amount": 2.3
+    }
+  ]
+}
+
+###
 POST http://localhost:8080/api/cleaner/checkFCOrder
 Content-Type: application/json
 Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e3d69a5f46c7f3b2bef6219155aa7d57
@@ -6,9 +32,9 @@ Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e
   "id": 1,
   "garbageChooses": [
     {
-      "id": 47,
+      "id": 50,
       "garbage": {
-        "id": 1
+        "id": 2
       },
       "amount": 6.6
     }
