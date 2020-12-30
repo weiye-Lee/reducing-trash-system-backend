@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface BaseOrderRepository extends BaseRepository<BaseOrder,Integer> {
     @Query("select o from BaseOrder o where o.id = :id")

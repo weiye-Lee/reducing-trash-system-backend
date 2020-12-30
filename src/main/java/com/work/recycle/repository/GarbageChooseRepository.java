@@ -14,6 +14,8 @@ public interface GarbageChooseRepository extends BaseRepository<GarbageChoose,In
     @Query("select g from GarbageChoose g where g.baseOrder.id = :id")
     List<GarbageChoose> getGarbageChooseByBaseOrder_Id(@Param("id") int id);
 
-    @Query("delete from GarbageChoose g where g.baseOrder = :id")
-    void deleteByBaseOrder_Id(@Param("id") int id);
+//    @Query("delete from GarbageChoose g where g.baseOrder.id = :id")
+//    void deleteByBaseOrder_Id(@Param("id") int id);
+
+    void deleteById(int id);
 }

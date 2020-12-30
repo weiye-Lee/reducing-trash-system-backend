@@ -36,4 +36,9 @@ class GarbageChooseRepositoryTest {
         garbageChoose.setAmount(666);
         chooseRepository.save(garbageChoose);
     }
+
+    @Test
+    void deleteByBaseOrder_Id() {
+        chooseRepository.deleteById(7);
+    }
 }

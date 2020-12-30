@@ -1,3 +1,250 @@
+POST http://localhost:8080/api/cleaner/checkFCOrder
+Content-Type: application/json
+Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e3d69a5f46c7f3b2bef6219155aa7d57
+
+{
+  "id": 1,
+  "garbageChooses": [
+    {
+      "id": 47,
+      "garbage": {
+        "id": 1
+      },
+      "amount": 6.6
+    }
+  ]
+}
+
+###
+POST http://localhost:8080/api/cleaner/getFCOrders/checking
+Content-Type: application/json
+Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e3d69a5f46c7f3b2bef6219155aa7d57
+
+{
+  "col":"none"
+}
+
+###
+POST http://localhost:8080/api/admin/add/garbage
+Content-Type: application/json
+Authorization: d173d91045a96d6a0350969c17a8ac077082b7f98448491c2cd477ecdb61b9985be10d33db85874e3fe1606c33de3588
+
+{
+  "category": "可回收垃圾",
+  "type": "纸张类",
+  "name": "测试用垃圾",
+  "unit": "斤",
+  "recyclePrice": 6.6,
+  "score": 0.01
+}
+
+###
+POST http://localhost:8080/api/admin/set/score
+Content-Type: application/json
+Authorization: d173d91045a96d6a0350969c17a8ac077082b7f98448491c2cd477ecdb61b9985be10d33db85874e3fe1606c33de3588
+
+{
+  "id": 1,
+  "score": 1.0
+}
+
+###
+POST http://localhost:8080/api/admin/set/suggest/price
+Content-Type: application/json
+Authorization: d173d91045a96d6a0350969c17a8ac077082b7f98448491c2cd477ecdb61b9985be10d33db85874e3fe1606c33de3588
+
+[
+  {
+    "id": 1,
+    "unit": "斤",
+    "suggestPrice": 0.5
+  },
+  {
+    "id": 2,
+    "unit": "斤",
+    "suggestPrice": 0.5
+  },
+  {
+    "id": 3,
+    "unit": "斤",
+    "suggestPrice": 0.5
+  },
+  {
+    "id": 4,
+    "unit": "斤",
+    "suggestPrice": 0.5
+  },
+  {
+    "id": 5,
+    "unit": "斤",
+    "suggestPrice": 0.5
+  },
+  {
+    "id": 6,
+    "unit": "斤",
+    "suggestPrice": 0.5
+  },
+  {
+    "id": 7,
+    "unit": "斤",
+    "suggestPrice": 0.5
+  },
+  {
+    "id": 8,
+    "unit": "斤",
+    "suggestPrice": 0.5
+  },
+  {
+    "id": 9,
+    "unit": "斤",
+    "suggestPrice": 0.5
+  },
+  {
+    "id": 10,
+    "unit": "斤",
+    "suggestPrice": 0.5
+  },
+  {
+    "id": 11,
+    "unit": "斤",
+    "suggestPrice": 0.5
+  },
+  {
+    "id": 12,
+    "unit": "斤",
+    "suggestPrice": 0.5
+  },
+  {
+    "id": 13,
+    "unit": "斤",
+    "suggestPrice": 0.5
+  },
+  {
+    "id": 14,
+    "unit": "斤",
+    "suggestPrice": 0.5
+  },
+  {
+    "id": 15,
+    "unit": "斤",
+    "suggestPrice": 0.5
+  },
+  {
+    "id": 16,
+    "unit": "斤",
+    "suggestPrice": 0.5
+  },
+  {
+    "id": 17,
+    "unit": "斤",
+    "suggestPrice": 0.5
+  },
+  {
+    "id": 18,
+    "unit": "斤",
+    "suggestPrice": 0.5
+  }
+]
+
+###
+POST http://localhost:8080/api/admin/set/recycle/price
+Content-Type: application/json
+Authorization: d173d91045a96d6a0350969c17a8ac077082b7f98448491c2cd477ecdb61b9985be10d33db85874e3fe1606c33de3588
+
+[
+  {
+    "id": 1,
+    "unit": "斤",
+    "recyclePrice": 1.0
+  },
+  {
+    "id": 2,
+    "unit": "斤",
+    "recyclePrice": 1.0
+  },
+  {
+    "id": 3,
+    "unit": "斤",
+    "recyclePrice": 1.0
+  },
+  {
+    "id": 4,
+    "unit": "斤",
+    "recyclePrice": 1.0
+  },
+  {
+    "id": 5,
+    "unit": "斤",
+    "recyclePrice": 1.0
+  },
+  {
+    "id": 6,
+    "unit": "斤",
+    "recyclePrice": 1.0
+  },
+  {
+    "id": 7,
+    "unit": "斤",
+    "recyclePrice": 1.0
+  },
+  {
+    "id": 8,
+    "unit": "斤",
+    "recyclePrice": 1.0
+  },
+  {
+    "id": 9,
+    "unit": "斤",
+    "recyclePrice": 1.0
+  },
+  {
+    "id": 10,
+    "unit": "斤",
+    "recyclePrice": 1.0
+  },
+  {
+    "id": 11,
+    "unit": "斤",
+    "recyclePrice": 1.0
+  },
+  {
+    "id": 12,
+    "unit": "斤",
+    "recyclePrice": 1.0
+  },
+  {
+    "id": 13,
+    "unit": "斤",
+    "recyclePrice": 1.0
+  },
+  {
+    "id": 14,
+    "unit": "斤",
+    "recyclePrice": 1.0
+  },
+  {
+    "id": 15,
+    "unit": "斤",
+    "recyclePrice": 1.0
+  },
+  {
+    "id": 16,
+    "unit": "斤",
+    "recyclePrice": 1.0
+  },
+  {
+    "id": 17,
+    "unit": "斤",
+    "recyclePrice": 1.0
+  },
+  {
+    "id": 18,
+    "unit": "斤",
+    "recyclePrice": 1.0
+  }
+]
+
+###
 POST http://localhost:8080/api/admin/set/user/usable/68/false
 Content-Type: application/json
 Authorization: d173d91045a96d6a0350969c17a8ac077082b7f98448491c2cd477ecdb61b9985be10d33db85874e3fe1606c33de3588
@@ -9,7 +256,10 @@ POST http://localhost:8080/api/admin/transfer/Driver/1/67
 Content-Type: application/json
 Authorization: d173d91045a96d6a0350969c17a8ac077082b7f98448491c2cd477ecdb61b9985be10d33db85874e3fe1606c33de3588
 
-[2,10]
+[
+  2,
+  10
+]
 
 ###
 GET http://localhost:8080/api/driver/receive/CDOrder/99
@@ -22,7 +272,10 @@ POST http://localhost:8080/api/admin/transfer/Cleaner/2/10
 Content-Type: application/json
 Authorization: d173d91045a96d6a0350969c17a8ac077082b7f98448491c2cd477ecdb61b9985be10d33db85874e3fe1606c33de3588
 
-[3,7]
+[
+  3,
+  7
+]
 
 ###
 POST http://localhost:8080/api/cleaner/getFCOrders/checking
@@ -37,6 +290,7 @@ Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e
     "province": "黑龙江省"
   }
 }
+
 ###
 
 POST http://localhost:8080/api/cleaner/getFCOrders/checking
@@ -519,21 +773,14 @@ Content-Type: application/json
 Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e3d69a5f46c7f3b2bef6219155aa7d57
 
 {
-  "id": 17,
+  "id": 10,
   "garbageChooses": [
     {
-      "id": 34,
+      "id": 19,
       "garbage": {
         "id": 1
       },
       "amount": 10.3
-    },
-    {
-      "id": 35,
-      "garbage": {
-        "id": 2
-      },
-      "amount": 1.2
     }
   ]
 }

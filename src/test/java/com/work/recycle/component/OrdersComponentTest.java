@@ -68,4 +68,19 @@ class OrdersComponentTest {
         Farmer farmer = farmerRepository.getFarmerById(uid);
         log.warn(mapper.writeValueAsString(farmer));
     }
+
+    @Test
+    void checkBaseOrderGarbage() {
+        BaseOrder baseOrder = new BaseOrder();
+        List<GarbageChoose> list = new ArrayList<>();
+        GarbageChoose choose = new GarbageChoose();
+        baseOrder.setId(1);
+        Garbage g = new Garbage();
+        g.setId(10);
+        choose.setGarbage(g);
+        choose.setId(45);
+        choose.setAmount(10);
+        list.add(choose);
+        ordersComponent.checkBaseOrderGarbage(baseOrder,list);
+    }
 }

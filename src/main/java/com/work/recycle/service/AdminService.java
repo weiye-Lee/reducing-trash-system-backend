@@ -1,6 +1,7 @@
 package com.work.recycle.service;
 
 import com.work.recycle.common.ResultCode;
+import com.work.recycle.controller.vo.GarbageVo;
 import com.work.recycle.entity.*;
 import com.work.recycle.exception.ApiException;
 import com.work.recycle.repository.*;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
 
 @Service
 public class AdminService {
@@ -190,6 +192,7 @@ public class AdminService {
     }
 
     // TODO: 2020/12/28 重构代码！-赶工-代码太丑了
+
     /**
      * 设置回收企业垃圾回收价格
      *
@@ -237,6 +240,7 @@ public class AdminService {
 
     /**
      * 设置建议农户回收价格
+     *
      * @param garbageList the garbage list
      */
     public int setSuggestPrice(List<Garbage> garbageList) {
@@ -251,11 +255,11 @@ public class AdminService {
         // 判空并将id 和 价格 or unit 的值插入到map中
         garbageList.forEach(garbage -> {
             if (garbage.getId() == null
-                    || garbage.getRecyclePrice() == null
+                    || garbage.getSuggestPrice() == null
                     || garbage.getUnit() == null) {
                 throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
             }
-            priceMap.put(garbage.getId(), garbage.getRecyclePrice());
+            priceMap.put(garbage.getId(), garbage.getSuggestPrice());
             unitMap.put(garbage.getId(), garbage.getUnit());
 
             // 生成价格记录表
@@ -279,7 +283,28 @@ public class AdminService {
         return garbageList.size();
     }
 
+    /**
+     * 新增一种垃圾
+     *
+     * @param garbage the garbage can include price unit and score
+     * @return the garbage
+     */
     public Garbage addGarbage(Garbage garbage) {
-        return null;
+        if (!GarbageVo.iscategory(garbage.getCategory())) {
+            throw new ApiException("垃圾类别输入错误");
+        }
+        garbage.setId(null);
+        garbageRepository.save(garbage);
+        return garbage;
+    }
+
+    public double setScore(Garbage garbage) {
+        if (garbage == null) {
+            throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
+        }
+        Garbage g = garbageRepository.getGarbageById(garbage.getId());
+        g.setScore(garbage.getScore());
+        garbageRepository.save(g);
+        return garbage.getScore();
     }
 }

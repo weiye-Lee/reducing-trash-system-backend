@@ -47,12 +47,42 @@ class AdminServiceTest {
             Garbage garbage = new Garbage();
             garbage.setId(i);
             garbage.setRecyclePrice(1.0);
+            garbage.setUnit("1斤");
+            list.add(garbage);
+        }
+        log.warn(mapper.writeValueAsString(list));
+    }
+
+    @Test
+    void createSuggestPrice() {
+        List<Garbage> list = new ArrayList<>();
+        for (int i = 0; i < 40; i++) {
+            if (garbageRepository.getGarbageById(i) == null) {
+                continue;
+            }
+            Garbage garbage = new Garbage();
+            garbage.setId(i);
+            garbage.setSuggestPrice(0.5);
             garbage.setUnit("斤");
             list.add(garbage);
         }
-        // log.warn(mapper.writeValueAsString(list));
+        try {
+            log.warn(mapper.writeValueAsString(list));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+    }
 
-        adminService.setRecyclePrice(list);
+    @Test
+    void test_createGarbage() {
+        Garbage garbage = new Garbage();
+        garbage.setId(1);
+        garbage.setScore(1.0);
+        try {
+            log.warn(mapper.writeValueAsString(garbage));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 
 }

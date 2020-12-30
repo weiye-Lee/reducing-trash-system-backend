@@ -252,11 +252,19 @@ public class AdminController {
      * @return the garbage
      */
     @PostMapping("add/garbage")
-    public CommonResult addRecycleGarbage(Garbage garbage) {
-        return CommonResult.success(null);
+    public CommonResult addRecycleGarbage(@RequestBody Garbage garbage) {
+        return CommonResult.success(adminService.addGarbage(garbage));
     }
 
 
-
+    /**
+     * 设置设置指定垃圾的积分值
+     * @param garbage id and score must not be null
+     * @return the garbage
+     */
+    @PostMapping("set/score")
+    public CommonResult setScore(@RequestBody Garbage garbage) {
+        return CommonResult.success(adminService.setScore(garbage));
+    }
 
 }

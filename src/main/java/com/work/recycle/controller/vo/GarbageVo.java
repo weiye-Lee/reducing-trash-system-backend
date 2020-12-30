@@ -61,5 +61,14 @@ public class GarbageVo {
     // 不可回收垃圾类别数组
     public static String[] UnRecycleTypeName = {METAL,PESTICIDE,OTHRERS};
 
+    public static Boolean iscategory(String category) {
+        boolean bool = false;
+        if (categoryCHName.get(RECYCLE_CATEGORY).equals(category)
+        || categoryCHName.get(UNRECYCLE_CATEGORY).equals(category)
+        || categoryCHName.get(SOIL_CATEGORY).equals(category)) {
+            bool = true;
+        }
+        return bool;
 
+    }
 }
