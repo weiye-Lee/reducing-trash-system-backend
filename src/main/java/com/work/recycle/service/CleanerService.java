@@ -49,14 +49,17 @@ public class CleanerService {
     private GarbageChooseRepository chooseRepository;
     @Autowired
     private ObjectMapper mapper;
+    @Autowired
+    private WasteRecordRepository wasteRecordRepository;
+
     public int getFCOrderTimes() {
         int uid = requestComponent.getUid();
         return fcOrderRepository.getCleanerFCOrderTimesById(uid);
     }
 
     // 审核农户订单
-    public void checkFCOrder(BaseOrder order,List<GarbageChoose> garbageChooses) {
-        ordersComponent.checkOrder(order,garbageChooses,SwitchUtil.FCORDER);
+    public void checkFCOrder(BaseOrder order, List<GarbageChoose> garbageChooses) {
+        ordersComponent.checkOrder(order, garbageChooses, SwitchUtil.FCORDER);
     }
 
     public BaseOrder receiveFCOrder(int id) {
@@ -71,9 +74,9 @@ public class CleanerService {
 
     }
 
-    public void addCDOrder(BaseOrder order,List<GarbageChoose> garbageChooses){
+    public void addCDOrder(BaseOrder order, List<GarbageChoose> garbageChooses) {
 
-        ordersComponent.addOrder(order,garbageChooses, SwitchUtil.CDORDER);
+        ordersComponent.addOrder(order, garbageChooses, SwitchUtil.CDORDER);
 
     }
 
@@ -84,7 +87,7 @@ public class CleanerService {
      * @return 订单vo list
      */
     public List<IndexOrderVo> getFCOrderChecked(SiftOrderVo siftOrderVo) {
-        return constructVoComponent.getCommonOrders(true,SwitchUtil.FCORDER,siftOrderVo);
+        return constructVoComponent.getCommonOrders(true, SwitchUtil.FCORDER, siftOrderVo);
 
     }
 
@@ -95,7 +98,7 @@ public class CleanerService {
      * @return 订单vo list
      */
     public List<IndexOrderVo> getFCOrderChecking(SiftOrderVo siftOrderVo) {
-        return constructVoComponent.getCommonOrders(false,SwitchUtil.FCORDER,siftOrderVo);
+        return constructVoComponent.getCommonOrders(false, SwitchUtil.FCORDER, siftOrderVo);
     }
 
     public int getScore() {
@@ -126,20 +129,21 @@ public class CleanerService {
 
 
     public List<IndexOrderVo> getCDOrderChecking(SiftOrderVo siftOrderVo) {
-        return constructVoComponent.getCommonOrders(false,SwitchUtil.CDORDER,siftOrderVo);
+        return constructVoComponent.getCommonOrders(false, SwitchUtil.CDORDER, siftOrderVo);
     }
 
     public List<IndexOrderVo> getCDOrderChecked(SiftOrderVo siftOrderVo) {
-        return constructVoComponent.getCommonOrders(true,SwitchUtil.CDORDER,siftOrderVo);
+        return constructVoComponent.getCommonOrders(true, SwitchUtil.CDORDER, siftOrderVo);
     }
 
     /**
      * 保洁员获取 CleanerRecycleFirm订单 ，没有预约审核关系
+     *
      * @param siftOrderVo 过滤因子
      * @return the IndexOrderVo list
      */
     public List<IndexOrderVo> getCROrders(SiftOrderVo siftOrderVo) {
-        return constructVoComponent.getCommonOrders(false,SwitchUtil.CRORDER,siftOrderVo);
+        return constructVoComponent.getCommonOrders(false, SwitchUtil.CRORDER, siftOrderVo);
     }
 
     public Farmer addFarmer(User user) {
@@ -175,7 +179,7 @@ public class CleanerService {
         cdOrderRepository.delete(cdOrder);
         chooseRepository.getGarbageChooseByBaseOrder_Id(id)
                 .forEach(garbageChoose -> {
-                    log.warn("{}",garbageChoose.getId());
+                    log.warn("{}", garbageChoose.getId());
                     chooseRepository.delete(garbageChoose);
                 });
         baseOrderRepository.deleteById(id);
@@ -191,6 +195,15 @@ public class CleanerService {
     public Farmer getFarmerIndex(int id) {
         return farmerRepository.getFarmerById(id);
 
+    }
+
+    // 保洁员添加危废垃圾
+    public int addWaste(WasteRecord wasteRecord) {
+        int uid = requestComponent.getUid();
+        Cleaner cleaner = cleanerRepository.getCleanerById(uid);
+        wasteRecord.setCleaner(cleaner);
+        wasteRecordRepository.save(wasteRecord);
+        return uid;
     }
 
 }

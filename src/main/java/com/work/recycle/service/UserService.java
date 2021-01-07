@@ -130,6 +130,9 @@ public class UserService {
         return unRecycleMap;
     }
 
+    /**
+     * @return Map< category ,map< type ,the garbage list of this type>
+     */
     public Map<String, Map<String, List<Garbage>>> getSoilGarbage() {
         Map<String, Map<String, List<Garbage>>> soilMap = new HashMap<>();
         soilMap.put(

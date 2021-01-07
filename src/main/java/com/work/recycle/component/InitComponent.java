@@ -37,7 +37,7 @@ public class InitComponent implements InitializingBean {
         User u = userService.getUserByPhone("13050496540");
         if (u == null) {
             User user3 = new User();
-            user3.setName("司机姓名");
+            user3.setName("司机A");
             user3.setAddress("黑龙江大庆市");
             user3.setSex(User.Sex.MALE);
             user3.setRole(User.Role.DRIVER);
@@ -53,7 +53,7 @@ public class InitComponent implements InitializingBean {
         u = userService.getUserByPhone("13050496541");
         if (u == null) {
             User user2 = new User();
-            user2.setName("保洁员姓名");
+            user2.setName("保洁员A");
             user2.setAddress("黑龙江大庆市");
             user2.setSex(User.Sex.MALE);
             user2.setRole(User.Role.CLEANER);
@@ -185,6 +185,7 @@ public class InitComponent implements InitializingBean {
             Garbage[] garbage = new Garbage[16];
             for (int i = 0; i < 16; i++) {
                 garbage[i] = new Garbage();
+                garbage[i].setShowAble(true);
                 garbage[i].setScore(score[i]);
                 garbage[i].setUnit(unit[i]);
                 garbage[i].setName(names[i]);
@@ -224,6 +225,7 @@ public class InitComponent implements InitializingBean {
             String unit = "斤";
             double score = 0.1;
             Garbage garbage = new Garbage();
+            garbage.setShowAble(true);
             String picture = "http://localhost:8080/static/" + 17 + ".jpg";
             garbage.setCategory(category);
             garbage.setType(type);
@@ -241,6 +243,7 @@ public class InitComponent implements InitializingBean {
             String unit = "斤";
             double score = 0;
             Garbage garbage = new Garbage();
+            garbage.setShowAble(true);
             String picture = "http://localhost:8080/static/" + 17 + ".jpg";
             garbage.setCategory(category);
             garbage.setType(type);
@@ -250,6 +253,25 @@ public class InitComponent implements InitializingBean {
             garbage.setPicture(picture);
             garbageRepository.save(garbage);
         }
+
+        if (userService.getGarbage("厨余垃圾") == null) {
+            String category = "不可回收垃圾";
+            String type = "厨余垃圾";
+            String name = "厨余垃圾";
+            String unit = "升";
+            double score = 0;
+            Garbage garbage = new Garbage();
+            garbage.setShowAble(true);
+            String picture = "http://localhost:8080/static/" + 19 + ".jpg";
+            garbage.setCategory(category);
+            garbage.setType(type);
+            garbage.setName(name);
+            garbage.setUnit(unit);
+            garbage.setScore(score);
+            garbage.setPicture(picture);
+            garbageRepository.save(garbage);
+        }
+        // 危废垃圾就要计数就行，那就不放到订单里面了
 
     }
 }

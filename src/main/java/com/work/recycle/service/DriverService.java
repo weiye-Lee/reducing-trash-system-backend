@@ -65,4 +65,9 @@ public class DriverService {
         return constructVoComponent.getCommonOrders(true,SwitchUtil.CDORDER,siftOrderVo);
     }
 
+    public int addCDOrder(BaseOrder baseOrder,List<GarbageChoose> garbageChooses,int id) {
+        ordersComponent.addOrder(baseOrder,garbageChooses,SwitchUtil.CDORDER,id);
+        return id;
+    }
+
 }

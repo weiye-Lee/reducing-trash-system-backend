@@ -48,3 +48,8 @@ you shouldn't change anything
 
 weiye Lee
 Tongtong Xia
+
+#### 项目历程
+
+2021/1/7 14：40 
+完善垃圾列表，增加处理垃圾type

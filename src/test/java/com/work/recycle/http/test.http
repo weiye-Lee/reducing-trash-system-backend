@@ -1,3 +1,58 @@
+#在执行更新操作时，要注意信息提交的准确性，就是不仅仅提交要更新的数据，而是所有的数据，否则将会造成数据丢失
+POST http://localhost:8080/api/admin/record/garbage
+Content-Type: application/json
+Authorization: d173d91045a96d6a0350969c17a8ac077082b7f98448491c2cd477ecdb61b9985be10d33db85874e3fe1606c33de3588
+
+{
+  "id": 19,
+  "name": "测试垃圾",
+  "recyclePrice": 9.7,
+  "suggestPrice": 8.8
+}
+
+###
+#厨余司机添加厨余垃圾记录
+POST http://localhost:8080/api/driver/record/CDOrder?id=2
+Content-Type: application/json
+Authorization: 7ebb247b73fb86cf1a8228091ea0fab4334e6ee2795c2a3a5d5fe85c73fd226ddc4e5dbd7b29078d22a32e5852df26de
+
+{
+  "province": "黑龙江省",
+  "city": "大庆市",
+  "area": "双城区",
+  "street": "平安街道",
+  "village": "伟业村",
+  "address": "村头第一家",
+  "remark": "管理员提交一条保洁员司机订单",
+  "garbageChooses": [
+    {
+      "garbage": {
+        "id": 20
+      },
+      "amount": 5.3
+    }
+  ]
+}
+
+###
+#保洁员添加危废垃圾处理记录
+POST http://localhost:8080/api/cleaner/record/waste
+Content-Type: application/json
+Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e3d69a5f46c7f3b2bef6219155aa7d57
+
+{
+  "total": 70.3,
+  "unit": "斤",
+  "wasteCompany": "危废垃圾处理公司"
+}
+
+###
+#厨余垃圾
+GET http://localhost:8080/api/user/getUnRecycleGarbage
+Accept: application/json
+Authorization: 621ecd13f84b1bfee8fc7dcd2ce2c538068f9b9272039187efd6946302775132f8a88001ab8912cc7123e4e07d9a9bec
+
+###
 POST http://localhost:8080/api/recycleFirm/addCROrder?id=2
 Content-Type: application/json
 Authorization: 621ecd13f84b1bfee8fc7dcd2ce2c538068f9b9272039187efd6946302775132f8a88001ab8912cc7123e4e07d9a9bec

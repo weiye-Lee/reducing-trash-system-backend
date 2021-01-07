@@ -82,4 +82,17 @@ public class DriverController {
         return CommonResult.success(userService.getBaseOrderById(id));
     }
 
+    /**
+     * 厨余垃圾司机添加一条cd订单
+     * @param id cleaner id
+     * @param baseOrder 基础订单
+     * @return the common result
+     */
+    @PostMapping("record/CDOrder")
+    public CommonResult addCDOrder(@Param("id") int id,@RequestBody BaseOrder baseOrder) {
+        List<GarbageChoose> garbageChooses = baseOrder.getGarbageChooses();
+        baseOrder.setGarbageChooses(null);
+        return CommonResult.success(driverService.addCDOrder(baseOrder,garbageChooses,id));
+    }
+
 }

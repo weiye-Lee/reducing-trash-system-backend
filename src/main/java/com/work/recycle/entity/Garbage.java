@@ -49,6 +49,8 @@ public class Garbage {
 
     private String suggestPriceUnit; // 建议回收价单位
 
+    private Boolean showAble = true; // 是否显示
+
     @JsonIgnore
     @Column(columnDefinition = "timestamp default current_timestamp",
             insertable = false,

@@ -284,4 +284,14 @@ public class CleanerController {
         return CommonResult.success(cleanerService.removeCDOrder(id));
     }
 
+    /**
+     * 保洁员添加一条危废垃圾回收记录
+     * @param wasteRecord 危废垃圾记录
+     * @return the uid
+     */
+    @PostMapping("record/waste")
+    public CommonResult recordWaste(@RequestBody  WasteRecord wasteRecord) {
+        return CommonResult.success(cleanerService.addWaste(wasteRecord));
+    }
+
 }

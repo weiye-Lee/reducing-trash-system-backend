@@ -114,6 +114,7 @@ public class FarmerService {
         map.put("area", cleaner.getUser().getArea());
         map.put("street", cleaner.getUser().getStreet());
         map.put("village", cleaner.getUser().getVillage());
+        map.put("phoneNumber",cleaner.getUser().getPhoneNumber());
 
         return map;
     }

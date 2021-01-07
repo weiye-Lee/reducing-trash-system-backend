@@ -47,6 +47,8 @@ public class OrdersComponent {
     private RequestComponent requestComponent;
     @Autowired
     private ObjectMapper mapper;
+    @Autowired
+    private DriverRepository driverRepository;
 
 
     /**
@@ -59,7 +61,7 @@ public class OrdersComponent {
     public void addOrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses, String opt) {
         switch (opt) {
             case SwitchUtil.CDORDER:
-                addCDOrder(baseOrder, garbageChooses);
+                addCDOrder(baseOrder, garbageChooses,0);
                 break;
             case SwitchUtil.FCORDER:
                 addFCOrder(baseOrder, garbageChooses);
@@ -74,6 +76,33 @@ public class OrdersComponent {
 
         addBaseOrderGarbageList(baseOrder, garbageChooses);
 
+    }
+
+    /**
+     * 单向不需要确认提交垃圾
+     *
+     * @param baseOrder      基础垃圾信息
+     * @param garbageChooses 选择垃圾信息
+     * @param opt            switch 的条件
+     * @param id             单向提交对方的id
+     */
+    public void addOrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses, String opt, int id) {
+        switch (opt) {
+            case SwitchUtil.CDORDER:
+                addCDOrder(baseOrder, garbageChooses, id);
+                break;
+            case SwitchUtil.FCORDER:
+                addFCOrder(baseOrder, garbageChooses);
+                break;
+            case SwitchUtil.CRORDER:
+                addCROrder(baseOrder, garbageChooses);
+                break;
+            case SwitchUtil.DTORDER:
+                addDTOrder(baseOrder, garbageChooses);
+                break;
+        }
+
+        addBaseOrderGarbageList(baseOrder, garbageChooses);
     }
 
     public void checkOrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses, String opt) {
@@ -119,7 +148,7 @@ public class OrdersComponent {
             throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
         double score = getScore(garbageChooses);
 
-         addBaseOrderGarbageList(baseOrder, garbageChooses);
+        addBaseOrderGarbageList(baseOrder, garbageChooses);
 //        checkBaseOrderGarbage(baseOrder, garbageChooses);
 
         cdOrder.getCleaner().addScore(score);
@@ -157,16 +186,16 @@ public class OrdersComponent {
     }
 
 
-    private void addCDOrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
+    private void addCDOrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses, int id) {
         int uid = requestComponent.getUid();
-        Cleaner cleaner = cleanerRepository.getCleanerById(uid);
-        ofNullable(cleaner)
-                .map(Cleaner::getDriver)
-                .ifPresentOrElse(driver -> {
+        Driver driver = driverRepository.getDriverById(uid);
+        Cleaner cleaner = cleanerRepository.getCleanerById(id);
+        ofNullable(driver)
+                .ifPresentOrElse(d -> {
                     CDOrder cdOrder = new CDOrder();
                     cdOrder.setCleaner(cleaner);
-                    cdOrder.setDriver(driver);
-                    baseOrder.setScore(getScore(garbageChooses));
+                    cdOrder.setDriver(d);
+                    baseOrder.setScore(0);
                     cdOrder.setBaseOrder(baseOrder);
                     cdOrderRepository.save(cdOrder);
                 }, () -> {
@@ -231,7 +260,7 @@ public class OrdersComponent {
                 GarbageChoose choose = iterator.next();
                 int id = choose.getGarbage().getId();
                 Garbage garbage = garbageRepository.getGarbageById(id);
-                price += choose.getAmount()*garbage.getSuggestPrice();
+                price += choose.getAmount() * garbage.getSuggestPrice();
 
             }
             return Double.parseDouble(
@@ -251,7 +280,7 @@ public class OrdersComponent {
                 GarbageChoose choose = iterator.next();
                 int id = choose.getGarbage().getId();
                 Garbage garbage = garbageRepository.getGarbageById(id);
-                price += choose.getAmount()*garbage.getRecyclePrice();
+                price += choose.getAmount() * garbage.getRecyclePrice();
 
             }
             return Double.parseDouble(
@@ -334,7 +363,7 @@ public class OrdersComponent {
 //        );
 //        chooseRepository.saveAll(garbageChooses);
 
-        addBaseOrderGarbageList(baseOrder,garbageChooses);
+        addBaseOrderGarbageList(baseOrder, garbageChooses);
     }
 
 }

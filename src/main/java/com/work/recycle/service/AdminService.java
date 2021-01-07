@@ -38,11 +38,7 @@ public class AdminService {
     @Autowired
     private RecyclePriceRepository recyclePriceRepository;
     @Autowired
-    private RecyclePriceRecordRepository recyclePriceRecordRepository;
-    @Autowired
     private SuggestPriceRepository suggestPriceRepository;
-    @Autowired
-    private SuggestPriceRecordRepository suggestPriceRecordRepository;
 
     private User validateUser(User user) {
         if (user.getName() == null || user.getPhoneNumber() == null) {
@@ -191,120 +187,36 @@ public class AdminService {
         return bool;
     }
 
-    // TODO: 2020/12/28 重构代码！-赶工-代码太丑了
+    public Garbage recordGarbage(Garbage garbage) {
+        int id = garbage.getId();
+        Garbage real = garbageRepository.getGarbageById(id);
 
-    /**
-     * 设置回收企业垃圾回收价格
-     *
-     * @param garbageList 新垃圾价格表，新价格表要包括所有的垃圾
-     */
-    public int setRecyclePrice(List<Garbage> garbageList) {
-        if (garbageList == null) {
-            throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
-        }
-        Map<Integer, Double> priceMap = new HashMap<>();
-        Map<Integer, String> unitMap = new HashMap<>();
-        RecyclePriceRecord recyclePriceRecord = new RecyclePriceRecord();
-        recyclePriceRecordRepository.save(recyclePriceRecord);
+        // 如果新旧价格不同，那么将旧价格记录下来
 
-        // 判空并将id 和 价格 or unit 的值插入到map中
-        garbageList.forEach(garbage -> {
-            if (garbage.getId() == null
-                    || garbage.getRecyclePrice() == null
-                    || garbage.getUnit() == null) {
-                throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
+        if (real != null) {
+            if (real.getRecyclePrice() != null && garbage.getRecyclePrice() != null) {
+                if (!real.getRecyclePrice().equals(garbage.getRecyclePrice())) {
+                    RecyclePrice recyclePrice = new RecyclePrice();
+                    recyclePrice.setGarbage(real);
+                    recyclePrice.setUnit(real.getUnit());
+                    recyclePrice.setPrice(real.getRecyclePrice());
+                    recyclePriceRepository.save(recyclePrice);
+                }
             }
-            priceMap.put(garbage.getId(), garbage.getRecyclePrice());
-            unitMap.put(garbage.getId(), garbage.getUnit());
 
-            // 生成价格记录表
-            RecyclePrice recyclePrice = new RecyclePrice();
-            recyclePrice.setPrice(priceMap.get(garbage.getId()));
-            recyclePrice.setUnit(unitMap.get(garbage.getId()));
-            recyclePrice.setRecyclePriceRecord(recyclePriceRecord);
-            recyclePrice.setGarbage(garbage);
-            recyclePriceRepository.save(recyclePrice);
-        });
-
-        // 更新垃圾列表中企业回收价格
-        List<Garbage> list = garbageRepository.findAll();
-        list.forEach(garbage -> {
-            int id = garbage.getId();
-            System.out.println(id);
-            garbage.setRecyclePrice(priceMap.get(id));
-            garbage.setRecyclePriceUnit(unitMap.get(id));
-            garbageRepository.save(garbage);
-        });
-        return garbageList.size();
-    }
-
-    /**
-     * 设置建议农户回收价格
-     *
-     * @param garbageList the garbage list
-     */
-    public int setSuggestPrice(List<Garbage> garbageList) {
-        if (garbageList == null) {
-            throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
-        }
-        Map<Integer, Double> priceMap = new HashMap<>();
-        Map<Integer, String> unitMap = new HashMap<>();
-        SuggestPriceRecord suggestPriceRecord = new SuggestPriceRecord();
-        suggestPriceRecordRepository.save(suggestPriceRecord);
-
-        // 判空并将id 和 价格 or unit 的值插入到map中
-        garbageList.forEach(garbage -> {
-            if (garbage.getId() == null
-                    || garbage.getSuggestPrice() == null
-                    || garbage.getUnit() == null) {
-                throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
+            if (real.getSuggestPrice() != null && garbage.getSuggestPrice() != null) {
+                if (!real.getSuggestPrice().equals(garbage.getSuggestPrice())) {
+                    SuggestPrice suggestPrice = new SuggestPrice();
+                    suggestPrice.setGarbage(real);
+                    suggestPrice.setUnit(real.getUnit());
+                    suggestPrice.setPrice(real.getSuggestPrice());
+                    suggestPriceRepository.save(suggestPrice);
+                }
             }
-            priceMap.put(garbage.getId(), garbage.getSuggestPrice());
-            unitMap.put(garbage.getId(), garbage.getUnit());
-
-            // 生成价格记录表
-            SuggestPrice suggestPrice = new SuggestPrice();
-            suggestPrice.setPrice(priceMap.get(garbage.getId()));
-            suggestPrice.setUnit(unitMap.get(garbage.getId()));
-            suggestPrice.setSuggestPriceRecord(suggestPriceRecord);
-            suggestPrice.setGarbage(garbage);
-            suggestPriceRepository.save(suggestPrice);
-        });
-
-        // 更新垃圾列表中企业回收价格
-        List<Garbage> list = garbageRepository.findAll();
-        list.forEach(garbage -> {
-            int id = garbage.getId();
-            System.out.println(id);
-            garbage.setSuggestPrice(priceMap.get(id));
-            garbage.setSuggestPriceUnit(unitMap.get(id));
-            garbageRepository.save(garbage);
-        });
-        return garbageList.size();
-    }
-
-    /**
-     * 新增一种垃圾
-     *
-     * @param garbage the garbage can include price unit and score
-     * @return the garbage
-     */
-    public Garbage addGarbage(Garbage garbage) {
-        if (!GarbageVo.iscategory(garbage.getCategory())) {
-            throw new ApiException("垃圾类别输入错误");
         }
-        garbage.setId(null);
+
         garbageRepository.save(garbage);
         return garbage;
     }
 
-    public double setScore(Garbage garbage) {
-        if (garbage == null) {
-            throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
-        }
-        Garbage g = garbageRepository.getGarbageById(garbage.getId());
-        g.setScore(garbage.getScore());
-        garbageRepository.save(g);
-        return garbage.getScore();
-    }
 }

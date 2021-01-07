@@ -219,52 +219,13 @@ public class AdminController {
     }
 
     /**
-     * 设置企业回收价格
-     * @param garbageList the garbage list that must include the recyclePrice
-     *                    and recycleUnit
-     * @return thr length of garbageList
+     * 添加/修改垃圾记录
+     * @param garbage it is only a lovely entity
+     * @return the common result
      */
-    @PostMapping("set/recycle/price")
-    public CommonResult setRecyclePrice(@RequestBody List<Garbage> garbageList) {
-        if (garbageList == null) {
-            throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
-        }
-        return CommonResult.success(adminService.setRecyclePrice(garbageList));
-    }
-
-    /**
-     * 这是建议保洁员回收价格
-     * @param garbageList the garbage list that must include the suggestPrice
-     *                    and suggestUnit
-     * @return thr length of garbageList
-     */
-    @PostMapping("set/suggest/price")
-    public CommonResult setSuggestPrice(@RequestBody List<Garbage> garbageList) {
-        if (garbageList == null) {
-            throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
-        }
-        return CommonResult.success(adminService.setSuggestPrice(garbageList));
-    }
-
-    /**
-     * 插入一条垃圾
-     * @param garbage 垃圾类（范畴，类别，单位，积分，回收价格，建议价格）
-     * @return the garbage
-     */
-    @PostMapping("add/garbage")
-    public CommonResult addRecycleGarbage(@RequestBody Garbage garbage) {
-        return CommonResult.success(adminService.addGarbage(garbage));
-    }
-
-
-    /**
-     * 设置设置指定垃圾的积分值
-     * @param garbage id and score must not be null
-     * @return the garbage
-     */
-    @PostMapping("set/score")
-    public CommonResult setScore(@RequestBody Garbage garbage) {
-        return CommonResult.success(adminService.setScore(garbage));
+    @PostMapping("record/garbage")
+    public CommonResult recordGarbage(@RequestBody Garbage garbage) {
+        return CommonResult.success(adminService.recordGarbage(garbage));
     }
 
 }
