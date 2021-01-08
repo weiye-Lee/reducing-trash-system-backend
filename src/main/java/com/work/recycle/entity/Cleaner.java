@@ -52,6 +52,10 @@ public class Cleaner {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<CROrder> crOrders;
 
+    @OneToMany(mappedBy = "cleaner")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<WasteRecord> wasteRecords;
+
     @Column(columnDefinition = "timestamp default current_timestamp",
             insertable = false,
             updatable = false)

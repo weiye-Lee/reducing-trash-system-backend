@@ -294,4 +294,9 @@ public class CleanerController {
         return CommonResult.success(cleanerService.addWaste(wasteRecord));
     }
 
+    @GetMapping("list/recycleDriver")
+    public CommonResult getRecycleDriver() {
+        return CommonResult.success(null);
+    }
+
 }

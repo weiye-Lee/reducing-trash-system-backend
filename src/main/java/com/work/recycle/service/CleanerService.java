@@ -206,4 +206,8 @@ public class CleanerService {
         return uid;
     }
 
+    public int addCROrder(BaseOrder baseOrder) {
+        return 0;
+    }
+
 }

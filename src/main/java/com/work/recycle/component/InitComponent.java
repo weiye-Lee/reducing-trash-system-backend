@@ -185,6 +185,8 @@ public class InitComponent implements InitializingBean {
             Garbage[] garbage = new Garbage[16];
             for (int i = 0; i < 16; i++) {
                 garbage[i] = new Garbage();
+                garbage[i].setRecyclePrice(1.0);
+                garbage[i].setSuggestPrice(1.0);
                 garbage[i].setShowAble(true);
                 garbage[i].setScore(score[i]);
                 garbage[i].setUnit(unit[i]);
@@ -228,6 +230,8 @@ public class InitComponent implements InitializingBean {
             garbage.setShowAble(true);
             String picture = "http://localhost:8080/static/" + 17 + ".jpg";
             garbage.setCategory(category);
+            garbage.setRecyclePrice(1.0);
+            garbage.setSuggestPrice(1.0);
             garbage.setType(type);
             garbage.setUnit(unit);
             garbage.setName(type);
@@ -246,6 +250,8 @@ public class InitComponent implements InitializingBean {
             garbage.setShowAble(true);
             String picture = "http://localhost:8080/static/" + 17 + ".jpg";
             garbage.setCategory(category);
+            garbage.setRecyclePrice(1.0);
+            garbage.setSuggestPrice(1.0);
             garbage.setType(type);
             garbage.setName(name);
             garbage.setUnit(unit);
@@ -263,6 +269,8 @@ public class InitComponent implements InitializingBean {
             Garbage garbage = new Garbage();
             garbage.setShowAble(true);
             String picture = "http://localhost:8080/static/" + 19 + ".jpg";
+            garbage.setRecyclePrice(1.0);
+            garbage.setSuggestPrice(1.0);
             garbage.setCategory(category);
             garbage.setType(type);
             garbage.setName(name);

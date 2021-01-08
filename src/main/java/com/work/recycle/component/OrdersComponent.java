@@ -216,15 +216,14 @@ public class OrdersComponent {
 
     private void addCROrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
         int uid = requestComponent.getUid();
-        CROrder crOrder = new CROrder();
-
-        RecycleFirm recycleFirm = recycleFirmRepository.getRecycleFirmById(uid);
+        Cleaner cleaner = cleanerRepository.getCleanerById(uid);
         baseOrder.setScore(getScore(garbageChooses));
-        crOrder.setBaseOrder(baseOrder);
-        crOrder.setRecycleFirm(recycleFirm);
 
-
-        crOrderRepository.save(crOrder);
+//        crOrder.setBaseOrder(baseOrder);
+//        crOrder.setRecycleFirm(recycleFirm);
+//
+//
+//        crOrderRepository.save(crOrder);
 
     }
 

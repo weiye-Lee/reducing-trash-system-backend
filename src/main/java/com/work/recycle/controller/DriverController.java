@@ -1,9 +1,13 @@
 package com.work.recycle.controller;
 
 import com.work.recycle.common.CommonResult;
+import com.work.recycle.controller.vo.AddressVo;
 import com.work.recycle.controller.vo.SiftOrderVo;
+import com.work.recycle.controller.vo.UserVo;
 import com.work.recycle.entity.BaseOrder;
+import com.work.recycle.entity.Cleaner;
 import com.work.recycle.entity.GarbageChoose;
+import com.work.recycle.entity.User;
 import com.work.recycle.service.DriverService;
 import com.work.recycle.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,5 +98,17 @@ public class DriverController {
         baseOrder.setGarbageChooses(null);
         return CommonResult.success(driverService.addCDOrder(baseOrder,garbageChooses,id));
     }
+
+    @GetMapping("show/cleaner/shortInfo")
+    public CommonResult showCleanerShortInfo(@Param("phone") String phone) {
+        Cleaner cleaner = driverService.getCleanerByPhone(phone);
+        UserVo userVo = new UserVo();
+        userVo.setId(cleaner.getId());
+        userVo.setName(cleaner.getUser().getName());
+        userVo.setPhoneNumber(cleaner.getUser().getPhoneNumber());
+        userVo.setAddressVo(AddressVo.getAddressVo(cleaner.getUser()));
+        return CommonResult.success(userVo);
+    }
+
 
 }

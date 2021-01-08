@@ -18,6 +18,8 @@ import java.util.List;
 @Service
 public class DriverService {
     @Autowired
+    private CleanerRepository cleanerRepository;
+    @Autowired
     private BaseOrderRepository baseOrderRepository;
     @Autowired
     private GarbageRepository garbageRepository;
@@ -68,6 +70,10 @@ public class DriverService {
     public int addCDOrder(BaseOrder baseOrder,List<GarbageChoose> garbageChooses,int id) {
         ordersComponent.addOrder(baseOrder,garbageChooses,SwitchUtil.CDORDER,id);
         return id;
+    }
+
+    public Cleaner getCleanerByPhone(String phone) {
+        return cleanerRepository.getCleanerByPhoneNumber(phone);
     }
 
 }

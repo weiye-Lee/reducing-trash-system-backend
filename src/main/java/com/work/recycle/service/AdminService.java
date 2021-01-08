@@ -1,5 +1,6 @@
 package com.work.recycle.service;
 
+import com.google.common.util.concurrent.AtomicDouble;
 import com.work.recycle.common.ResultCode;
 import com.work.recycle.controller.vo.GarbageVo;
 import com.work.recycle.entity.*;
@@ -187,35 +188,49 @@ public class AdminService {
         return bool;
     }
 
+    // todo test it
     public Garbage recordGarbage(Garbage garbage) {
-        int id = garbage.getId();
-        Garbage real = garbageRepository.getGarbageById(id);
+        if (garbage == null) {
+            throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
+        }
+        Optional.ofNullable(garbage)
+                .map(Garbage::getId)
+                .ifPresentOrElse(id -> {
+                    Garbage real = garbageRepository.getGarbageById(id);
+                    if (real != null) {
+                        if (garbage.getRecyclePrice() == null) {
+                            garbage.setRecyclePrice(real.getRecyclePrice());
+                        }
+                        if (garbage.getSuggestPrice() == null) {
+                            garbage.setSuggestPrice(real.getSuggestPrice());
+                        }
+                        if (real.getRecyclePrice() != null) {
+
+                            if (!real.getRecyclePrice().equals(garbage.getRecyclePrice())) {
+                                RecyclePrice recyclePrice = new RecyclePrice();
+                                recyclePrice.setGarbage(real);
+                                recyclePrice.setUnit(real.getUnit());
+                                recyclePrice.setPrice(real.getRecyclePrice());
+                                recyclePriceRepository.save(recyclePrice);
+                            }
+                        }
+
+                        if (real.getSuggestPrice() != null) {
+                            if (!real.getSuggestPrice().equals(garbage.getSuggestPrice())) {
+                                SuggestPrice suggestPrice = new SuggestPrice();
+                                suggestPrice.setGarbage(real);
+                                suggestPrice.setUnit(real.getUnit());
+                                suggestPrice.setPrice(real.getSuggestPrice());
+                                suggestPriceRepository.save(suggestPrice);
+                            }
+                        }
+                        garbageRepository.save(garbage);
+                    }
+                }, () -> garbageRepository.save(garbage));
+
 
         // 如果新旧价格不同，那么将旧价格记录下来
 
-        if (real != null) {
-            if (real.getRecyclePrice() != null && garbage.getRecyclePrice() != null) {
-                if (!real.getRecyclePrice().equals(garbage.getRecyclePrice())) {
-                    RecyclePrice recyclePrice = new RecyclePrice();
-                    recyclePrice.setGarbage(real);
-                    recyclePrice.setUnit(real.getUnit());
-                    recyclePrice.setPrice(real.getRecyclePrice());
-                    recyclePriceRepository.save(recyclePrice);
-                }
-            }
-
-            if (real.getSuggestPrice() != null && garbage.getSuggestPrice() != null) {
-                if (!real.getSuggestPrice().equals(garbage.getSuggestPrice())) {
-                    SuggestPrice suggestPrice = new SuggestPrice();
-                    suggestPrice.setGarbage(real);
-                    suggestPrice.setUnit(real.getUnit());
-                    suggestPrice.setPrice(real.getSuggestPrice());
-                    suggestPriceRepository.save(suggestPrice);
-                }
-            }
-        }
-
-        garbageRepository.save(garbage);
         return garbage;
     }
 
