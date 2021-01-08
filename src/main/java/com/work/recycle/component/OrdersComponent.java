@@ -20,7 +20,7 @@ import java.util.Optional;
 
 import static java.util.Optional.ofNullable;
 
-
+//TODO 重构代码，代码耦合性较差
 /**
  * 订单插入 审核组件
  */
@@ -158,13 +158,26 @@ public class OrdersComponent {
     }
 
     /**
-     * 功能暂时不需要
+     * 回收企业审核订单
      *
      * @param baseOrder      the baseOrder
      * @param garbageChooses the garbageChoose list
      */
     private void checkCROrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {
-
+        CROrder crOrder = crOrderRepository.getCROrderById(baseOrder.getId());
+        if (crOrder == null || crOrder.getBaseOrder().getCheckStatus()) {
+            throw new ApiException("审核完成订单不能修改");
+        }
+        if (crOrder.getBaseOrder() == null ) {
+            throw new ApiException("数据集错误");
+        }
+        double score = getScore(garbageChooses);
+        crOrder.getCleaner().addScore(score);
+        crOrder.getBaseOrder().setScore(score);
+        crOrder.getBaseOrder().setCheckStatus(true);
+        crOrder.setBaseOrder(null);
+        crOrder.setTradePrice(getCRPrice(garbageChooses));
+        crOrderRepository.save(crOrder);
     }
 
     private void addFCOrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses) {

@@ -1,3 +1,81 @@
+#回收企业审核订单
+POST http://localhost:8080/api/recycleFirm/check/CROrder
+Content-Type: application/json
+Authorization: 621ecd13f84b1bfee8fc7dcd2ce2c538068f9b9272039187efd6946302775132f8a88001ab8912cc7123e4e07d9a9bec
+
+{
+  "id": 1,
+  "garbageChooses": [
+    {
+      "id": 1,
+      "garbage": {
+        "id": 1
+      },
+      "amount": 10.1
+    },
+    {
+      "id": 2,
+      "garbage": {
+        "id": 2
+      },
+      "amount": 10
+    }
+  ]
+}
+
+###
+#保洁员添加一条cr订单，与fc订单不同的是，该接口请求体为CROrder，fc订单请求体是BaseOrder
+POST http://localhost:8080/api/cleaner/record/CROrder
+Content-Type: application/json
+Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e3d69a5f46c7f3b2bef6219155aa7d57
+
+{
+  "baseOrder": {
+    "address": "村口第二家",
+    "remark": "提交一条保洁员-回收企业订单",
+    "name": "回收企业",
+    "phoneNumber": "13050496544",
+    "garbageChooses": [
+      {
+        "garbage": {
+          "id": 1
+        },
+        "amount": 100.1
+      },
+      {
+        "garbage": {
+          "id": 2
+        },
+        "amount": 2.3
+      }
+    ]
+  },
+  "recycleFirm": {
+    "id": 5
+  },
+  "recycleDriver": {
+    "id": 1
+  }
+}
+
+###
+#获取回收企业
+GET http://localhost:8080/api/cleaner/list/recycleFirm
+Accept: application/json
+Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e3d69a5f46c7f3b2bef6219155aa7d57
+
+###
+#获取回收司机
+GET http://localhost:8080/api/cleaner/list/recycleDriver
+Accept: application/json
+Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e3d69a5f46c7f3b2bef6219155aa7d57
+
+###
+GET http://localhost:8080/api/user/show/garbage?id=1
+Accept: application/json
+Authorization: 7ebb247b73fb86cf1a8228091ea0fab4334e6ee2795c2a3a5d5fe85c73fd226ddc4e5dbd7b29078d22a32e5852df26de
+
+###
 GET http://localhost:8080/api/driver/show/cleaner/shortInfo?phone=13050496541
 Accept: application/json
 Authorization: 7ebb247b73fb86cf1a8228091ea0fab4334e6ee2795c2a3a5d5fe85c73fd226ddc4e5dbd7b29078d22a32e5852df26de
@@ -110,7 +188,7 @@ Content-Type: application/json
 Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e3d69a5f46c7f3b2bef6219155aa7d57
 
 {
-  "col":"none"
+  "col": "none"
 }
 
 ###

@@ -21,6 +21,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static java.util.Optional.ofNullable;
+
 /**
  * The type Cleaner service.
  */
@@ -51,6 +53,12 @@ public class CleanerService {
     private ObjectMapper mapper;
     @Autowired
     private WasteRecordRepository wasteRecordRepository;
+    @Autowired
+    private CROrderRepository crOrderRepository;
+    @Autowired
+    private RecycleDriverRepository recycleDriverRepository;
+    @Autowired
+    private RecycleFirmRepository firmRepository;
 
     public int getFCOrderTimes() {
         int uid = requestComponent.getUid();
@@ -206,8 +214,36 @@ public class CleanerService {
         return uid;
     }
 
-    public int addCROrder(BaseOrder baseOrder) {
+    public int addCROrder(CROrder crOrder) {
+        int uid = requestComponent.getUid();
+        log.warn("{}", uid);
+        Cleaner cleaner = cleanerRepository.getCleanerById(uid);
+        if (crOrder == null) {
+            throw new ApiException(ResultCode.RESOURCE_NOT_FOUND);
+        }
+
+        crOrder.setCleaner(cleaner);
+
+        List<GarbageChoose> garbageChooses = crOrder.getBaseOrder().getGarbageChooses();
+        BaseOrder baseOrder = crOrder.getBaseOrder();
+        crOrder.getBaseOrder().setGarbageChooses(null);
+        crOrder.getBaseOrder().setScore(ordersComponent.getScore(garbageChooses));
+        crOrderRepository.save(crOrder);
+        ordersComponent.addBaseOrderGarbageList(baseOrder, garbageChooses);
         return 0;
     }
+
+    public List<RecycleDriver> listDriver() {
+        return recycleDriverRepository.findAll();
+    }
+
+    public RecycleDriver showDriver(String phone) {
+        return null;
+    }
+
+    public List<RecycleFirm> listRecycleFirm() {
+        return firmRepository.findAll();
+    }
+
 
 }

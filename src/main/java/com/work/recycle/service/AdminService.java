@@ -17,6 +17,8 @@ import java.util.stream.Collectors;
 @Service
 public class AdminService {
     @Autowired
+    private RecycleDriverRepository recycleDriverRepository;
+    @Autowired
     private CleanerRepository cleanerRepository;
     @Autowired
     private FarmerRepository farmerRepository;
@@ -65,6 +67,11 @@ public class AdminService {
         driver.setUser(user);
         driverRepository.save(driver);
         return user;
+    }
+    // todo test it
+    public RecycleDriver addRecycleDriver(RecycleDriver recycleDriver) {
+        recycleDriverRepository.save(recycleDriver);
+        return recycleDriver;
     }
 
     public User addRecycleFirm(User user) {
@@ -188,6 +195,7 @@ public class AdminService {
         return bool;
     }
 
+
     // todo test it
     public Garbage recordGarbage(Garbage garbage) {
         if (garbage == null) {
@@ -233,5 +241,6 @@ public class AdminService {
 
         return garbage;
     }
+
 
 }

@@ -28,6 +28,6 @@ public class CROrder {
     private double tradePrice;
 
     @ManyToOne
-    private RecycleDriver driver;
+    private RecycleDriver recycleDriver;
 
 }

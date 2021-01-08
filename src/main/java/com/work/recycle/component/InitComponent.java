@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class InitComponent implements InitializingBean {
     @Autowired
+    private RecycleDriverRepository recycleDriverRepository;
+    @Autowired
     private TransferStationRepository transferStationRepository;
     @Autowired
     private FarmerRepository farmerRepository;
@@ -38,7 +40,12 @@ public class InitComponent implements InitializingBean {
         if (u == null) {
             User user3 = new User();
             user3.setName("司机A");
-            user3.setAddress("黑龙江大庆市");
+            user3.setAddress("村口第一家");
+            user3.setProvince("黑龙江省");
+            user3.setCity("哈尔滨市");
+            user3.setArea("双城区");
+            user3.setStreet("承恩街道");
+            user3.setVillage("永和村");
             user3.setSex(User.Sex.MALE);
             user3.setRole(User.Role.DRIVER);
             user3.setPhoneNumber("13050496540");
@@ -54,7 +61,12 @@ public class InitComponent implements InitializingBean {
         if (u == null) {
             User user2 = new User();
             user2.setName("保洁员A");
-            user2.setAddress("黑龙江大庆市");
+            user2.setAddress("村口第一家");
+            user2.setProvince("黑龙江省");
+            user2.setCity("哈尔滨市");
+            user2.setArea("双城区");
+            user2.setStreet("承恩街道");
+            user2.setVillage("永和村");
             user2.setSex(User.Sex.MALE);
             user2.setRole(User.Role.CLEANER);
             user2.setPhoneNumber("13050496541");
@@ -68,8 +80,13 @@ public class InitComponent implements InitializingBean {
         u = userService.getUserByPhone("13050496542");
         if (u == null) {
             User user = new User();
+            user.setProvince("黑龙江省");
+            user.setCity("哈尔滨市");
+            user.setArea("双城区");
+            user.setStreet("承恩街道");
+            user.setVillage("永和村");
             user.setName("农户姓名");
-            user.setAddress("黑龙江大庆市");
+            user.setAddress("村口第一家");
             user.setSex(User.Sex.MALE);
             user.setRole(User.Role.FARMER);
             user.setPhoneNumber("13050496542");
@@ -84,6 +101,11 @@ public class InitComponent implements InitializingBean {
         if (u == null) {
             User user = new User();
             user.setName("中转站姓名");
+            user.setProvince("黑龙江省");
+            user.setCity("哈尔滨市");
+            user.setArea("双城区");
+            user.setStreet("承恩街道");
+            user.setVillage("永和村");
             user.setRole(User.Role.TRANSFERSTATION);
             user.setPhoneNumber("13050496543");
             user.setPassword(encoder.encode("123456"));
@@ -96,7 +118,12 @@ public class InitComponent implements InitializingBean {
         if (u == null) {
             User user = new User();
             user.setName("回收企业姓名");
-            user.setAddress("黑龙江大庆市");
+            user.setAddress("村口第一家");
+            user.setProvince("黑龙江省");
+            user.setCity("哈尔滨市");
+            user.setArea("双城区");
+            user.setStreet("承恩街道");
+            user.setVillage("永和村");
             user.setRole(User.Role.RECYCLEFIRM);
             user.setPhoneNumber("13050496544");
             user.setPassword(encoder.encode("123456"));
@@ -109,7 +136,12 @@ public class InitComponent implements InitializingBean {
         if (u == null) {
             User user = new User();
             user.setName("王根源");
-            user.setAddress("黑龙江大庆市");
+            user.setAddress("村口第一家");
+            user.setProvince("黑龙江省");
+            user.setCity("哈尔滨市");
+            user.setArea("双城区");
+            user.setStreet("承恩街道");
+            user.setVillage("永和村");
             user.setRole(User.Role.ADMIN);
             user.setPhoneNumber("13050406666");
             user.setPassword(encoder.encode("123456"));
@@ -280,6 +312,12 @@ public class InitComponent implements InitializingBean {
             garbageRepository.save(garbage);
         }
         // 危废垃圾就要计数就行，那就不放到订单里面了
-
+        if (recycleDriverRepository.getById(0) == null) {
+            RecycleDriver recycleDriver = new RecycleDriver();
+            recycleDriver.setAddress("村口二甲");
+            recycleDriver.setName("王二田");
+            recycleDriver.setPhoneNumber("13050406564");
+            recycleDriverRepository.save(recycleDriver);
+        }
     }
 }

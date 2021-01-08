@@ -171,4 +171,9 @@ public class UserController {
     public CommonResult test() {
         return CommonResult.success("every thing is ok");
     }
+
+    @GetMapping("show/garbage")
+    public CommonResult getGarbageById(@Param("id") int id) {
+        return CommonResult.success(userService.getGarbageById(id));
+    }
 }

@@ -296,7 +296,17 @@ public class CleanerController {
 
     @GetMapping("list/recycleDriver")
     public CommonResult getRecycleDriver() {
-        return CommonResult.success(null);
+        return CommonResult.success(cleanerService.listDriver());
+    }
+
+    @GetMapping("list/recycleFirm")
+    public CommonResult getRecycleFirm() {
+        return CommonResult.success(cleanerService.listRecycleFirm());
+    }
+
+    @PostMapping("record/CROrder")
+    public CommonResult addCROrder(@RequestBody CROrder crOrder) {
+        return CommonResult.success(cleanerService.addCROrder(crOrder));
     }
 
 }

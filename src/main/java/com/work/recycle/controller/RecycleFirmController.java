@@ -47,4 +47,11 @@ public class RecycleFirmController {
     public CommonResult getCleaner(@Param("id") int id) {
         return CommonResult.success(recycleFirmService.getCleanerNameById(id));
     }
+
+    @PostMapping("check/CROrder")
+    public CommonResult checkCROrder(@RequestBody BaseOrder baseOrder) {
+        List<GarbageChoose> garbageChooses = baseOrder.getGarbageChooses();
+        baseOrder.setGarbageChooses(null);
+        return CommonResult.success(recycleFirmService.checkCROrder(baseOrder,garbageChooses));
+    }
 }

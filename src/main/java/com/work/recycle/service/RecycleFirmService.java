@@ -13,6 +13,7 @@ import com.work.recycle.repository.*;
 import com.work.recycle.utils.SwitchUtil;
 import com.work.recycle.utils.VoUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -73,5 +74,15 @@ public class RecycleFirmService {
         }
 
         return user.getName();
+    }
+
+    public List<CROrder> getCROrders() {
+        int uid = requestComponent.getUid();
+        return crOrderRepository.getCROrdersByRecycleFirm(uid);
+    }
+
+    public int checkCROrder(BaseOrder baseOrder,List<GarbageChoose> garbageChooses) {
+        ordersComponent.checkOrder(baseOrder,garbageChooses,SwitchUtil.CRORDER);
+        return requestComponent.getUid();
     }
 }
