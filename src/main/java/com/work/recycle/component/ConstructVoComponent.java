@@ -98,6 +98,7 @@ public class ConstructVoComponent {
         List<IndexOrderVo> indexOrderVos = new ArrayList<>();
         fcOrders.forEach(each -> {
             IndexOrderVo indexOrderVo = VoUtil.constructIndexOrder(each.getBaseOrder());
+            indexOrderVo.setTradePrice(each.getTradePrice());
             indexOrderVos.add(indexOrderVo);
         });
         return siftOrdersComponent.siftOrders(indexOrderVos,siftOrderVo);
@@ -124,6 +125,7 @@ public class ConstructVoComponent {
         List<IndexOrderVo> indexOrderVos = new ArrayList<>();
         crOrders.forEach(each -> {
             IndexOrderVo indexOrderVo = VoUtil.constructIndexOrder(each.getBaseOrder());
+            indexOrderVo.setTradePrice(each.getTradePrice());
             indexOrderVos.add(indexOrderVo);
         });
         return siftOrdersComponent.siftOrders(indexOrderVos,siftOrderVo);

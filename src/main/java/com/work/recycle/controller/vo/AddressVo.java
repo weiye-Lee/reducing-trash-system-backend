@@ -32,7 +32,7 @@ public class AddressVo {
                 ,user.getCity()
                 ,user.getArea()
                 ,user.getStreet()
-                ,user.getStreet()
+                ,user.getVillage()
         );
     }
 }

@@ -26,4 +26,5 @@ public class IndexOrderVo {
     private String area;
     private String street;
     private String village;
+    private Double tradePrice;
 }

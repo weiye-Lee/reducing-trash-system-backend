@@ -51,6 +51,7 @@ public class VoUtil {
             indexOrderVo.setId(baseOrder.getId());
             indexOrderVo.setMsg(getMsg(baseOrder.getGarbageChooses()));
             indexOrderVo.setDate(baseOrder.getInsertTime());
+
             return indexOrderVo;
     }
 

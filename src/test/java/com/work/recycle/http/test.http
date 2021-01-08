@@ -1,3 +1,12 @@
+POST http://localhost:8080/api/cleaner/getCROrders
+Content-Type: application/json
+Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e3d69a5f46c7f3b2bef6219155aa7d57
+
+{
+  "col": "none"
+}
+
+###
 #回收企业审核订单
 POST http://localhost:8080/api/recycleFirm/check/CROrder
 Content-Type: application/json
@@ -445,17 +454,12 @@ Authorization: d173d91045a96d6a0350969c17a8ac077082b7f98448491c2cd477ecdb61b9985
 ]
 
 ###
-POST http://localhost:8080/api/cleaner/getFCOrders/checking
+POST http://localhost:8080/api/cleaner/getFCOrders/checked
 Content-Type: application/json
 Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e3d69a5f46c7f3b2bef6219155aa7d57
 
 {
-  "col": "t_a",
-  "startTime": "2020-11-15 17:45:29",
-  "endTime": "2020-11-16 18:50:42",
-  "addressVo": {
-    "province": "黑龙江省"
-  }
+  "col": "none"
 }
 
 ###
@@ -923,7 +927,6 @@ Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e
 GET http://localhost:8080/api/cleaner/getFCOrders/checked
 Accept: application/json
 Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e3d69a5f46c7f3b2bef6219155aa7d57
-
 ###
 GET http://localhost:8080/api/farmer/getFCOrder/checking
 Accept: application/json
