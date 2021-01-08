@@ -56,7 +56,6 @@ public class InitComponent implements InitializingBean {
         }
 
 
-
         u = userService.getUserByPhone("13050496541");
         if (u == null) {
             User user2 = new User();
@@ -246,16 +245,16 @@ public class InitComponent implements InitializingBean {
                 } else {
                     garbage[i].setCategory(UnRecycleCategory);
                 }
-                String picture = "http://localhost:8080/static/" + (i+1) + ".jpg";
+                String picture = "http://localhost:8080/static/" + (i + 1) + ".jpg";
                 garbage[i].setPicture(picture);
                 garbageRepository.save(garbage[i]);
 
             }
         }
-
-        if (userService.getGarbage("煤渣、灰土") == null ) {
-            String category = "煤渣、灰土";
-            String type = "煤渣、灰土";
+        if (userService.getGarbage("煤渣、灰土") == null) {
+            String category = "自利用垃圾";
+            String type = "自利用";
+            String name = "煤渣、灰土";
             String unit = "斤";
             double score = 0.1;
             Garbage garbage = new Garbage();
@@ -266,7 +265,7 @@ public class InitComponent implements InitializingBean {
             garbage.setSuggestPrice(1.0);
             garbage.setType(type);
             garbage.setUnit(unit);
-            garbage.setName(type);
+            garbage.setName(name);
             garbage.setScore(score);
             garbage.setPicture(picture);
             garbageRepository.save(garbage);

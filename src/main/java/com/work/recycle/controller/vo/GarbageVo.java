@@ -54,7 +54,7 @@ public class GarbageVo {
         Map<String,String> map = new HashMap<>();
         map.put(RECYCLE_CATEGORY,"可回收垃圾");
         map.put(UNRECYCLE_CATEGORY,"不可回收垃圾");
-        map.put(SOIL_CATEGORY,"煤渣、灰土");
+        map.put(SOIL_CATEGORY,"自利用垃圾");
         return map;
     }
 
