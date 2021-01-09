@@ -61,9 +61,6 @@ public class RecycleFirmService {
         ordersComponent.addBaseOrderGarbageList(baseOrder,garbageChooses);
     }
 
-    public List<IndexOrderVo> getCROrders(SiftOrderVo siftOrderVo) {
-        return constructVoComponent.getCommonOrders(false,SwitchUtil.CRORDER,siftOrderVo);
-    }
 
 
     public String getCleanerNameById(int id) {
@@ -76,13 +73,17 @@ public class RecycleFirmService {
         return user.getName();
     }
 
-    public List<CROrder> getCROrders() {
-        int uid = requestComponent.getUid();
-        return crOrderRepository.getCROrdersByRecycleFirm(uid);
-    }
-
     public int checkCROrder(BaseOrder baseOrder,List<GarbageChoose> garbageChooses) {
         ordersComponent.checkOrder(baseOrder,garbageChooses,SwitchUtil.CRORDER);
         return requestComponent.getUid();
+    }
+
+    public List<IndexOrderVo> getCROrderChecked(SiftOrderVo siftOrderVo) {
+        return constructVoComponent.getCommonOrders(true,SwitchUtil.CRORDER,siftOrderVo);
+    }
+
+    public List<IndexOrderVo> getCROrderChecking(SiftOrderVo siftOrderVo) {
+        return constructVoComponent.getCommonOrders(false,SwitchUtil.CRORDER,siftOrderVo);
+
     }
 }

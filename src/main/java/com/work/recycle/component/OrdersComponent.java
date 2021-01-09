@@ -191,6 +191,7 @@ public class OrdersComponent {
                     fcOrder.setCleaner(cleaner);
                     fcOrder.setFarmer(farmer);
                     baseOrder.setScore(getScore(garbageChooses));
+                    fcOrder.setTradePrice(getFCPrice(garbageChooses));
                     fcOrder.setBaseOrder(baseOrder);
                     fcOrderRepository.save(fcOrder);
                 }, () -> {

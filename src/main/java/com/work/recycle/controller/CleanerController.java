@@ -309,4 +309,12 @@ public class CleanerController {
         return CommonResult.success(cleanerService.addCROrder(crOrder));
     }
 
+    @PostMapping("list/CROrder/checked")
+    public CommonResult getCROrderChecked(@RequestBody SiftOrderVo siftOrderVo) {
+        return CommonResult.success(cleanerService.getCROrderChecked(siftOrderVo));
+    }
+    @PostMapping("list/CROrder/checking")
+    public CommonResult getCROrderChecking(@RequestBody SiftOrderVo siftOrderVo) {
+        return CommonResult.success(cleanerService.getCROrderChecking(siftOrderVo));
+    }
 }

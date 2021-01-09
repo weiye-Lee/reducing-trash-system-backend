@@ -33,10 +33,6 @@ public class RecycleFirmController {
         return CommonResult.success(null);
     }
 
-    @PostMapping("getCROrders")
-    public CommonResult getCROrders(@RequestBody SiftOrderVo siftOrderVo) {
-        return CommonResult.success(recycleFirmService.getCROrders(siftOrderVo));
-    }
 
     @GetMapping("getBaseOrderById")
     public CommonResult getBaseOrderById(@Param("id") int id) {
@@ -53,5 +49,14 @@ public class RecycleFirmController {
         List<GarbageChoose> garbageChooses = baseOrder.getGarbageChooses();
         baseOrder.setGarbageChooses(null);
         return CommonResult.success(recycleFirmService.checkCROrder(baseOrder,garbageChooses));
+    }
+
+    @PostMapping("list/CROrder/checked")
+    public CommonResult getCROrderChecked(@RequestBody SiftOrderVo siftOrderVo) {
+        return CommonResult.success(recycleFirmService.getCROrderChecked(siftOrderVo));
+    }
+    @PostMapping("list/CROrder/checking")
+    public CommonResult getCROrderChecking(@RequestBody SiftOrderVo siftOrderVo) {
+        return CommonResult.success(recycleFirmService.getCROrderChecking(siftOrderVo));
     }
 }

@@ -228,6 +228,8 @@ public class CleanerService {
         BaseOrder baseOrder = crOrder.getBaseOrder();
         crOrder.getBaseOrder().setGarbageChooses(null);
         crOrder.getBaseOrder().setScore(ordersComponent.getScore(garbageChooses));
+        // 插入订单没有即使没有审核，也要插入价格信息
+        crOrder.setTradePrice(ordersComponent.getCRPrice(garbageChooses));
         crOrderRepository.save(crOrder);
         ordersComponent.addBaseOrderGarbageList(baseOrder, garbageChooses);
         return 0;
@@ -245,5 +247,13 @@ public class CleanerService {
         return firmRepository.findAll();
     }
 
+    public List<IndexOrderVo> getCROrderChecked(SiftOrderVo siftOrderVo) {
+        return constructVoComponent.getCommonOrders(true,SwitchUtil.CRORDER,siftOrderVo);
+    }
+
+    public List<IndexOrderVo> getCROrderChecking(SiftOrderVo siftOrderVo) {
+        return constructVoComponent.getCommonOrders(false,SwitchUtil.CRORDER,siftOrderVo);
+
+    }
 
 }

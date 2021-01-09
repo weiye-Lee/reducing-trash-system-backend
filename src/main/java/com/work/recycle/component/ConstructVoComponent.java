@@ -47,7 +47,7 @@ public class ConstructVoComponent {
                 list = getCommonCDOrders(uid, status,siftOrderVo);
                 break;
             case SwitchUtil.CRORDER:
-                list = getCommonCROrders(uid,siftOrderVo);
+                list = getCommonCROrders(uid,status,siftOrderVo);
                 break;
         }
         return list;
@@ -103,21 +103,20 @@ public class ConstructVoComponent {
         });
         return siftOrdersComponent.siftOrders(indexOrderVos,siftOrderVo);
     }
-
     /**
      * 返回标准类型订单列表
      *
      * @param uid user id
      * @return 标准订单类型 list
      */
-    private List<IndexOrderVo> getCommonCROrders(int uid ,SiftOrderVo siftOrderVo) {
+    private List<IndexOrderVo> getCommonCROrders(int uid ,Boolean status,SiftOrderVo siftOrderVo) {
         User.Role role = requestComponent.getRole();
         List<CROrder> crOrders;
 
         if (role == User.Role.CLEANER) {
-            crOrders = crOrderRepository.getCROrdersByCleaner(uid);
+            crOrders = crOrderRepository.getCROrdersByCleaner(uid,status);
         } else if (role == User.Role.RECYCLEFIRM) {
-            crOrders = crOrderRepository.getCROrdersByRecycleFirm(uid);
+            crOrders = crOrderRepository.getCROrdersByRecycleFirm(uid,status);
         } else {
             throw new ApiException(ResultCode.VALIDATE_FAILED);
         }
