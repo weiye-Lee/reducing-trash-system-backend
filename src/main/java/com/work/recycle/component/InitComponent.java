@@ -311,7 +311,7 @@ public class InitComponent implements InitializingBean {
             garbageRepository.save(garbage);
         }
         // 危废垃圾就要计数就行，那就不放到订单里面了
-        if (recycleDriverRepository.getById(0) == null) {
+        if (recycleDriverRepository.getById(1) == null) {
             RecycleDriver recycleDriver = new RecycleDriver();
             recycleDriver.setAddress("村口二甲");
             recycleDriver.setName("王二田");

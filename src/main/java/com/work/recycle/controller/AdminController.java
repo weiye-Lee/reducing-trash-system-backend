@@ -5,6 +5,7 @@ import com.work.recycle.common.ResultCode;
 import com.work.recycle.controller.vo.SiftOrderVo;
 import com.work.recycle.controller.vo.UserVo;
 import com.work.recycle.entity.Garbage;
+import com.work.recycle.entity.News;
 import com.work.recycle.entity.RecycleDriver;
 import com.work.recycle.entity.User;
 import com.work.recycle.exception.ApiException;
@@ -254,5 +255,12 @@ public class AdminController {
     public CommonResult recordGarbage(@RequestBody Garbage garbage) {
         return CommonResult.success(adminService.recordGarbage(garbage));
     }
+
+    @PostMapping("record/news")
+    public CommonResult addNews(@RequestBody News news) {
+        return null;
+    }
+
+
 
 }

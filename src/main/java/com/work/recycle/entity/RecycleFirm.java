@@ -1,5 +1,6 @@
 package com.work.recycle.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -30,6 +31,7 @@ public class RecycleFirm {
     private String sector;
 
     @OneToMany(mappedBy = "recycleFirm")
+    @JsonIgnore
     private List<CROrder> crOrders;
 
     @Column(columnDefinition = "timestamp default current_timestamp",
