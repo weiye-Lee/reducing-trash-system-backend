@@ -44,7 +44,7 @@ public class RecycleFirmService {
     public void addCROrder(BaseOrder baseOrder, List<GarbageChoose> garbageChooses,int id) {
         CROrder crOrder = new CROrder();
         int uid = requestComponent.getUid();
-        RecycleFirm recycleFirm = recycleFirmRepository.getRecycleFirmById(uid);
+//        RecycleFirm recycleFirm = recycleFirmRepository.getRecycleFirmById(uid);
         Cleaner cleaner = cleanerRepository.getCleanerById(id);
         if (cleaner == null) {
             throw new ApiException(ResultCode.VALIDATE_FAILED);
@@ -54,7 +54,9 @@ public class RecycleFirmService {
         cleaner.addScore(score);
         baseOrder.setScore(score);
         crOrder.setCleaner(cleaner);
-        crOrder.setRecycleFirm(recycleFirm);
+
+//        具体执行操作的人，在插入订单时不需要指定
+//        crOrder.setRecycleFirm(recycleFirm);
         crOrder.setBaseOrder(baseOrder);
         crOrder.setTradePrice(ordersComponent.getCRPrice(garbageChooses));
         crOrderRepository.save(crOrder);
@@ -85,5 +87,9 @@ public class RecycleFirmService {
     public List<IndexOrderVo> getCROrderChecking(SiftOrderVo siftOrderVo) {
         return constructVoComponent.getCommonOrders(false,SwitchUtil.CRORDER,siftOrderVo);
 
+    }
+
+    public CROrder getCROrder(int id) {
+        return crOrderRepository.getCROrderById(id);
     }
 }

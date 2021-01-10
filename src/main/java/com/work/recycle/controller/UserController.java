@@ -176,4 +176,16 @@ public class UserController {
     public CommonResult getGarbageById(@Param("id") int id) {
         return CommonResult.success(userService.getGarbageById(id));
     }
+
+
+//    @GetMapping("list/news")
+//    public CommonResult getNews(@Param("limit") int limit) {
+//        User.Role role = requestComponent.getRole();
+//        return null;
+//    }
+
+    @GetMapping("get/news/info")
+    public CommonResult getNewsInfo(@Param("id") int id) {
+        return null;
+    }
 }

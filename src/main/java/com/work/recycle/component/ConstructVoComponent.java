@@ -4,14 +4,12 @@ package com.work.recycle.component;
 import com.work.recycle.common.ResultCode;
 import com.work.recycle.controller.vo.IndexOrderVo;
 import com.work.recycle.controller.vo.SiftOrderVo;
-import com.work.recycle.entity.CDOrder;
-import com.work.recycle.entity.CROrder;
-import com.work.recycle.entity.FCOrder;
-import com.work.recycle.entity.User;
+import com.work.recycle.entity.*;
 import com.work.recycle.exception.ApiException;
 import com.work.recycle.repository.CDOrderRepository;
 import com.work.recycle.repository.CROrderRepository;
 import com.work.recycle.repository.FCOrderRepository;
+import com.work.recycle.repository.RecycleFirmRepository;
 import com.work.recycle.utils.SwitchUtil;
 import com.work.recycle.utils.VoUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +23,8 @@ import java.util.List;
  */
 @Component
 public class ConstructVoComponent {
+    @Autowired
+    private RecycleFirmRepository firmRepository;
     @Autowired
     private FCOrderRepository fcOrderRepository;
     @Autowired
@@ -116,7 +116,9 @@ public class ConstructVoComponent {
         if (role == User.Role.CLEANER) {
             crOrders = crOrderRepository.getCROrdersByCleaner(uid,status);
         } else if (role == User.Role.RECYCLEFIRM) {
-            crOrders = crOrderRepository.getCROrdersByRecycleFirm(uid,status);
+//            crOrders = crOrderRepository.getCROrdersByRecycleFirm(uid,status);
+            RecycleFirm recycleFirm = firmRepository.getRecycleFirmById(uid);
+            crOrders = crOrderRepository.getCROrdersByCompany(status,recycleFirm.getCompany());
         } else {
             throw new ApiException(ResultCode.VALIDATE_FAILED);
         }

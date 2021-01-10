@@ -16,6 +16,9 @@ public interface CROrderRepository extends BaseRepository<CROrder,Integer> {
     @Query("select cr from CROrder cr where cr.recycleFirm.id = :id and cr.baseOrder.checkStatus = :checkStatus")
     List<CROrder> getCROrdersByRecycleFirm(@Param("id") int id,@Param("checkStatus") Boolean checkStatus);
 
+    @Query("select cr from CROrder cr where cr.company = :company and cr.baseOrder.checkStatus = :checkStatus")
+    List<CROrder> getCROrdersByCompany(@Param("checkStatus") Boolean checkStatus,@Param("company") String company);
+
     @Query("select cr from CROrder cr where cr.cleaner.id = :id and cr.baseOrder.checkStatus = :checkStatus")
     List<CROrder> getCROrdersByCleaner(@Param("id") int id ,@Param("checkStatus") Boolean checkStatus);
 }

@@ -17,6 +17,8 @@ import java.util.stream.Collectors;
 @Service
 public class AdminService {
     @Autowired
+    private NewsRepository newsRepository;
+    @Autowired
     private RecycleDriverRepository recycleDriverRepository;
     @Autowired
     private CleanerRepository cleanerRepository;
@@ -240,6 +242,11 @@ public class AdminService {
         // 如果新旧价格不同，那么将旧价格记录下来
 
         return garbage;
+    }
+
+    public News addNews(News news) {
+        newsRepository.save(news);
+        return news;
     }
 
 

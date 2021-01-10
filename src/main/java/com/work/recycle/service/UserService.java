@@ -3,15 +3,13 @@ package com.work.recycle.service;
 import com.work.recycle.common.ResultCode;
 import com.work.recycle.component.RequestComponent;
 import com.work.recycle.controller.vo.GarbageVo;
-import com.work.recycle.entity.BaseOrder;
-import com.work.recycle.entity.FCOrder;
-import com.work.recycle.entity.Garbage;
-import com.work.recycle.entity.User;
+import com.work.recycle.entity.*;
 import com.work.recycle.exception.ApiException;
 import com.work.recycle.repository.BaseOrderRepository;
 import com.work.recycle.repository.FCOrderRepository;
 import com.work.recycle.repository.GarbageRepository;
 import com.work.recycle.repository.UserRepository;
+import javassist.expr.NewArray;
 import org.apache.tomcat.util.net.AprEndpoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -181,5 +179,20 @@ public class UserService {
         return password;
 
     }
+
+//    public List<News> getNews(User.Role role ,int limit) {
+//        switch (role){
+//            case FARMER:
+//                break;
+//            case DRIVER:
+//                break;
+//            case RECYCLEFIRM:
+//                break;
+//            case CLEANER:
+//                break;
+//            case ADMIN:
+//                break;
+//        }
+//    }
 
 }

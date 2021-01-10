@@ -30,4 +30,8 @@ public class CROrder {
     @ManyToOne
     private RecycleDriver recycleDriver;
 
+    private String company; // 回收公司
+
+    private String sector; // 公司部门
+
 }

@@ -14,10 +14,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @RestController
@@ -316,5 +313,24 @@ public class CleanerController {
     @PostMapping("list/CROrder/checking")
     public CommonResult getCROrderChecking(@RequestBody SiftOrderVo siftOrderVo) {
         return CommonResult.success(cleanerService.getCROrderChecking(siftOrderVo));
+    }
+
+    @GetMapping("get/CROrder")
+    public CommonResult getCROrder(@Param("id") int id) {
+        CROrder crOrder = cleanerService.getCROrder(id);
+        Cleaner cleaner = new Cleaner();
+        RecycleDriver recycleDriver = new RecycleDriver();
+//        cleaner.getUser().setName(crOrder.getCleaner().getUser().getName());
+        String name = Optional.ofNullable(crOrder)
+                .map(CROrder::getRecycleDriver)
+                .map(RecycleDriver::getName)
+                .orElse("未选择");
+        recycleDriver.setName(name);
+        crOrder.setRecycleFirm(null);
+        crOrder.setCleaner(null);
+        crOrder.setRecycleDriver(recycleDriver);
+        return CommonResult.success(crOrder);
+
+
     }
 }

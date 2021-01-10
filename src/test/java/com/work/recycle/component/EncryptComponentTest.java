@@ -33,18 +33,21 @@ class EncryptComponentTest {
     @Test
     void testEncrypt() {
 
-        MyToken myToken = new MyToken(User.Role.FARMER,3);
-        MyToken myToken1 = new MyToken(User.Role.CLEANER, 2);
-        MyToken myToken2 = new MyToken(User.Role.DRIVER, 1);
-        MyToken myToken3 = new MyToken(User.Role.TRANSFERSTATION,4);
-        MyToken myToken4 = new MyToken(User.Role.RECYCLEFIRM,5);
-        MyToken myToken5 = new MyToken(User.Role.ADMIN,61);
-        log.warn(encryptComponent.encryptToken(myToken));
-        log.warn(encryptComponent.encryptToken(myToken1));
-        log.warn(encryptComponent.encryptToken(myToken2));
-        log.warn(encryptComponent.encryptToken(myToken3));
-        log.warn(encryptComponent.encryptToken(myToken4));
-        log.warn("admin="+encryptComponent.encryptToken(myToken5));
+        MyToken unAuthorization = new MyToken(null,0);
+        log.warn(encryptComponent.encryptToken(unAuthorization));
+
+//        MyToken myToken = new MyToken(User.Role.FARMER,3);
+//        MyToken myToken1 = new MyToken(User.Role.CLEANER, 2);
+//        MyToken myToken2 = new MyToken(User.Role.DRIVER, 1);
+//        MyToken myToken3 = new MyToken(User.Role.TRANSFERSTATION,4);
+//        MyToken myToken4 = new MyToken(User.Role.RECYCLEFIRM,5);
+//        MyToken myToken5 = new MyToken(User.Role.ADMIN,61);
+//        log.warn(encryptComponent.encryptToken(myToken));
+//        log.warn(encryptComponent.encryptToken(myToken1));
+//        log.warn(encryptComponent.encryptToken(myToken2));
+//        log.warn(encryptComponent.encryptToken(myToken3));
+//        log.warn(encryptComponent.encryptToken(myToken4));
+//        log.warn("admin="+encryptComponent.encryptToken(myToken5));
 
         /*
             farmer

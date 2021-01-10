@@ -30,6 +30,8 @@ import static java.util.Optional.ofNullable;
 @Slf4j
 public class CleanerService {
     @Autowired
+    private RecycleFirmCompanyRepo companyRepo;
+    @Autowired
     private FCOrderRepository fcOrderRepository;
     @Autowired
     private BaseOrderRepository baseOrderRepository;
@@ -243,10 +245,13 @@ public class CleanerService {
         return null;
     }
 
-    public List<RecycleFirm> listRecycleFirm() {
-        return firmRepository.findAll();
-    }
+//    public List<RecycleFirm> listRecycleFirm() {
+//        return firmRepository.findAll();
+//    }
 
+    public List<RecycleFirmCompany> listRecycleFirm() {
+        return companyRepo.findAll();
+    }
     public List<IndexOrderVo> getCROrderChecked(SiftOrderVo siftOrderVo) {
         return constructVoComponent.getCommonOrders(true,SwitchUtil.CRORDER,siftOrderVo);
     }
@@ -254,6 +259,10 @@ public class CleanerService {
     public List<IndexOrderVo> getCROrderChecking(SiftOrderVo siftOrderVo) {
         return constructVoComponent.getCommonOrders(false,SwitchUtil.CRORDER,siftOrderVo);
 
+    }
+
+    public CROrder getCROrder(int id) {
+        return crOrderRepository.getCROrderById(id);
     }
 
 }

@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class InitComponent implements InitializingBean {
     @Autowired
+    private RecycleFirmCompanyRepo companyRepo;
+    @Autowired
     private RecycleDriverRepository recycleDriverRepository;
     @Autowired
     private TransferStationRepository transferStationRepository;
@@ -84,7 +86,7 @@ public class InitComponent implements InitializingBean {
             user.setArea("双城区");
             user.setStreet("承恩街道");
             user.setVillage("永和村");
-            user.setName("农户姓名");
+            user.setName("侬志文");
             user.setAddress("村口第一家");
             user.setSex(User.Sex.MALE);
             user.setRole(User.Role.FARMER);
@@ -99,7 +101,7 @@ public class InitComponent implements InitializingBean {
         u = userService.getUserByPhone("13050496543");
         if (u == null) {
             User user = new User();
-            user.setName("中转站姓名");
+            user.setName("钟红叶");
             user.setProvince("黑龙江省");
             user.setCity("哈尔滨市");
             user.setArea("双城区");
@@ -116,7 +118,7 @@ public class InitComponent implements InitializingBean {
         u = userService.getUserByPhone("13050496544");
         if (u == null) {
             User user = new User();
-            user.setName("回收企业姓名");
+            user.setName("黄大发");
             user.setAddress("村口第一家");
             user.setProvince("黑龙江省");
             user.setCity("哈尔滨市");
@@ -128,13 +130,14 @@ public class InitComponent implements InitializingBean {
             user.setPassword(encoder.encode("123456"));
             RecycleFirm recycleFirm = new RecycleFirm();
             recycleFirm.setUser(user);
+            recycleFirm.setCompany("双城区废品回收有限公司A");
             recycleFirmRepository.save(recycleFirm);
         }
 
         u = userService.getUserByPhone("13050406666");
         if (u == null) {
             User user = new User();
-            user.setName("王根源");
+            user.setName("王富贵");
             user.setAddress("村口第一家");
             user.setProvince("黑龙江省");
             user.setCity("哈尔滨市");
@@ -216,8 +219,6 @@ public class InitComponent implements InitializingBean {
             Garbage[] garbage = new Garbage[16];
             for (int i = 0; i < 16; i++) {
                 garbage[i] = new Garbage();
-                garbage[i].setRecyclePrice(1.0);
-                garbage[i].setSuggestPrice(1.0);
                 garbage[i].setShowAble(true);
                 garbage[i].setScore(score[i]);
                 garbage[i].setUnit(unit[i]);
@@ -242,8 +243,12 @@ public class InitComponent implements InitializingBean {
 
                 if (i < 11) {
                     garbage[i].setCategory(RecycleCategory);
+                    garbage[i].setRecyclePrice(1.0);
+                    garbage[i].setSuggestPrice(1.0);
                 } else {
                     garbage[i].setCategory(UnRecycleCategory);
+                    garbage[i].setRecyclePrice(0.0);
+                    garbage[i].setSuggestPrice(0.0);
                 }
                 String picture = "http://localhost:8080/static/" + (i + 1) + ".jpg";
                 garbage[i].setPicture(picture);
@@ -261,8 +266,8 @@ public class InitComponent implements InitializingBean {
             garbage.setShowAble(true);
             String picture = "http://localhost:8080/static/" + 17 + ".jpg";
             garbage.setCategory(category);
-            garbage.setRecyclePrice(1.0);
-            garbage.setSuggestPrice(1.0);
+            garbage.setRecyclePrice(0.0);
+            garbage.setSuggestPrice(0.0);
             garbage.setType(type);
             garbage.setUnit(unit);
             garbage.setName(name);
@@ -271,25 +276,25 @@ public class InitComponent implements InitializingBean {
             garbageRepository.save(garbage);
         }
 
-        if (userService.getGarbage("其他垃圾") == null) {
-            String category = "不可回收垃圾";
-            String type = "其他垃圾";
-            String name = "其他垃圾";
-            String unit = "斤";
-            double score = 0;
-            Garbage garbage = new Garbage();
-            garbage.setShowAble(true);
-            String picture = "http://localhost:8080/static/" + 17 + ".jpg";
-            garbage.setCategory(category);
-            garbage.setRecyclePrice(1.0);
-            garbage.setSuggestPrice(1.0);
-            garbage.setType(type);
-            garbage.setName(name);
-            garbage.setUnit(unit);
-            garbage.setScore(score);
-            garbage.setPicture(picture);
-            garbageRepository.save(garbage);
-        }
+//        if (userService.getGarbage("其他垃圾") == null) {
+//            String category = "不可回收垃圾";
+//            String type = "其他垃圾";
+//            String name = "其他垃圾";
+//            String unit = "斤";
+//            double score = 0;
+//            Garbage garbage = new Garbage();
+//            garbage.setShowAble(true);
+//            String picture = "http://localhost:8080/static/" + 17 + ".jpg";
+//            garbage.setCategory(category);
+//            garbage.setRecyclePrice(1.0);
+//            garbage.setSuggestPrice(1.0);
+//            garbage.setType(type);
+//            garbage.setName(name);
+//            garbage.setUnit(unit);
+//            garbage.setScore(score);
+//            garbage.setPicture(picture);
+//            garbageRepository.save(garbage);
+//        }
 
         if (userService.getGarbage("厨余垃圾") == null) {
             String category = "不可回收垃圾";
@@ -300,8 +305,8 @@ public class InitComponent implements InitializingBean {
             Garbage garbage = new Garbage();
             garbage.setShowAble(true);
             String picture = "http://localhost:8080/static/" + 19 + ".jpg";
-            garbage.setRecyclePrice(1.0);
-            garbage.setSuggestPrice(1.0);
+            garbage.setRecyclePrice(0.0);
+            garbage.setSuggestPrice(0.0);
             garbage.setCategory(category);
             garbage.setType(type);
             garbage.setName(name);
@@ -318,5 +323,15 @@ public class InitComponent implements InitializingBean {
             recycleDriver.setPhoneNumber("13050406564");
             recycleDriverRepository.save(recycleDriver);
         }
+
+        if (companyRepo.getById(1) == null) {
+            RecycleFirmCompany recycleFirmCompany = new RecycleFirmCompany();
+            recycleFirmCompany.setName("双城区废品回收有限公司A");
+            RecycleFirmCompany recycleFirmCompany2 = new RecycleFirmCompany();
+            recycleFirmCompany2.setName("双城区废品回收有限公司B");
+            companyRepo.save(recycleFirmCompany);
+            companyRepo.save(recycleFirmCompany2);
+        }
+
     }
 }

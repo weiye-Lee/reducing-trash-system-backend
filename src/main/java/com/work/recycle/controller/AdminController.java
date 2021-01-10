@@ -256,11 +256,14 @@ public class AdminController {
         return CommonResult.success(adminService.recordGarbage(garbage));
     }
 
-    @PostMapping("record/news")
-    public CommonResult addNews(@RequestBody News news) {
-        return null;
-    }
-
-
+    /**
+     * 添加/修改新闻
+     * @param news the entity of news
+     * @return the common result
+     */
+//    @PostMapping("record/news")
+//    public CommonResult addNews(@RequestBody News news) {
+//        return CommonResult.success(adminService.addNews(news));
+//    }
 
 }
