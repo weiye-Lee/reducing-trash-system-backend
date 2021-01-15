@@ -265,4 +265,21 @@ public class CleanerService {
         return crOrderRepository.getCROrderById(id);
     }
 
+    public int addFCOrder(BaseOrder baseOrder,List<GarbageChoose> garbageChooses) {
+        int uid = requestComponent.getUid();
+        Cleaner cleaner = cleanerRepository.getCleanerById(uid);
+        FCOrder fcOrder = new FCOrder();
+        double score = ordersComponent.getScore(garbageChooses);
+        baseOrder.setScore(score);
+        baseOrder.setCheckStatus(true);
+        fcOrder.setBaseOrder(baseOrder);
+//        fcOrder.getCleaner().addScore(score);
+        fcOrder.setTradePrice(ordersComponent.getFCPrice(garbageChooses));
+        fcOrder.setCleaner(cleaner);
+        fcOrderRepository.save(fcOrder);
+        ordersComponent.addBaseOrderGarbageList(baseOrder,garbageChooses);
+        return uid;
+    }
+
+
 }

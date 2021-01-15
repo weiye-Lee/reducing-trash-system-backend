@@ -144,16 +144,16 @@ public class CleanerController {
      * 获取积分和提交次数展示
      *
      * @return {
-     *   "code": 200,
-     *   "message": "操作成功",
-     *   "data": [
-     *     {
-     *       "score": 0
-     *     },
-     *     {
-     *       "times": 3
-     *     }
-     *   ]
+     * "code": 200,
+     * "message": "操作成功",
+     * "data": [
+     * {
+     * "score": 0
+     * },
+     * {
+     * "times": 3
+     * }
+     * ]
      * }
      */
     @GetMapping("getOrderInfo")
@@ -245,22 +245,22 @@ public class CleanerController {
      * @return {
      * "code": 200,
      * "message": "操作成功",
-     *      "data": {
-     *          "id": 7,
-     *          "user": {
-     *              "id": 7,
-     *              "name": "安慕希",
-     *              "phoneNumber": "15941627298",
-     *              "role": "FARMER",
-     *              "province": "黑龙江省",
-     *              "city": "大庆市",
-     *              "area": "双城区",
-     *              "street": "平安街道",
-     *              "village": "伟业村"
-     *          },
-     *          "familySize": 1,
-     *          "score": 0.0
-     *      }
+     * "data": {
+     * "id": 7,
+     * "user": {
+     * "id": 7,
+     * "name": "安慕希",
+     * "phoneNumber": "15941627298",
+     * "role": "FARMER",
+     * "province": "黑龙江省",
+     * "city": "大庆市",
+     * "area": "双城区",
+     * "street": "平安街道",
+     * "village": "伟业村"
+     * },
+     * "familySize": 1,
+     * "score": 0.0
+     * }
      * }
      */
     @GetMapping("getFarmer/index")
@@ -283,11 +283,12 @@ public class CleanerController {
 
     /**
      * 保洁员添加一条危废垃圾回收记录
+     *
      * @param wasteRecord 危废垃圾记录
      * @return the uid
      */
     @PostMapping("record/waste")
-    public CommonResult recordWaste(@RequestBody  WasteRecord wasteRecord) {
+    public CommonResult recordWaste(@RequestBody WasteRecord wasteRecord) {
         return CommonResult.success(cleanerService.addWaste(wasteRecord));
     }
 
@@ -310,6 +311,7 @@ public class CleanerController {
     public CommonResult getCROrderChecked(@RequestBody SiftOrderVo siftOrderVo) {
         return CommonResult.success(cleanerService.getCROrderChecked(siftOrderVo));
     }
+
     @PostMapping("list/CROrder/checking")
     public CommonResult getCROrderChecking(@RequestBody SiftOrderVo siftOrderVo) {
         return CommonResult.success(cleanerService.getCROrderChecking(siftOrderVo));
@@ -333,4 +335,12 @@ public class CleanerController {
 
 
     }
+
+    @PostMapping("record/FCOrder")
+    public CommonResult addFCOrder(@RequestBody BaseOrder baseOrder) {
+        List<GarbageChoose> garbageChooses = baseOrder.getGarbageChooses();
+        baseOrder.setGarbageChooses(null);
+        return CommonResult.success(cleanerService.addFCOrder(baseOrder,garbageChooses));
+    }
+
 }

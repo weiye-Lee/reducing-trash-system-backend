@@ -3,6 +3,7 @@ package com.work.recycle.service;
 import com.google.common.util.concurrent.AtomicDouble;
 import com.work.recycle.common.ResultCode;
 import com.work.recycle.controller.vo.GarbageVo;
+import com.work.recycle.controller.vo.NewsVo;
 import com.work.recycle.entity.*;
 import com.work.recycle.exception.ApiException;
 import com.work.recycle.repository.*;
@@ -70,19 +71,22 @@ public class AdminService {
         driverRepository.save(driver);
         return user;
     }
+
     // todo test it
     public RecycleDriver addRecycleDriver(RecycleDriver recycleDriver) {
         recycleDriverRepository.save(recycleDriver);
         return recycleDriver;
     }
 
-    public User addRecycleFirm(User user) {
+    public User addRecycleFirm(User user,String company,String sector) {
         user = validateUser(user);
         user.setRole(User.Role.RECYCLEFIRM);
         RecycleFirm recycleFirm = new RecycleFirm();
+        recycleFirm.setCompany(company);
+        recycleFirm.setSector(sector);
         recycleFirm.setUser(user);
         recycleFirmRepository.save(recycleFirm);
-        return user;
+        return recycleFirm.getUser();
     }
 
     public User addTransferStation(User user) {
@@ -249,5 +253,19 @@ public class AdminService {
         return news;
     }
 
+    public List<NewsVo> getNews() {
+        List<NewsVo> newsVos = new ArrayList<>();
+        List<News> newsList = newsRepository.findAll();
+        if (newsList == null) {
+            return null;
+        }
+        newsList.forEach(news -> newsVos.add(NewsVo.constructVo(news)));
+        return newsVos;
+    }
 
+    public News getNewsInfo(int id) {
+        return newsRepository.findById(id)
+                .stream().findFirst()
+                .orElse(null);
+    }
 }

@@ -178,14 +178,14 @@ public class UserController {
     }
 
 
-//    @GetMapping("list/news")
-//    public CommonResult getNews(@Param("limit") int limit) {
-//        User.Role role = requestComponent.getRole();
-//        return null;
-//    }
+    @GetMapping("list/news")
+    public CommonResult getNews(@Param("limit") int limit) {
+        User.Role role = requestComponent.getRole();
+        return CommonResult.success(userService.getNews(role,limit));
+    }
 
     @GetMapping("get/news/info")
     public CommonResult getNewsInfo(@Param("id") int id) {
-        return null;
+        return CommonResult.success(userService.getNewsInfo(id));
     }
 }

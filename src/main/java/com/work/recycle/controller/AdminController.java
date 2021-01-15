@@ -1,16 +1,10 @@
 package com.work.recycle.controller;
 
 import com.work.recycle.common.CommonResult;
-import com.work.recycle.common.ResultCode;
 import com.work.recycle.controller.vo.SiftOrderVo;
 import com.work.recycle.controller.vo.UserVo;
-import com.work.recycle.entity.Garbage;
-import com.work.recycle.entity.News;
-import com.work.recycle.entity.RecycleDriver;
-import com.work.recycle.entity.User;
-import com.work.recycle.exception.ApiException;
+import com.work.recycle.entity.*;
 import com.work.recycle.service.AdminService;
-import com.work.recycle.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
@@ -83,14 +77,17 @@ public class AdminController {
     }
 
     /**
-     * 新增回收企业用户
-     *
-     * @param user the user
-     * @return return the code message and the inserted user
+     * 新建回收企业用户
+     * @param user 用户实体
+     * @param company 回收企业公司
+     * @param sector 回收企业部门
+     * @return user 实体
      */
     @PostMapping("add/recycleFirm")
-    public CommonResult addRecycleFirm(@RequestBody User user) {
-        return CommonResult.success(adminService.addRecycleFirm(user));
+    public CommonResult addRecycleFirm(@RequestBody User user
+            ,@Param("company") String company
+            ,@Param("sector") String sector) {
+        return CommonResult.success(adminService.addRecycleFirm(user, company, sector));
     }
 
     /**
@@ -261,9 +258,14 @@ public class AdminController {
      * @param news the entity of news
      * @return the common result
      */
-//    @PostMapping("record/news")
-//    public CommonResult addNews(@RequestBody News news) {
-//        return CommonResult.success(adminService.addNews(news));
-//    }
+    @PostMapping("record/news")
+    public CommonResult addNews(@RequestBody News news) {
+        return CommonResult.success(adminService.addNews(news));
+    }
+
+    @GetMapping("list/news")
+    public CommonResult getNews() {
+        return CommonResult.success(adminService.getNews());
+    }
 
 }

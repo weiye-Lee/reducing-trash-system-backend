@@ -5,6 +5,9 @@ import lombok.Data;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+/**
+ * 公告新闻
+ */
 @Data
 @Entity
 

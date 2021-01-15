@@ -1,3 +1,94 @@
+#仅由保洁员单方面提交fc订单的模式
+#获取订单通过get/FCOrder/checked
+POST http://localhost:8080/api/cleaner/record/FCOrder
+Content-Type: application/json
+Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e3d69a5f46c7f3b2bef6219155aa7d57
+
+{
+  "province": "黑龙江省",
+  "city": "大庆市",
+  "area": "双城区",
+  "street": "平安街道",
+  "village": "伟业村",
+  "address": "村口大槐树下",
+  "remark": "农户zai插入提交一条记录",
+  "name": "李伟业",
+  "phone": "13050496540",
+  "garbageChooses": [
+    {
+      "garbage": {
+        "id": 1
+      },
+      "amount": 5.5
+    },
+    {
+      "garbage": {
+        "id": 2
+      },
+      "amount": 1.2
+    }
+  ]
+}
+
+###
+#重构 新建回收企业用户接口
+POST http://localhost:8080/api/admin/add/recycleFirm?company=双城区废品回收有限公司A&sector=北厂
+Content-Type: application/json
+Authorization: d173d91045a96d6a0350969c17a8ac077082b7f98448491c2cd477ecdb61b9985be10d33db85874e3fe1606c33de3588
+
+{
+    "province": "黑龙江省",
+    "city": "大庆市",
+    "area": "双城区",
+    "street": "平安街道",
+    "village": "伟业村",
+    "name": "回收企业",
+    "IDNumber": "20207878549017382",
+    "phoneNumber": "15941627202"
+}
+
+###
+#通过id查询新闻详情
+GET http://localhost:8080/api/user/get/news/info?id=1
+Accept: application/json
+Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e3d69a5f46c7f3b2bef6219155aa7d57
+
+###
+#任何角色都可以用的接口，只有传递的token不同
+GET http://localhost:8080/api/user/list/news?limit=6
+Accept: application/json
+Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e3d69a5f46c7f3b2bef6219155aa7d57
+
+###
+#管理员插入/修改一条新闻
+#要注意的是，修改时要传递所有的数据，否则就会出现“修改垃圾价格时图片丢失的情况”
+POST http://localhost:8080/api/admin/record/news
+Content-Type: application/json
+Authorization: d173d91045a96d6a0350969c17a8ac077082b7f98448491c2cd477ecdb61b9985be10d33db85874e3fe1606c33de3588
+
+{
+  "author": "weiye",
+  "title": "a title of test",
+  "content": "this is a content of test",
+  "hidden": "false",
+  "level": 1,
+  "farmerShow": "true",
+  "cleanerShow": "true",
+  "kitchenShow": "true",
+  "recycleFirmShow": "true",
+  "transferStationShow": "true"
+}
+
+###
+POST http://localhost:8080/api/cleaner/getCDOrder/Checking
+Content-Type: application/json
+Authorization: c7f9fb9a8461a21c669b6cd05d4fab40852a1c7c8cce406802034a19a22140b0e3d69a5f46c7f3b2bef6219155aa7d57
+
+{
+  "col":"none"
+}
+
+###
 GET http://localhost:8080/api/recycleFirm/get/CROrder?id=1
 Accept: application/json
 Authorization: 621ecd13f84b1bfee8fc7dcd2ce2c538068f9b9272039187efd6946302775132f8a88001ab8912cc7123e4e07d9a9bec
@@ -552,22 +643,6 @@ Authorization: d173d91045a96d6a0350969c17a8ac077082b7f98448491c2cd477ecdb61b9985
 GET http://localhost:8080/api/admin/get/Cleaner
 Accept: application/json
 Authorization: d173d91045a96d6a0350969c17a8ac077082b7f98448491c2cd477ecdb61b9985be10d33db85874e3fe1606c33de3588
-
-###
-POST http://localhost:8080/api/admin/add/recycleFirm
-Content-Type: application/json
-Authorization: d173d91045a96d6a0350969c17a8ac077082b7f98448491c2cd477ecdb61b9985be10d33db85874e3fe1606c33de3588
-
-{
-  "province": "黑龙江省",
-  "city": "大庆市",
-  "area": "双城区",
-  "street": "平安街道",
-  "village": "伟业村",
-  "name": "回收企业",
-  "IDNumber": "20207878549017382",
-  "phoneNumber": "15941627201"
-}
 
 ###
 POST http://localhost:8080/api/admin/add/transferStation
